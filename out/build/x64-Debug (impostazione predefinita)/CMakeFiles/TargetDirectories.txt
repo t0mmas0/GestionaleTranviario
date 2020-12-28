@@ -1,3 +1,0 @@
-C:/Users/simon/source/repos/GestionaleTranviario/out/build/x64-Debug (impostazione predefinita)/CMakeFiles/GestionaleTranviario.dir
-C:/Users/simon/source/repos/GestionaleTranviario/out/build/x64-Debug (impostazione predefinita)/CMakeFiles/edit_cache.dir
-C:/Users/simon/source/repos/GestionaleTranviario/out/build/x64-Debug (impostazione predefinita)/CMakeFiles/rebuild_cache.dir
