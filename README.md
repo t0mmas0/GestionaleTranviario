@@ -32,4 +32,7 @@ Gestione Orari
 Lettura e Scrittura File
 Leggere i file timetable e parsarli a qualcosa di conosciuto da cristo
 Scrivere su file timetable l'output
-  
+ 
+
+
+BLA BLA
