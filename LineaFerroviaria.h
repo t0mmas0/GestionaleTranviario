@@ -1,0 +1,14 @@
+//
+// Created by Tommaso on 28/12/2020.
+//
+
+#ifndef GESTIONETRANVIARIA_LINEAFERROVIARIA_H
+#define GESTIONETRANVIARIA_LINEAFERROVIARIA_H
+
+
+class LineaFerroviaria {
+
+};
+
+
+#endif //GESTIONETRANVIARIA_LINEAFERROVIARIA_H

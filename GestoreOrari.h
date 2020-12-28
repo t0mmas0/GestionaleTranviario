@@ -1,0 +1,14 @@
+//
+// Created by Tommaso on 28/12/2020.
+//
+
+#ifndef GESTIONETRANVIARIA_GESTOREORARI_H
+#define GESTIONETRANVIARIA_GESTOREORARI_H
+
+
+class GestoreOrari {
+
+};
+
+
+#endif //GESTIONETRANVIARIA_GESTOREORARI_H
