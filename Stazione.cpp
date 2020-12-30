@@ -8,7 +8,9 @@
 
 Stazione::Stazione(int km, std::string nome) : Km(km),nome(nome) {
     accessoStazione = Semaforo();
+    accessoStazione.setVerde();
     uscitaDeposito = Semaforo();
+    uscitaDeposito.setVerde();
 }
 bool Stazione::RichiediAccessoStazione(Treno t) {
     std::cout<<"Richiesta di accesso alla Stazione";
@@ -25,6 +27,10 @@ bool Stazione::PrenotaBinario(Treno t) {
         std::cout << "Richiesta Accettata e Confermata";
         binarioOrdinario.push_back(t);
         i++;
+        if (i=4) {
+            accessoStazione.setRosso();
+            uscitaDeposito.setRosso();
+        }
         return true;
     }
 

@@ -7,9 +7,10 @@
 #include "algorithm"
 
 bool StazioneSecondaria::richiestaTransito(Treno t) {
-    if (i<2) {
+    if (j<2) {
         binarioTransito.push_back(t);
         std::cout << "Richiesta di transito accettata";
+        j++;
         return true;
     }
     std::cout << "Richiesta di transito rifiutata, binari occupati";
