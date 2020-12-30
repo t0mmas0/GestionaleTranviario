@@ -13,7 +13,7 @@
 #include "Semaforo.h"
 
 class Stazione {
-private:
+protected:
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
     Semaforo accessoStazione;
@@ -25,7 +25,7 @@ private:
 
 public:
 
-    Stazione(int km);
+    Stazione(int km, std::string nome);
 
     bool PrenotaBinario(Treno t);
     void liberaBinario(Treno t);

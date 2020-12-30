@@ -6,8 +6,9 @@
  * @brief Stazione della linea ferroviaria
  */
 
-Stazione::Stazione(int km) : Km(km) {
-
+Stazione::Stazione(int km, std::string nome) : Km(km),nome(nome) {
+    accessoStazione = Semaforo();
+    uscitaDeposito = Semaforo();
 }
 bool Stazione::RichiediAccessoStazione(Treno t) {
     std::cout<<"Richiesta di accesso alla Stazione";
