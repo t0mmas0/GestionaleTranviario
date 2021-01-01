@@ -1,6 +1,7 @@
 # GestionaleTranviario
 
 #Appunti
+Bozza struttura del progetto: https://app.creately.com/diagram/KxGNY59bkHs/view
 
 #Cosa mostriamo in output
 stato treni dato un orario(terminale) 
