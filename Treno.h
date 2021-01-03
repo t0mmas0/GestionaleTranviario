@@ -13,11 +13,17 @@ class Stazione;
 class Treno {
 public:
 	//Costruttore
-	Treno(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
-	
-	//TO-DO: Abilitare copia e move
+	Treno(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
 
-	//TO-Do: Override ==
+	//Costruttore di copia
+	Treno(const Treno& treno);
+	
+	//TO-DO: Move?
+
+	//Operatore di copia
+	Treno& operator=(const Treno& treno);
+
+	//Override operator ==
 	bool Treno::operator ==(const Treno& treno) const;
 
 	//Metodo chiamato per aggiornare lo stato interno al treno
@@ -28,14 +34,14 @@ protected:
 	int ritardo;
 	int minuti_fermata;
 
-	const std::list<Stazione>& Stazioni;
-	const std::vector<int>& Orari;
+	std::list<Stazione>& Stazioni;
+	std::vector<int>& Orari;
 
 };
 
 class Regionale : public Treno {
 public:
-	Regionale(int id, const std::list<Stazione>& Stazioni,const std::vector<int>& Orari);
+	Regionale(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
 	void Muta();
 private:
 	const int MAX_SPEED;
@@ -43,7 +49,7 @@ private:
 
 class AltaVelocità : public Treno {
 public:
-	AltaVelocità(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
+	AltaVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
 	void Muta();
 private:
 	const int MAX_SPEED;
@@ -51,7 +57,7 @@ private:
 
 class SuperVelocità : public Treno {
 public:
-	SuperVelocità(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
+	SuperVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
 	void Muta();
 private:
 	const int MAX_SPEED;
