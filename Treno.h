@@ -13,15 +13,17 @@ class Stazione;
 class Treno {
 public:
 	//Costruttore
-	Treno(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
+	Treno(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
 	
 	//TO-DO: Disabilitare copia e move
 
 	//TO-Do: Override ==
+	bool Treno::operator ==(const Treno& treno) const;
 
 	//Metodo chiamato per aggiornare lo stato interno al treno
 	void Muta();
 protected:
+	int identificativo;
 	int posizione;
 	int ritardo;
 	int minuti_fermata;
@@ -33,7 +35,7 @@ protected:
 
 class Regionale : public Treno {
 public:
-	Regionale(const std::list<Stazione>& Stazioni,const std::vector<int>& Orari);
+	Regionale(int id, const std::list<Stazione>& Stazioni,const std::vector<int>& Orari);
 	void Muta();
 private:
 	const int MAX_SPEED;
@@ -41,7 +43,7 @@ private:
 
 class AltaVelocità : public Treno {
 public:
-	AltaVelocità(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
+	AltaVelocità(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
 	void Muta();
 private:
 	const int MAX_SPEED;
@@ -49,7 +51,7 @@ private:
 
 class SuperVelocità : public Treno {
 public:
-	SuperVelocità(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
+	SuperVelocità(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
 	void Muta();
 private:
 	const int MAX_SPEED;

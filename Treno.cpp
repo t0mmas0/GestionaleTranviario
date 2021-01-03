@@ -2,18 +2,22 @@
 #include "Treno.h"
 #include "Stazione.h"
 
-Treno::Treno(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
-	:posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, Stazioni{ Stazioni }, Orari{Orari} {
+Treno::Treno(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
+	:identificativo{id}, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, Stazioni{ Stazioni }, Orari{Orari} {
 }
 
-Regionale::Regionale(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
-	: Treno(Stazioni, Orari), MAX_SPEED{160} {
+bool Treno::operator==(const Treno& treno) const{
+	return identificativo == treno.identificativo;
 }
 
-AltaVelocità::AltaVelocità(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
-	: Treno(Stazioni, Orari), MAX_SPEED{240}{
+Regionale::Regionale(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
+	: Treno(id, Stazioni, Orari), MAX_SPEED{160} {
 }
 
-SuperVelocità::SuperVelocità(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
-	: Treno(Stazioni, Orari), MAX_SPEED{300}{
+AltaVelocità::AltaVelocità(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
+	: Treno(id, Stazioni, Orari), MAX_SPEED{240}{
+}
+
+SuperVelocità::SuperVelocità(int id,  const std::list<Stazione>& Stazioni, const std::vector<int>& Orari)
+	: Treno(id, Stazioni, Orari), MAX_SPEED{300}{
 }
