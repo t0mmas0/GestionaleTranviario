@@ -15,7 +15,7 @@ public:
 	//Costruttore
 	Treno(int id, const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
 	
-	//TO-DO: Disabilitare copia e move
+	//TO-DO: Abilitare copia e move
 
 	//TO-Do: Override ==
 	bool Treno::operator ==(const Treno& treno) const;
