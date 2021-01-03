@@ -26,8 +26,14 @@ public:
 	//Costruttore di copia
 	Treno(const Treno& treno);
 
-	//Metodo chiamato per aggiornare lo stato interno al treno
-	virtual void muta();
+	//Funzione che muta automaticamente gli attributi del treno
+	void muta();
+
+	//Funzione che fa avanzare il treno
+	void avanza();
+
+	//Funzione che aggiorna il tempo di fermata
+	void aggiorna_fermata();
 	
 	//TO-DO: Move?
 
@@ -39,6 +45,7 @@ public:
 
 protected:
 	int identificativo;
+	int velocità;
 	int posizione;
 	int ritardo;
 	int minuti_fermata;
