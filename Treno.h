@@ -33,20 +33,26 @@ protected:
 
 class Regionale : public Treno {
 public:
-	Regionale(std::list<Stazione> Stazioni, std::vector<int> Orari);
+	Regionale(const std::list<Stazione>& Stazioni,const std::vector<int>& Orari);
 	void Muta();
+private:
+	const int MAX_SPEED;
 };
 
 class AltaVelocità : public Treno {
 public:
-	AltaVelocità(std::list<Stazione> Stazioni, std::vector<int> Orari);
+	AltaVelocità(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
 	void Muta();
+private:
+	const int MAX_SPEED;
 };
 
 class SuperVelocità : public Treno {
 public:
-	SuperVelocità(std::list<Stazione> Stazioni, std::vector<int> Orari);
+	SuperVelocità(const std::list<Stazione>& Stazioni, const std::vector<int>& Orari);
 	void Muta();
+private:
+	const int MAX_SPEED;
 };
 
 
