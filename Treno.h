@@ -8,6 +8,8 @@
 #ifndef GESTIONETRANVIARIA_TRENO_H
 #define GESTIONETRANVIARIA_TRENO_H
 
+class Stazione;
+
 class Treno {
 public:
 	//Costruttore
