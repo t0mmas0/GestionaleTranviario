@@ -12,6 +12,10 @@ class Stazione;
 
 class Treno {
 public:
+
+	//Costruttore di default
+	Treno();
+
 	//Costruttore
 	Treno(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
 
