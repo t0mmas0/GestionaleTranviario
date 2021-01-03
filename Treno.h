@@ -8,7 +8,11 @@
 #ifndef GESTIONETRANVIARIA_TRENO_H
 #define GESTIONETRANVIARIA_TRENO_H
 
+//Forward declaration
 class Stazione;
+
+//Enumeratore stato treno
+enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3};
 
 class Treno {
 public:
@@ -21,6 +25,9 @@ public:
 
 	//Costruttore di copia
 	Treno(const Treno& treno);
+
+	//Metodo chiamato per aggiornare lo stato interno al treno
+	virtual void muta();
 	
 	//TO-DO: Move?
 
@@ -30,13 +37,13 @@ public:
 	//Override operator ==
 	bool Treno::operator ==(const Treno& treno) const;
 
-	//Metodo chiamato per aggiornare lo stato interno al treno
-	void Muta();
 protected:
 	int identificativo;
 	int posizione;
 	int ritardo;
 	int minuti_fermata;
+
+	Stato stato;
 
 	std::list<Stazione>& Stazioni;
 	std::vector<int>& Orari;
@@ -46,7 +53,6 @@ protected:
 class Regionale : public Treno {
 public:
 	Regionale(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
-	void Muta();
 private:
 	const int MAX_SPEED;
 };
@@ -54,7 +60,6 @@ private:
 class AltaVelocità : public Treno {
 public:
 	AltaVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
-	void Muta();
 private:
 	const int MAX_SPEED;
 };
@@ -62,7 +67,6 @@ private:
 class SuperVelocità : public Treno {
 public:
 	SuperVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
-	void Muta();
 private:
 	const int MAX_SPEED;
 };

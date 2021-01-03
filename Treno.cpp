@@ -3,11 +3,11 @@
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari)
-	:identificativo{id}, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, Stazioni{ Stazioni }, Orari{Orari} {
+	:identificativo{ id }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{attesa}, Stazioni{ Stazioni }, Orari{ Orari } {
 }
 
 Treno::Treno(const Treno& treno)
-:identificativo{ treno.identificativo }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, Stazioni{ treno.Stazioni }, Orari{ treno.Orari }{
+	: identificativo{ treno.identificativo }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{treno.stato}, Stazioni{ treno.Stazioni }, Orari{ treno.Orari }{
 }
 
 Treno& Treno::operator=(const Treno& treno){
@@ -15,6 +15,7 @@ Treno& Treno::operator=(const Treno& treno){
 	posizione = treno.posizione;
 	ritardo = treno.ritardo;
 	minuti_fermata = treno.minuti_fermata;
+	stato = treno.stato;
 	Stazioni = treno.Stazioni;
 	Orari = treno.Orari;
 	return *this;
