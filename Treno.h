@@ -26,7 +26,8 @@ protected:
 	int ritardo;
 	int minuti_fermata;
 
-	std::list<Stazione>& Stazioni;
+	const std::list<Stazione>& Stazioni;
+	const std::vector<int>& Orari;
 
 };
 
