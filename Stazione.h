@@ -19,7 +19,7 @@ protected:
     Semaforo accessoStazione;
     Semaforo uscitaDeposito;
     std::vector <Treno> binarioOrdinario{4};
-    std::vector <Treno> deposito(5);
+    std::vector <Treno> deposito{ 5 };
     int i = 0;
 
 

@@ -17,6 +17,8 @@ public:
 	
 	//TO-DO: Disabilitare copia e move
 
+	//TO-Do: Override ==
+
 	//Metodo chiamato per aggiornare lo stato interno al treno
 	void Muta();
 protected:
