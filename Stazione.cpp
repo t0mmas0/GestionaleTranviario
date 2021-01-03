@@ -35,6 +35,7 @@ bool Stazione::PrenotaBinario(Treno t) {
     }
 
         std::cout << "Stazione piena reindirizzamento al deposito";
+        deposito().push_back(t);
         //Verificando col semaforo non si dovrebbe mai arrivare qua
         return false;
 }

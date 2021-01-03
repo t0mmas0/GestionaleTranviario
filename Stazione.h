@@ -19,6 +19,7 @@ protected:
     Semaforo accessoStazione;
     Semaforo uscitaDeposito;
     std::vector <Treno> binarioOrdinario{4};
+    std::vector <Treno> deposito(5);
     int i = 0;
 
 
@@ -31,6 +32,7 @@ public:
     void liberaBinario(Treno t);
     bool RichiediAccessoStazione(Treno t);
     bool permessoUscitaDeposito(Treno t);
+
 
 
 };
