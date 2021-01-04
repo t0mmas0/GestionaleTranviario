@@ -1,18 +1,26 @@
 //Simone Peraro 1216334
+#include <iostream>
 #include <cmath>
 #include <stdexcept>
 #include "Treno.h"
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari)
-	:identificativo{ id }, velocità{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{0} {
+	: orario{ 0 }, identificativo{ id }, velocità{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false } {
 }
 
 Treno::Treno(const Treno& treno)
-	: identificativo{ treno.identificativo }, velocità{ treno.velocità }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{ treno.stato }, Stazioni{ treno.Stazioni }, Orari{ treno.Orari }{
+	: orario{ treno.orario }, identificativo{ treno.identificativo }, velocità{ treno.velocità }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{ treno.stato }, Stazioni{ treno.Stazioni }, iteratore_stazioni{ treno.iteratore_stazioni }, Orari{ treno.Orari }, indice_orario{ treno.indice_orario }, attivato{ false }{
+}
+
+void Treno::attiva(int ora){
+	if (attivato)
+		throw std::logic_error("Errore. Si sta cercando di attivare un treno già attivato");
+	orario = ora;
 }
 
 void Treno::muta() {
+	//TODO: Il treno deve aggiornare il proprio orario interno
 	//Il treno automaticamente muta il proprio stato in base allo stato attuale
 	switch (stato){
 	case attesa:
@@ -29,9 +37,10 @@ void Treno::muta() {
 		//Se il treno è in fermata, allora vi rimane, ma aumenta il tempo di fermata effettuato
 		aggiorna_fermata();
 		// TODO: Calcolare il ritardo
+		calcola_ritardo();
 		break;
 	}
-	//Se sono avanzato, devo controllare se chiamare la stazione
+	//TODO: Se sono avanzato, devo controllare se chiamare la stazione
 }
 
 void Treno::avanza(){
@@ -39,7 +48,7 @@ void Treno::avanza(){
 	//La posizione è aggiornata all'intero superiore:
 	//i chilometri vanno da 0 a 1 per il primo, da 1.1 a 2 per il secondo ecc...
 	//Pertanto se un treno è al km 1.2, si trova al km 2
-	posizione = std::ceil(posizione + (velocità / 60));
+	posizione = posizione + (velocità / 60);
 }
 
 void Treno::aggiorna_fermata(){
@@ -57,6 +66,20 @@ void Treno::cambia_stato(Stato s){
 	//Azzero la velocità se il treno viene posto in uno stato tale da renderlo immobile
 	if (stato == attesa || stato == parcheggio || stato == fermata)
 		velocità = 0;
+}
+
+void Treno::calcola_ritardo(){
+	//Devo calcoare l'eventuale ritardo/anticipo del treno
+	//TODO: Per ora la funzione è pensata per calcolarlo all'arrivo in stazione, quindi si presuppone sia in stazione
+	int previsto = Orari[indice_orario];
+	if (previsto - orario == ritardo)
+		return; //Il ritardo non è variato
+	ritardo = previsto - orario;
+	if (ritardo > 0)
+		std::cout << "Il treno " << identificativo << " è in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->nome ; //TODO: Aggiungere nome stazioni
+	if (ritardo < 0)
+		std::cout << "Il treno " << identificativo << " è in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->nome;
+	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
 int Treno::get_id() const {

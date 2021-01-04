@@ -13,7 +13,7 @@
 class Stazione;
 
 //Enumeratore stato treno
-enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3};
+enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5};
 
 class Treno {
 public:
@@ -25,10 +25,12 @@ public:
 	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
 	// TODO: Move
 
+	void attiva(int ora);										//Attiva per la prima volta il treno sulla linea
 	void muta();												//Muta automaticamento lo stato del treno
 	void avanza();												//Fa avanzare il treno
 	void aggiorna_fermata();									//Conta il tempo di fermata
 	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocità
+	void calcola_ritardo();
 
 	int get_id() const;				//Resituisce l'identificativo
 	int get_velocità() const;		//Resituisce la velocità
@@ -41,19 +43,23 @@ public:
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
 
 protected:
+	int orario;
 	int identificativo;
 	int velocità;
-	int posizione;
 	int ritardo;
 	int minuti_fermata;
+
+	double posizione;
 
 	Stato stato;
 
 	std::list<std::shared_ptr<Stazione>>& Stazioni;
 	std::list<std::shared_ptr<Stazione>>::iterator iteratore_stazioni;
+
 	std::vector<int>& Orari;
 	int indice_orario;
 
+	bool attivato;
 };
 
 class Regionale : public Treno {
