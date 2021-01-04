@@ -19,7 +19,7 @@ class Treno {
 public:
 
 	Treno();																					//Costruttore di default
-	Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari);		//Costruttore
+	Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);		//Costruttore
 	Treno(const Treno& treno);																	//Costruttore di copia
 
 	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
@@ -61,11 +61,12 @@ protected:
 	int indice_orario;
 
 	bool attivato;
+	bool reverse;
 };
 
 class Regionale : public Treno {
 public:
-	Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari);
+	Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void set_velocità(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 160;
@@ -73,7 +74,7 @@ private:
 
 class AltaVelocità : public Treno {
 public:
-	AltaVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari);
+	AltaVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void set_velocità(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 240;
@@ -81,7 +82,7 @@ private:
 
 class SuperVelocità : public Treno {
 public:
-	SuperVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari);
+	SuperVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void set_velocità(int v = MAX_SPEED);
 private:
 	static const int MAX_SPEED = 300;
