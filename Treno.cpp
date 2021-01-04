@@ -81,11 +81,12 @@ void Treno::cambia_stato(Stato s){
 	if (stato == attesa || stato == parcheggio || stato == fermata)
 		velocità = 0;
 	//Imposto la velocità limite se il treno entra nella zona stazione
-	if (stato == stazione)
+	else if (stato == stazione)
 		velocità = 80;
 	//Imposto la velocità massima se il treno viene messo in movimento
-	if (stato = movimento)
+	else if (stato = movimento)
 		set_velocità(); //Verrà chiamato il metodo override che imposterà la velocità massima consentita dal tipo del treno
+	//TODO: Stato distrutto
 }
 
 void Treno::calcola_ritardo(){
