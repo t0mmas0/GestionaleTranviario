@@ -20,29 +20,26 @@ void Treno::attiva(int ora){
 }
 
 void Treno::muta() {
-	//TODO: Il treno deve aggiornare il proprio orario interno
+	
 	//Il treno automaticamente muta il proprio stato in base allo stato attuale
 	switch (stato){
-	case attesa:
-		//Se il treno è in attesa (di un qualche evento esterno o di segnali da parte dei gestori), non fa nulla
-		return;
 	case movimento:
 		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocità
 		avanza();
+		//Deve poi controllare se deve chiamare la stazione
+		if ((*iteratore_stazioni)->Km - 5 >= posizione)
+			chiama_stazione();
 		break;
-	case parcheggio:
-		//Se il treno è in parcheggio, allora vi rimane e non fa nulla
-		return;
 	case fermata:
 		//Se il treno è in fermata, allora vi rimane, ma aumenta il tempo di fermata effettuato
 		aggiorna_fermata();
-		// TODO: Calcolare il ritardo
 		calcola_ritardo();
 		break;
 	}
-	//TODO: Se sono avanzato, devo controllare se chiamare la stazione
+	//TODO: Il treno deve aggiornare il proprio orario interno
 }
 
+//TODO: Il treno avanza anche se deve percorrere la tratta al contrario - decidere se rovesciare i km delle stazioni
 void Treno::avanza(){
 	//Aggiorno la posizione del treno, convertendo la velocità da km/h a km/minuto
 	//La posizione è aggiornata all'intero superiore:
@@ -80,6 +77,11 @@ void Treno::calcola_ritardo(){
 	if (ritardo < 0)
 		std::cout << "Il treno " << identificativo << " è in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->nome;
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
+}
+
+void Treno::chiama_stazione(){
+	if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Passaggio per puntatore o per riferimento?
+		cambia_stato(parcheggio);
 }
 
 int Treno::get_id() const {

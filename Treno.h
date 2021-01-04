@@ -18,9 +18,9 @@ enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivat
 class Treno {
 public:
 
-	Treno();																	//Costruttore di default
+	Treno();																					//Costruttore di default
 	Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari);		//Costruttore
-	Treno(const Treno& treno);													//Costruttore di copia
+	Treno(const Treno& treno);																	//Costruttore di copia
 
 	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
 	// TODO: Move
@@ -30,7 +30,8 @@ public:
 	void avanza();												//Fa avanzare il treno
 	void aggiorna_fermata();									//Conta il tempo di fermata
 	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocità
-	void calcola_ritardo();
+	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
+	void chiama_stazione();										//Chiama stazione
 
 	int get_id() const;				//Resituisce l'identificativo
 	int get_velocità() const;		//Resituisce la velocità
