@@ -27,6 +27,7 @@ void Treno::muta() {
 		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocità
 		avanza();
 		//Deve poi controllare se deve chiamare la stazione
+		//TODO: Controllo al rovescio
 		if ((*iteratore_stazioni)->Km - 5 >= posizione)
 			chiama_stazione();
 		break;
@@ -37,6 +38,7 @@ void Treno::muta() {
 		break;
 	}
 	//TODO: Il treno deve aggiornare il proprio orario interno
+	orario++;
 }
 
 //TODO: Il treno avanza anche se deve percorrere la tratta al contrario - decidere se rovesciare i km delle stazioni
