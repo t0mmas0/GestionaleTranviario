@@ -17,31 +17,23 @@ enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3};
 class Treno {
 public:
 
-	//Costruttore di default
-	Treno();
+	Treno();																	//Costruttore di default
+	Treno(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);		//Costruttore
+	Treno(const Treno& treno);													//Costruttore di copia
 
-	//Costruttore
-	Treno(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
+	void muta();												//Muta automaticamento lo stato del treno
+	void avanza();												//Fa avanzare il treno
+	void aggiorna_fermata();									//Conta il tempo di fermata
 
-	//Costruttore di copia
-	Treno(const Treno& treno);
+	int get_id() const;			//Getters
+	int get_velocità() const;
+	int get_posizione() const;
+	int get_ritardo() const;
 
-	//Funzione che muta automaticamente gli attributi del treno
-	void muta();
+	virtual void set_velocità(int v);
 
-	//Funzione che fa avanzare il treno
-	void avanza();
-
-	//Funzione che aggiorna il tempo di fermata
-	void aggiorna_fermata();
-	
-	//TO-DO: Move?
-
-	//Operatore di copia
-	Treno& operator=(const Treno& treno);
-
-	//Override operator ==
-	bool Treno::operator ==(const Treno& treno) const;
+	Treno& operator=(const Treno& treno);						//Assegnamento di copia
+	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
 
 protected:
 	int identificativo;

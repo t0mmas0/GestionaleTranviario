@@ -50,6 +50,22 @@ void Treno::aggiorna_fermata(){
 	minuti_fermata++;
 }
 
+int Treno::get_id() const {
+	return identificativo;
+}
+
+int Treno::get_velocità() const {
+	return velocità;
+}
+
+int Treno::get_posizione() const {
+	return posizione;
+}
+
+int Treno::get_ritardo() const {
+	return ritardo;
+}
+
 Treno& Treno::operator=(const Treno& treno){
 	identificativo = treno.identificativo;
 	velocità = treno.velocità,
