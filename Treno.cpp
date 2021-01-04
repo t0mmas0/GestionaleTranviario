@@ -5,7 +5,7 @@
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari)
-	:identificativo{ id }, velocità{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, Orari{ Orari } {
+	:identificativo{ id }, velocità{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{0} {
 }
 
 Treno::Treno(const Treno& treno)

@@ -50,7 +50,9 @@ protected:
 	Stato stato;
 
 	std::list<std::shared_ptr<Stazione>>& Stazioni;
+	std::list<std::shared_ptr<Stazione>>::iterator iteratore_stazioni;
 	std::vector<int>& Orari;
+	int indice_orario;
 
 };
 
