@@ -18,6 +18,10 @@ void Treno::attiva(int ora){
 		throw std::logic_error("Errore. Si sta cercando di attivare un treno già attivato");
 	orario = ora;
 	cambia_stato(attesa);
+	calcola_ritardo();
+	//A questo punto il treno deve essere pronto a partire appena viene cambiato il suo stato. Devo aggiornare i riferimenti alla prossima stazione
+	iteratore_stazioni++;
+	indice_orario++;
 }
 
 void Treno::muta() {
@@ -105,6 +109,7 @@ void Treno::calcola_ritardo(){
 }
 
 void Treno::chiama_stazione(){
+	//TODO: verificare che il treno debba fermarsi
 	if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Passaggio per puntatore o per riferimento?
 		cambia_stato(parcheggio);
 }
