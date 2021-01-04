@@ -4,7 +4,7 @@
 #include "Treno.h"
 #include "Stazione.h"
 
-Treno::Treno(int id, std::list<Stazione*>& Stazioni, std::vector<int>& Orari)
+Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari)
 	:identificativo{ id }, velocità{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, Orari{ Orari } {
 }
 
@@ -104,7 +104,7 @@ bool Treno::operator==(const Treno& treno) const{
 	return identificativo == treno.identificativo;
 }
 
-Regionale::Regionale(int id, std::list<Stazione*>& Stazioni, std::vector<int>& Orari)
+Regionale::Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari)
 	: Treno(id, Stazioni, Orari){
 }
 
@@ -114,7 +114,7 @@ void Regionale::set_velocità(int v){
 	Treno::set_velocità(v);
 }
 
-AltaVelocità::AltaVelocità(int id, std::list<Stazione*>& Stazioni, std::vector<int>& Orari)
+AltaVelocità::AltaVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari)
 	: Treno(id, Stazioni, Orari){
 }
 
@@ -124,7 +124,7 @@ void AltaVelocità::set_velocità(int v){
 	Treno::set_velocità(v);
 }
 
-SuperVelocità::SuperVelocità(int id, std::list<Stazione*>& Stazioni, std::vector<int>& Orari)
+SuperVelocità::SuperVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari)
 	: Treno(id, Stazioni, Orari){
 }
 
