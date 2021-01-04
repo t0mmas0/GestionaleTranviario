@@ -47,11 +47,10 @@ void Treno::muta() {
 //TODO: Il treno avanza anche se deve percorrere la tratta al contrario - decidere se rovesciare i km delle stazioni
 void Treno::avanza(){
 	//Aggiorno la posizione del treno, convertendo la velocità da km/h a km/minuto
-	//La posizione è aggiornata all'intero superiore:
-	//i chilometri vanno da 0 a 1 per il primo, da 1.1 a 2 per il secondo ecc...
-	//Pertanto se un treno è al km 1.2, si trova al km 2
 	posizione = posizione + (velocità / 60);
-	//TODO: Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
+	//Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
+	if (posizione >= (*iteratore_stazioni)->Km)
+		cambia_stato(fermata);
 }
 
  
