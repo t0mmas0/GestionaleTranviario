@@ -1,13 +1,14 @@
 //Simone Peraro 1216334
 //Interfaccia Treno e sottoclassi derivate
 
+#ifndef GESTIONETRANVIARIA_TRENO_H
+#define GESTIONETRANVIARIA_TRENO_H
+
 #include <list>
 #include <vector>
 #include <memory>
-#include "Stazione.h"
 
-#ifndef GESTIONETRANVIARIA_TRENO_H
-#define GESTIONETRANVIARIA_TRENO_H
+#include "Stazione.h"
 
 //Forward declaration
 class Stazione;

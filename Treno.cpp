@@ -28,7 +28,8 @@ void Treno::muta() {
 		avanza();
 		//Deve poi controllare se deve chiamare la stazione
 		//TODO: Controllo al rovescio
-		if ((*iteratore_stazioni)->Km - 5 >= posizione)
+		//TODO: Limitare la velocità
+		if (posizione >= (*iteratore_stazioni)->Km - 5)
 			chiama_stazione();
 		break;
 	case fermata:
@@ -36,8 +37,9 @@ void Treno::muta() {
 		aggiorna_fermata();
 		calcola_ritardo();
 		break;
+	default:
+		break;
 	}
-	//TODO: Il treno deve aggiornare il proprio orario interno
 	orario++;
 }
 
@@ -48,13 +50,26 @@ void Treno::avanza(){
 	//i chilometri vanno da 0 a 1 per il primo, da 1.1 a 2 per il secondo ecc...
 	//Pertanto se un treno è al km 1.2, si trova al km 2
 	posizione = posizione + (velocità / 60);
+	//TODO: Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
 }
 
+ 
 void Treno::aggiorna_fermata(){
 	if (minuti_fermata == 4) {
 		//Sono già stato fermo 5 minuti, devo ripartire
 		minuti_fermata = 0;
-		//TO-DO
+		
+		//Richiedo l'uscita dalla stazione
+		(*iteratore_stazioni)->liberaBinario(this);
+
+		//Cambio lo stato del treno
+		stato = movimento;
+		velocità = 80;
+
+		//Ho effettuato la fermata, devo aggiornare gli indici
+		iteratore_stazioni++;
+		indice_orario++;
+
 	}
 	//Altrimenti aggiorno il tempo
 	minuti_fermata++;
