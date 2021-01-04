@@ -21,10 +21,13 @@ public:
 	Treno(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);		//Costruttore
 	Treno(const Treno& treno);													//Costruttore di copia
 
+	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
+	// TODO: Move
+
 	void muta();												//Muta automaticamento lo stato del treno
 	void avanza();												//Fa avanzare il treno
 	void aggiorna_fermata();									//Conta il tempo di fermata
-	void cambia_stato(Stato s);
+	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocità
 
 	int get_id() const;				//Resituisce l'identificativo
 	int get_velocità() const;		//Resituisce la velocità
@@ -53,22 +56,25 @@ protected:
 class Regionale : public Treno {
 public:
 	Regionale(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
+	void set_velocità(int v = MAX_SPEED) override;
 private:
-	const int MAX_SPEED;
+	static const int MAX_SPEED = 160;
 };
 
 class AltaVelocità : public Treno {
 public:
 	AltaVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
+	void set_velocità(int v = MAX_SPEED) override;
 private:
-	const int MAX_SPEED;
+	static const int MAX_SPEED = 240;
 };
 
 class SuperVelocità : public Treno {
 public:
 	SuperVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari);
+	void set_velocità(int v = MAX_SPEED);
 private:
-	const int MAX_SPEED;
+	static const int MAX_SPEED = 300;
 };
 
 

@@ -28,6 +28,7 @@ void Treno::muta() {
 	case fermata:
 		//Se il treno è in fermata, allora vi rimane, ma aumenta il tempo di fermata effettuato
 		aggiorna_fermata();
+		// TODO: Calcolare il ritatrdo
 		break;
 	}
 	//Se sono avanzato, devo controllare se chiamare la stazione
@@ -104,13 +105,31 @@ bool Treno::operator==(const Treno& treno) const{
 }
 
 Regionale::Regionale(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari)
-	: Treno(id, Stazioni, Orari), MAX_SPEED{160} {
+	: Treno(id, Stazioni, Orari){
+}
+
+void Regionale::set_velocità(int v){
+	if (v > MAX_SPEED)
+		v = MAX_SPEED;
+	Treno::set_velocità(v);
 }
 
 AltaVelocità::AltaVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari)
-	: Treno(id, Stazioni, Orari), MAX_SPEED{240}{
+	: Treno(id, Stazioni, Orari){
+}
+
+void AltaVelocità::set_velocità(int v){
+	if (v > MAX_SPEED)
+		v = MAX_SPEED;
+	Treno::set_velocità(v);
 }
 
 SuperVelocità::SuperVelocità(int id, std::list<Stazione>& Stazioni, std::vector<int>& Orari)
-	: Treno(id, Stazioni, Orari), MAX_SPEED{300}{
+	: Treno(id, Stazioni, Orari){
+}
+
+void SuperVelocità::set_velocità(int v){
+	if (v > MAX_SPEED)
+		v = MAX_SPEED;
+	Treno::set_velocità(v);
 }
