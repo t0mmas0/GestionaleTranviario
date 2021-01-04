@@ -28,8 +28,9 @@ void Treno::muta() {
 		avanza();
 		//Deve poi controllare se deve chiamare la stazione
 		//TODO: Controllo al rovescio
-		//TODO: Limitare la velocità
 		if (posizione >= (*iteratore_stazioni)->Km - 5)
+			//Devo limitare la velocità e chiamare la stazione
+			velocità = 80;
 			chiama_stazione();
 		break;
 	case fermata:
