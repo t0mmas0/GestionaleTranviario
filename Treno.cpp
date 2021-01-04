@@ -1,5 +1,6 @@
 //Simone Peraro 1216334
 #include <cmath>
+#include <stdexcept>
 #include "Treno.h"
 #include "Stazione.h"
 
@@ -50,6 +51,13 @@ void Treno::aggiorna_fermata(){
 	minuti_fermata++;
 }
 
+void Treno::cambia_stato(Stato s){
+	stato = s;
+	//Azzero la velocità se il treno viene posto in uno stato tale da renderlo immobile
+	if (stato == attesa || stato == parcheggio || stato == fermata)
+		velocità = 0;
+}
+
 int Treno::get_id() const {
 	return identificativo;
 }
@@ -64,6 +72,19 @@ int Treno::get_posizione() const {
 
 int Treno::get_ritardo() const {
 	return ritardo;
+}
+
+void Treno::set_velocità(int v){
+	if (v < 0)
+		throw std::invalid_argument("La velocità non può essere negativa");
+	if (v == 0) {
+		velocità = 0;
+		stato = attesa;
+	}
+	else {
+		velocità = v;
+		stato = movimento;
+	}
 }
 
 Treno& Treno::operator=(const Treno& treno){

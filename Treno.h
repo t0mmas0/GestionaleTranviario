@@ -24,13 +24,14 @@ public:
 	void muta();												//Muta automaticamento lo stato del treno
 	void avanza();												//Fa avanzare il treno
 	void aggiorna_fermata();									//Conta il tempo di fermata
+	void cambia_stato(Stato s);
 
-	int get_id() const;			//Getters
-	int get_velocità() const;
-	int get_posizione() const;
-	int get_ritardo() const;
+	int get_id() const;				//Resituisce l'identificativo
+	int get_velocità() const;		//Resituisce la velocità
+	int get_posizione() const;		//Resituisce la posizione
+	int get_ritardo() const;		//Resituisce il ritardo
 
-	virtual void set_velocità(int v);
+	virtual void set_velocità(int v);	//Imposta la velocità
 
 	Treno& operator=(const Treno& treno);						//Assegnamento di copia
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
