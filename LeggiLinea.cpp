@@ -14,13 +14,14 @@ std::list<std::shared_ptr<Stazione>> LeggiLinea::LeggiStazioni()
 	if (!Stream) {//se file non trovato lancio eccezione
 		throw std::runtime_error("Impossibile aprire file");
 	}
-	std::string line; 
+	std::string line;
 	std::getline(Stream, line);//leggo prima stazione che sarà solo composta da parole
 	Stazioni.push_back(std::make_shared<Stazione>(0, line));
 	std::string NomeStazione;
 	std::string parola;
 	bool IsSecondaria;
-	int kmDaOrigine;
+	int kmDaOrigine=0;
+	int previouskm = 0;
 	for (line; std::getline(Stream, line); )
 	{
 		NomeStazione = "";
@@ -29,22 +30,26 @@ std::list<std::shared_ptr<Stazione>> LeggiLinea::LeggiStazioni()
 		NomeStazione += parola;
 		if (sstream >> IsSecondaria) {//provo a leggere un numero
 			sstream >> kmDaOrigine;
-			continue;
+			
 		}
 		sstream.clear();//nel caso non fosse stato letto il numero tolgo la flag di errore
 		while (sstream >> parola) {//tento di leggere un'altra parola nel caso non sia stato letto un numero
 			while (sstream >> IsSecondaria) {//ora che ho letto la parola tento di leggere il numero
 				sstream >> kmDaOrigine;
-				continue;
+
 			}
 			sstream.clear();//nel caso ci sia ancora un'altra parola tolgo flag di errore
-			NomeStazione += " "+parola;//aggiungo parola al nome
+			NomeStazione += " " + parola;//aggiungo parola al nome
 		}
-		if (IsSecondaria) {//se stazione secondaria uso altra classe
-			Stazioni.push_back(std::make_shared<StazioneSecondaria>(kmDaOrigine, line));
-		}
-		else {
-			Stazioni.push_back(std::make_shared<Stazione>(kmDaOrigine, line));
+		if (kmDaOrigine-previouskm>=20) {
+
+			if (IsSecondaria) {//se stazione secondaria uso altra classe
+				Stazioni.emplace_back(std::make_shared<StazioneSecondaria>(kmDaOrigine, NomeStazione));
+			}
+			else {
+				Stazioni.emplace_back(std::make_shared<Stazione>(kmDaOrigine, NomeStazione));
+			}
+			previouskm = kmDaOrigine;
 		}
 
 	}//ripeto per ogni riga di file
