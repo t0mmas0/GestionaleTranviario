@@ -17,7 +17,7 @@ void Treno::attiva(int ora){
 	if (attivato)
 		throw std::logic_error("Errore. Si sta cercando di attivare un treno già attivato");
 	orario = ora;
-	cambia_stato(movimento);
+	cambia_stato(attesa);
 }
 
 void Treno::muta() {
