@@ -17,6 +17,7 @@ void Treno::attiva(int ora){
 	if (attivato)
 		throw std::logic_error("Errore. Si sta cercando di attivare un treno già attivato");
 	orario = ora;
+	cambia_stato(movimento);
 }
 
 void Treno::muta() {
@@ -56,8 +57,9 @@ void Treno::avanza(){
  
 void Treno::aggiorna_fermata(){
 	if (minuti_fermata == 4) {
-		//Sono già stato fermo 5 minuti, devo ripartire
+		//Sono già stato fermo 5 minuti, devo ripartire dal km della stazione (anche se il treno si era fermato più avanti)
 		minuti_fermata = 0;
+		posizione = (*iteratore_stazioni)->Km;
 		
 		//Richiedo l'uscita dalla stazione
 		(*iteratore_stazioni)->liberaBinario(this);
