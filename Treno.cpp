@@ -38,6 +38,9 @@ void Treno::muta() {
 			velocità = 80;
 			chiama_stazione();
 		break;
+	case stazione:
+		//Se il treno è in stazione, continua ad avanzare
+		avanza();
 	case fermata:
 		//Se il treno è in fermata, allora vi rimane, ma aumenta il tempo di fermata effettuato
 		aggiorna_fermata();
