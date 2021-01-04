@@ -64,8 +64,7 @@ void Treno::aggiorna_fermata(){
 		(*iteratore_stazioni)->liberaBinario(this);
 
 		//Cambio lo stato del treno
-		stato = movimento;
-		velocità = 80;
+		cambia_stato(stazione);
 
 		//Ho effettuato la fermata, devo aggiornare gli indici
 		iteratore_stazioni++;
@@ -81,6 +80,12 @@ void Treno::cambia_stato(Stato s){
 	//Azzero la velocità se il treno viene posto in uno stato tale da renderlo immobile
 	if (stato == attesa || stato == parcheggio || stato == fermata)
 		velocità = 0;
+	//Imposto la velocità limite se il treno entra nella zona stazione
+	if (stato == stazione)
+		velocità = 80;
+	//Imposto la velocità massima se il treno viene messo in movimento
+	if (stato = movimento)
+		set_velocità(); //Verrà chiamato il metodo override che imposterà la velocità massima consentita dal tipo del treno
 }
 
 void Treno::calcola_ritardo(){

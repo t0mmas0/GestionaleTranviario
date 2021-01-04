@@ -14,7 +14,7 @@
 class Stazione;
 
 //Enumeratore stato treno
-enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5};
+enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5, stazione = 6};
 
 class Treno {
 public:
@@ -39,7 +39,7 @@ public:
 	int get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
 
-	virtual void set_velocità(int v);	//Imposta la velocità
+	virtual void set_velocità(int v = 0);	//Imposta la velocità. Poichè questa interfaccia non ha una velocità limite predefinita, essa viene posta a 0 di default
 
 	Treno& operator=(const Treno& treno);						//Assegnamento di copia
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
@@ -63,6 +63,7 @@ protected:
 
 	bool attivato;
 	bool reverse;
+
 };
 
 class Regionale : public Treno {
