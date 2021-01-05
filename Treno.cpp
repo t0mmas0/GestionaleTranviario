@@ -33,7 +33,7 @@ void Treno::muta() {
 		avanza();
 		//Deve poi controllare se deve chiamare la stazione
 		//TODO: Controllo al rovescio
-		if (posizione >= (*iteratore_stazioni)->Km - 5)
+		if (posizione >= (*iteratore_stazioni)->getDistance() - 5)
 			//Devo limitare la velocità e chiamare la stazione
 			velocità = 80;
 			chiama_stazione();
@@ -57,7 +57,7 @@ void Treno::avanza(){
 	//Aggiorno la posizione del treno, convertendo la velocità da km/h a km/minuto
 	posizione = posizione + (velocità / 60);
 	//Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
-	if (posizione >= (*iteratore_stazioni)->Km)
+	if (posizione >= (*iteratore_stazioni)->getDistance())
 		cambia_stato(fermata);
 }
 
@@ -66,7 +66,7 @@ void Treno::aggiorna_fermata(){
 	if (minuti_fermata == 4) {
 		//Sono già stato fermo 5 minuti, devo ripartire dal km della stazione (anche se il treno si era fermato più avanti)
 		minuti_fermata = 0;
-		posizione = (*iteratore_stazioni)->Km;
+		posizione = (*iteratore_stazioni)->getDistance();
 		
 		//Richiedo l'uscita dalla stazione
 		(*iteratore_stazioni)->liberaBinario(this);
@@ -93,7 +93,7 @@ void Treno::cambia_stato(Stato s){
 		velocità = 80;
 	//Imposto la velocità massima se il treno viene messo in movimento
 	else if (stato = movimento)
-		set_velocità(); //Verrà chiamato il metodo override che imposterà la velocità massima consentita dal tipo del treno
+		set_velocita(); //Verrà chiamato il metodo override che imposterà la velocità massima consentita dal tipo del treno
 	//TODO: Stato distrutto
 }
 
@@ -105,9 +105,9 @@ void Treno::calcola_ritardo(){
 		return; //Il ritardo non è variato
 	ritardo = previsto - orario;
 	if (ritardo > 0)
-		std::cout << "Il treno " << identificativo << " è in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->nome ; //TODO: Aggiungere nome stazioni
+		std::cout << "Il treno " << identificativo << " è in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
 	if (ritardo < 0)
-		std::cout << "Il treno " << identificativo << " è in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->nome;
+		std::cout << "Il treno " << identificativo << " è in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
@@ -121,7 +121,7 @@ int Treno::get_id() const {
 	return identificativo;
 }
 
-int Treno::get_velocità() const {
+int Treno::get_velocita() const {
 	return velocità;
 }
 
@@ -133,7 +133,7 @@ int Treno::get_ritardo() const {
 	return ritardo;
 }
 
-void Treno::set_velocità(int v){
+void Treno::set_velocita(int v){
 	if (v < 0)
 		throw std::invalid_argument("La velocità non può essere negativa");
 	if (v == 0) {
@@ -173,28 +173,28 @@ Regionale::Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
-void Regionale::set_velocità(int v){
+void Regionale::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
-	Treno::set_velocità(v);
+	Treno::set_velocita(v);
 }
 
 AltaVelocità::AltaVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
-void AltaVelocità::set_velocità(int v){
+void AltaVelocità::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
-	Treno::set_velocità(v);
+	Treno::set_velocita(v);
 }
 
 SuperVelocità::SuperVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
-void SuperVelocità::set_velocità(int v){
+void SuperVelocità::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
-	Treno::set_velocità(v);
+	Treno::set_velocita(v);
 }

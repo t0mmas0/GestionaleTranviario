@@ -35,11 +35,11 @@ public:
 	void chiama_stazione();										//Chiama stazione
 
 	int get_id() const;				//Resituisce l'identificativo
-	int get_velocità() const;		//Resituisce la velocità
+	int get_velocita() const;		//Resituisce la velocità
 	int get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
 
-	virtual void set_velocità(int v = 0);	//Imposta la velocità. Poichè questa interfaccia non ha una velocità limite predefinita, essa viene posta a 0 di default
+	virtual void set_velocita(int v = 0);	//Imposta la velocità. Poichè questa interfaccia non ha una velocità limite predefinita, essa viene posta a 0 di default
 
 	Treno& operator=(const Treno& treno);						//Assegnamento di copia
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
@@ -69,7 +69,7 @@ protected:
 class Regionale : public Treno {
 public:
 	Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
-	void set_velocità(int v = MAX_SPEED) override;
+	void set_velocita(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 160;
 };
@@ -77,7 +77,7 @@ private:
 class AltaVelocità : public Treno {
 public:
 	AltaVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
-	void set_velocità(int v = MAX_SPEED) override;
+	void set_velocita(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 240;
 };
@@ -85,7 +85,7 @@ private:
 class SuperVelocità : public Treno {
 public:
 	SuperVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
-	void set_velocità(int v = MAX_SPEED);
+	void set_velocita(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 300;
 };
