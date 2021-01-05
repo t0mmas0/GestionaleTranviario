@@ -25,7 +25,6 @@ void Treno::attiva(int ora){
 }
 
 void Treno::muta() {
-	
 	//Il treno automaticamente muta il proprio stato in base allo stato attuale
 	switch (stato){
 	case movimento:
@@ -105,9 +104,8 @@ void Treno::aggiorna_fermata(){
 void Treno::cambia_stato(Stato s){
 	stato = s;
 	//Azzero la velocita se il treno viene posto in uno stato tale da renderlo immobile
-	if (stato == attesa || stato == parcheggio || stato == fermata) {
+	if (stato == attesa || stato == parcheggio || stato == fermata)
 		velocita = 0;
-	}
 	//Imposto la velocita limite se il treno entra nella zona stazione
 	else if (stato == stazione)
 		velocita = 80;
@@ -208,6 +206,19 @@ void Regionale::chiama_stazione(){
 void Regionale::effettua_fermata(){
 	//Mi devo fermare sempre
 	cambia_stato(fermata);
+	//Ora controllo se questa era l'ultima fermata. In tal caso non devo aspettare 5 minuti, ma devo liberare il binario subito
+	if (reverse) {
+		if (iteratore_stazioni == Stazioni.begin()) {
+			cambia_stato(distrutto);
+			(*iteratore_stazioni)->liberaBinario(this);
+			return;
+		}
+	}
+
+	if (iteratore_stazioni == Stazioni.end() - 1) {
+		cambia_stato(distrutto);
+		(*iteratore_stazioni)->liberaBinario(this);
+	}
 }
 
 AltaVelocita::AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
@@ -240,6 +251,19 @@ void AltaVelocita::effettua_fermata(){
 		cambia_stato(fermata);
 		return;
 	}
+	//Controllo di non essere arrivato al capolinea
+	if (reverse) {
+		if (iteratore_stazioni == Stazioni.begin()) {
+			cambia_stato(distrutto);
+			return;
+		}
+	}
+	//Eseguo lo stesso controllo per i treni che non viaggiano a ritroso
+	if (iteratore_stazioni == Stazioni.end() - 1) {
+		cambia_stato(distrutto);
+		return;
+	}
+
 	//Altrimenti aggiorno i riferimenti per la prossima stazione
 	iteratore_stazioni--;
 	indice_orario--;
@@ -275,6 +299,19 @@ void SuperVelocita::effettua_fermata(){
 		cambia_stato(fermata);
 		return;
 	}
+	//Controllo di non essere arrivato al capolinea
+	if (reverse) {
+		if (iteratore_stazioni == Stazioni.begin()) {
+			cambia_stato(distrutto);
+			return;
+		}
+	}
+	//Eseguo lo stesso controllo per i treni che non viaggiano a ritroso
+	if (iteratore_stazioni == Stazioni.end() - 1) {
+		cambia_stato(distrutto);
+		return;
+	}
+
 	//Altrimenti aggiorno i riferimenti per la prossima stazione
 	iteratore_stazioni--;
 	indice_orario--;
