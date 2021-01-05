@@ -32,10 +32,13 @@ void Treno::muta() {
 		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocita
 		avanza();
 		//Deve poi controllare se deve chiamare la stazione
-		//TODO: Controllo al rovescio
+		if (reverse) {
+			if (posizione <= (*iteratore_stazioni)->getDistance() + 5) {
+				chiama_stazione();
+			}
+			break;
+		}
 		if (posizione >= (*iteratore_stazioni)->getDistance() - 5)
-			//Devo limitare la velocita e chiamare la stazione
-			velocita = 80;
 			chiama_stazione();
 		break;
 	case stazione:
@@ -52,19 +55,29 @@ void Treno::muta() {
 	orario++;
 }
 
-//TODO: Il treno avanza anche se deve percorrere la tratta al contrario - decidere se rovesciare i km delle stazioni
 void Treno::avanza(){
-	//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
-	posizione = posizione + (velocita / 60);
-	//Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
-	if (posizione >= (*iteratore_stazioni)->getDistance())
-		cambia_stato(fermata);
-}
+	//Controllo se il treno viaggia a ritroso
+	if (reverse) {
+		//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
+		posizione = posizione - (velocita / 60);
+		//Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
+		if (posizione <= (*iteratore_stazioni)->getDistance()) {
+			//Sono arrivato ad una stazione. Mi devo fermare?
+			effettua_fermata();
+		}
+		return;
+	}
 
+	//Se non viaggia a ritroso, eseguo le stesse operazioni ma in avanti
+	posizione = posizione + (velocita / 60);
+	if (posizione >= (*iteratore_stazioni)->getDistance())
+		effettua_fermata();
+}
  
 void Treno::aggiorna_fermata(){
+	//Se sono già stato fermo 5 minuti
 	if (minuti_fermata == 4) {
-		//Sono già stato fermo 5 minuti, devo ripartire dal km della stazione (anche se il treno si era fermato più avanti)
+		//Sono già stato fermo 5 minuti, devo ripartire dal km della stazione (anche se il treno si era fermato più avanti, si ricongiunge alla linea al km di posizione della stazione)
 		minuti_fermata = 0;
 		posizione = (*iteratore_stazioni)->getDistance();
 		
@@ -75,9 +88,15 @@ void Treno::aggiorna_fermata(){
 		cambia_stato(stazione);
 
 		//Ho effettuato la fermata, devo aggiornare gli indici
-		iteratore_stazioni++;
-		indice_orario++;
-
+		if (reverse) {
+			iteratore_stazioni--;
+			indice_orario--;
+		}
+		else {
+			iteratore_stazioni++;
+			indice_orario++;
+		}
+		return;
 	}
 	//Altrimenti aggiorno il tempo
 	minuti_fermata++;
@@ -86,9 +105,9 @@ void Treno::aggiorna_fermata(){
 void Treno::cambia_stato(Stato s){
 	stato = s;
 	//Azzero la velocita se il treno viene posto in uno stato tale da renderlo immobile
-	if (stato == attesa || stato == parcheggio || stato == fermata)
-
-        velocita = 0;
+	if (stato == attesa || stato == parcheggio || stato == fermata) {
+		velocita = 0;
+	}
 	//Imposto la velocita limite se il treno entra nella zona stazione
 	else if (stato == stazione)
 		velocita = 80;
@@ -110,12 +129,6 @@ void Treno::calcola_ritardo(){
 	if (ritardo < 0)
 		std::cout << "Il treno " << identificativo << " è in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
-}
-
-void Treno::chiama_stazione(){
-	//TODO: verificare che il treno debba fermarsi
-	if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Passaggio per puntatore o per riferimento?
-		cambia_stato(parcheggio);
 }
 
 int Treno::get_id() const {
@@ -186,6 +199,17 @@ void Regionale::set_velocita(int v){
 	Treno::set_velocita(v);
 }
 
+void Regionale::chiama_stazione(){
+	//Il treno si deve fermare sempre
+	if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Testare il passaggio, non sembra riconoscere il tipo
+		cambia_stato(parcheggio);
+}
+
+void Regionale::effettua_fermata(){
+	//Mi devo fermare sempre
+	cambia_stato(fermata);
+}
+
 AltaVelocita::AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
@@ -196,6 +220,31 @@ void AltaVelocita::set_velocita(int v){
 	Treno::set_velocita(v);
 }
 
+void AltaVelocita::chiama_stazione(){
+	//Il treno si deve fermare solo se è una stazione pricipale
+	if ((*iteratore_stazioni)->isPrincipale()) {
+		if (!((*iteratore_stazioni)->PrenotaBinario(this)) ) //TODO Testare il passaggio, non sembra riconoscere il tipo
+			cambia_stato(parcheggio);
+		return;
+	}
+
+	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
+	if (!((*iteratore_stazioni)->RichiediTransito(this)))
+		cambia_stato(parcheggio);
+
+}
+
+void AltaVelocita::effettua_fermata(){
+	//Mi devo fermare solo se è una stazione principale
+	if ((*iteratore_stazioni)->isPrincipale()) {
+		cambia_stato(fermata);
+		return;
+	}
+	//Altrimenti aggiorno i riferimenti per la prossima stazione
+	iteratore_stazioni--;
+	indice_orario--;
+}
+
 SuperVelocita::SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
@@ -204,4 +253,29 @@ void SuperVelocita::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
+}
+
+void SuperVelocita::chiama_stazione(){
+	//Il treno si deve fermare solo se è una stazione pricipale
+	if ((*iteratore_stazioni)->isPrincipale()) {
+		if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Testare il passaggio, non sembra riconoscere il tipo
+			cambia_stato(parcheggio);
+		return;
+	}
+
+	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
+	if (!((*iteratore_stazioni)->RichiediTransito(this)))
+		cambia_stato(parcheggio);
+
+}
+
+void SuperVelocita::effettua_fermata(){
+	//Mi devo fermare solo se è una stazione principale
+	if ((*iteratore_stazioni)->isPrincipale()) {
+		cambia_stato(fermata);
+		return;
+	}
+	//Altrimenti aggiorno i riferimenti per la prossima stazione
+	iteratore_stazioni--;
+	indice_orario--;
 }
