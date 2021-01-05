@@ -13,12 +13,12 @@ File di output dove viene descritto il percorso che deve fare ogni treno a secon
 Treni:
 Ogni tipo di treno deve avere una classe 
   regionale: Ferma a tutte le stazioni
-  Alta velocità / super: Ferma solo alle stazioni principali
+  Alta velocita / super: Ferma solo alle stazioni principali
     
   Compiti
     Chiedere il permesso alla stazione 
     Comunicare se deve fermarsi o transitare
-    Decidere velocità a cui viaggiare
+    Decidere velocita a cui viaggiare
     
 Stazione:
   Gestire il traffico in ingrasso e uscita

@@ -30,16 +30,16 @@ public:
 	void muta();												//Muta automaticamento lo stato del treno
 	void avanza();												//Fa avanzare il treno
 	void aggiorna_fermata();									//Conta il tempo di fermata
-	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocità
+	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocita
 	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
 	void chiama_stazione();										//Chiama stazione
 
 	int get_id() const;				//Resituisce l'identificativo
-	int get_velocita() const;		//Resituisce la velocità
+	int get_velocita() const;		//Resituisce la velocita
 	int get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
 
-	virtual void set_velocita(int v = 0);	//Imposta la velocità. Poichè questa interfaccia non ha una velocità limite predefinita, essa viene posta a 0 di default
+	virtual void set_velocita(int v = 0);	//Imposta la velocita. Poichè questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
 
 	Treno& operator=(const Treno& treno);						//Assegnamento di copia
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
@@ -47,7 +47,7 @@ public:
 protected:
 	int orario;
 	int identificativo;
-	int velocità;
+	int velocita;
 	int ritardo;
 	int minuti_fermata;
 
@@ -74,17 +74,17 @@ private:
 	static const int MAX_SPEED = 160;
 };
 
-class AltaVelocità : public Treno {
+class AltaVelocita : public Treno {
 public:
-	AltaVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void set_velocita(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 240;
 };
 
-class SuperVelocità : public Treno {
+class SuperVelocita : public Treno {
 public:
-	SuperVelocità(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void set_velocita(int v = MAX_SPEED) override;
 private:
 	static const int MAX_SPEED = 300;
