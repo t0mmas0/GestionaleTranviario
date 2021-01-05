@@ -48,6 +48,9 @@ void Treno::muta() {
 		aggiorna_fermata();
 		calcola_ritardo();
 		break;
+	case distrutto:
+		std::logic_error("Errore. Il treno è distrutto e il suo stato non può essere mutato.");
+		break;
 	default:
 		break;
 	}
@@ -112,7 +115,8 @@ void Treno::cambia_stato(Stato s){
 	//Imposto la velocita massima se il treno viene messo in movimento
 	else if (stato = movimento)
 		set_velocita(); //Verrà chiamato il metodo override che imposterà la velocita massima consentita dal tipo del treno
-	//TODO: Stato distrutto
+	else if (stato = distrutto)
+		std::cout << "Il treno " << identificativo << " è giunto a destinazione e ha liberato il binario, presso la stazione di " << (*iteratore_stazioni)->getNome << " alle ore " << orario << " con un ritardo di " << ritardo << " minuti";
 }
 
 void Treno::calcola_ritardo(){
