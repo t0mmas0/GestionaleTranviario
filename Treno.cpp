@@ -6,11 +6,19 @@
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
+<<<<<<< HEAD
 	: orario{ 0 }, identificativo{ id }, velocita{0 }, posizione{0 }, ritardo{0 }, minuti_fermata{0 }, stato{attesa }, Stazioni{Stazioni }, iteratore_stazioni{Stazioni.begin() }, Orari{Orari }, indice_orario{0 }, attivato{false }, reverse{reverse} {
 }
 
 Treno::Treno(const Treno& treno)
 	: orario{ treno.orario }, identificativo{ treno.identificativo }, velocita{treno.velocita }, posizione{treno.posizione }, ritardo{treno.ritardo }, minuti_fermata{treno.minuti_fermata }, stato{treno.stato }, Stazioni{treno.Stazioni }, iteratore_stazioni{treno.iteratore_stazioni }, Orari{treno.Orari }, indice_orario{treno.indice_orario }, attivato{false }, reverse{treno.reverse }{
+=======
+	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{reverse} {
+}
+
+Treno::Treno(const Treno& treno)
+	: orario{ treno.orario }, identificativo{ treno.identificativo }, velocita{ treno.velocita }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{ treno.stato }, Stazioni{ treno.Stazioni }, iteratore_stazioni{ treno.iteratore_stazioni }, Orari{ treno.Orari }, indice_orario{ treno.indice_orario }, attivato{ false }, reverse{ treno.reverse }{
+>>>>>>> 250dc9070517f95038acc32d3ce4a72e3c82be37
 }
 
 void Treno::attiva(int ora){
@@ -87,10 +95,17 @@ void Treno::cambia_stato(Stato s){
 	stato = s;
 	//Azzero la velocita se il treno viene posto in uno stato tale da renderlo immobile
 	if (stato == attesa || stato == parcheggio || stato == fermata)
+<<<<<<< HEAD
         velocita = 0;
 	//Imposto la velocita limite se il treno entra nella zona stazione
 	else if (stato == stazione)
         velocita = 80;
+=======
+		velocita = 0;
+	//Imposto la velocita limite se il treno entra nella zona stazione
+	else if (stato == stazione)
+		velocita = 80;
+>>>>>>> 250dc9070517f95038acc32d3ce4a72e3c82be37
 	//Imposto la velocita massima se il treno viene messo in movimento
 	else if (stato = movimento)
 		set_velocita(); //Verrà chiamato il metodo override che imposterà la velocita massima consentita dal tipo del treno
@@ -137,11 +152,19 @@ void Treno::set_velocita(int v){
 	if (v < 0)
 		throw std::invalid_argument("La velocita non può essere negativa");
 	if (v == 0) {
+<<<<<<< HEAD
         velocita = 0;
 		stato = attesa;
 	}
 	else {
         velocita = v;
+=======
+		velocita = 0;
+		stato = attesa;
+	}
+	else {
+		velocita = v;
+>>>>>>> 250dc9070517f95038acc32d3ce4a72e3c82be37
 		stato = movimento;
 	}
 }
@@ -149,7 +172,11 @@ void Treno::set_velocita(int v){
 Treno& Treno::operator=(const Treno& treno){
 	orario = treno.orario;
 	identificativo = treno.identificativo;
+<<<<<<< HEAD
     velocita = treno.velocita,
+=======
+	velocita = treno.velocita,
+>>>>>>> 250dc9070517f95038acc32d3ce4a72e3c82be37
 	ritardo = treno.ritardo;
 	minuti_fermata = treno.minuti_fermata;
 
