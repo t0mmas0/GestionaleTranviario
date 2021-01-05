@@ -28,6 +28,7 @@ public:
 
     Stazione(int km, std::string nome);
     int getDistance();
+    std::string getNome();
     bool PrenotaBinario(Treno t);
     void liberaBinario(Treno t);
     bool UscitaDeposito(Treno t);

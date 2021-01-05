@@ -58,3 +58,7 @@ int Stazione::getDistance() {
     return this->Km;
 }
 
+std::string Stazione::getNome() {
+    return this->nome;
+}
+
