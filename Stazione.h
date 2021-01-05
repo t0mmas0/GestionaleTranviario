@@ -21,17 +21,17 @@ protected:
     std::vector <Treno> binarioOrdinario{4};
     std::vector <Treno> deposito{ 5 };
     int i = 0;
-
+    void liberaDeposito(Treno t);
 
 
 public:
 
     Stazione(int km, std::string nome);
-
+    int getDistance();
     bool PrenotaBinario(Treno t);
     void liberaBinario(Treno t);
-    bool RichiediAccessoStazione(Treno t);
-    bool permessoUscitaDeposito(Treno t);
+    bool UscitaDeposito(Treno t);
+
 
 
 
