@@ -203,8 +203,13 @@ void Regionale::set_velocita(int v){
 
 void Regionale::chiama_stazione(){
 	//Il treno si deve fermare sempre
-	if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Testare il passaggio, non sembra riconoscere il tipo
+	if (!((*iteratore_stazioni)->isFreeStop())) {
+		//Se non ci sono binari liberi, vado al parcheggio
 		cambia_stato(parcheggio);
+		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+	}
+	//Altrimenti chiedo la fermata e proseguo
+	(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 }
 
 void Regionale::effettua_fermata(){
@@ -238,15 +243,21 @@ void AltaVelocita::set_velocita(int v){
 void AltaVelocita::chiama_stazione(){
 	//Il treno si deve fermare solo se è una stazione pricipale
 	if ((*iteratore_stazioni)->isPrincipale()) {
-		if (!((*iteratore_stazioni)->PrenotaBinario(this)) ) //TODO Testare il passaggio, non sembra riconoscere il tipo
+		if (!((*iteratore_stazioni)->isFreeStop())) {
+			//Se non ci sono binari liberi, vado al parcheggio
 			cambia_stato(parcheggio);
+			(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+		}
+		//Altrimenti chiedo la fermata e proseguo
+		(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 		return;
 	}
-
+	//TODO: Il transito viene richiesto?
 	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
-	if (!((*iteratore_stazioni)->RichiediTransito(this)))
+	if (!((*iteratore_stazioni)->RichiediTransito(this))) {
 		cambia_stato(parcheggio);
-
+		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+	}
 }
 
 void AltaVelocita::effettua_fermata(){
@@ -286,15 +297,21 @@ void SuperVelocita::set_velocita(int v){
 void SuperVelocita::chiama_stazione(){
 	//Il treno si deve fermare solo se è una stazione pricipale
 	if ((*iteratore_stazioni)->isPrincipale()) {
-		if (!((*iteratore_stazioni)->PrenotaBinario(this))) //TODO Testare il passaggio, non sembra riconoscere il tipo
+		if (!((*iteratore_stazioni)->isFreeStop())) {
+			//Se non ci sono binari liberi, vado al parcheggio
 			cambia_stato(parcheggio);
+			(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+		}
+		//Altrimenti chiedo la fermata e proseguo
+		(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 		return;
 	}
 
 	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
-	if (!((*iteratore_stazioni)->RichiediTransito(this)))
+	if (!((*iteratore_stazioni)->RichiediTransito(this))) {
 		cambia_stato(parcheggio);
-
+		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+	}
 }
 
 void SuperVelocita::effettua_fermata(){
