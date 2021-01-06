@@ -50,3 +50,7 @@ void Stazione::PrenotaStazionameto(Treno t) {
 void Stazione::PrenotaDeposito(Treno t) {
     deposito.push_back(t);
 }
+
+bool Stazione::isPrincipale() {
+    return true;
+}

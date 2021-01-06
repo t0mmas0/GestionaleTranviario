@@ -13,6 +13,8 @@
 #include "Semaforo.h"
 class Treno;
 class Stazione {
+private:
+    bool isPrincipale();
 protected:
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
