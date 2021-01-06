@@ -53,6 +53,7 @@ public:
 	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
 	void prenota_fermata();
 	void prenota_transito();
+	void partenza(bool transito = false);
 
 	virtual void attiva(int ora) = 0;										//Attiva per la prima volta il treno sulla linea
 	virtual void chiama_stazione() = 0;										//Chiama stazione

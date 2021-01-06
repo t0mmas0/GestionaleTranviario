@@ -7,6 +7,12 @@
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{reverse} {
+	if (reverse) {
+		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
+		iteratore_stazioni = --(Stazioni.end());
+		posizione = (*iteratore_stazioni)->getDistance();
+		indice_orario = Orari.size() - 1;
+	}
 }
 
 Treno::Treno(const Treno& treno)
@@ -128,10 +134,40 @@ void Treno::calcola_ritardo(){
 }
 
 void Treno::prenota_fermata(){
-	if ((*iteratore_stazioni)->isFreeStop())
-		std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
-	(*iteratore_stazioni)->PrenotaStazionameto(this);
-	cambia_stato(stazione);
+	if (!((*iteratore_stazioni)->isFreeStop())) {
+		(*iteratore_stazioni)->PrenotaDeposito();
+		cambia_stato(parcheggio);
+	}
+	else {
+		(*iteratore_stazioni)->PrenotaStazionameto(this);
+		cambia_stato(stazione);
+	}
+}
+
+void Treno::prenota_transito(){
+	if (!((*iteratore_stazioni)->isFreePass())) {
+		(*iteratore_stazioni)->PrenotaDeposito();
+		cambia_stato(parcheggio);
+	}
+	else {
+		(*iteratore_stazioni)->PrenotaTransito(this);
+		cambia_stato(transito);
+	}
+}
+
+void Treno::partenza(bool transito){
+	if (transito) {
+		if (!((*iteratore_stazioni)->isFreePass()))
+			std::logic_error("Errore. Si sta cercando di far transitare");
+		(*iteratore_stazioni)->PrenotaTransito(this);
+		cambia_stato(transito);
+	}
+	else {
+		if (!((*iteratore_stazioni)->isFreeStop()))
+			std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
+		(*iteratore_stazioni)->PrenotaStazionameto(this);
+		cambia_stato(stazione);
+	}
 }
 
 int Treno::get_id() const {
@@ -200,7 +236,12 @@ void Regionale::attiva(int orario){
 	if (attivato)
 		std::logic_error("Errore. Si sta attivando un treno già attivato");
 	//Devo cercare un binario libero
-	prenota_fermata();
+	partenza();
+	//Fingo di aver già effettuato la fermata
+	stato = fermata;
+	minuti_fermata = 4;
+	//Imposto il treno come già attivato
+	attivato = true;
 }
 
 void Regionale::set_velocita(int v){
@@ -246,12 +287,16 @@ void AltaVelocita::attiva(int orario){
 	//Verifico da che tipo di stazione sto partendo
 	if ((*iteratore_stazioni)->isPrincipale()) {
 		//Sto partendo da una stazione principale. Devo prenotare un binario di transito
-		prenota_fermata();
+		partenza();
+		//Fingo di aver già effettuato la fermata
+		stato = fermata;
+		minuti_fermata = 4;
 	}
 	else {
 		//Sto partendo da una stazione locale. Devo prenotare un binario di transito
-		prenota_transito();
+		partenza(true);
 	}
+	attivato = true;
 }
 
 void AltaVelocita::set_velocita(int v){
@@ -312,12 +357,16 @@ void SuperVelocita::attiva(int orario){
 	//Verifico da che tipo di stazione sto partendo
 	if ((*iteratore_stazioni)->isPrincipale()) {
 		//Sto partendo da una stazione principale. Devo prenotare un binario di transito
-		prenota_fermata();
+		partenza();
+		//Fingo di aver già effettuato la fermata
+		stato = fermata;
+		minuti_fermata = 4;
 	}
 	else {
 		//Sto partendo da una stazione locale. Devo prenotare un binario di transito
-		prenota_transito();
+		partenza(true);
 	}
+	attivato = true;
 }
 
 void SuperVelocita::set_velocita(int v){
