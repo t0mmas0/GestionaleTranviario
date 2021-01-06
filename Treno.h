@@ -10,7 +10,8 @@
 
 #include "Stazione.h"
 
-//Forward declaration
+//Forward declaration. Poichè la classe Stazione include la classe Treno, 
+//e la classe Treno include la classe Stazione, è necessario anticipare la dichiarazione della classe Stazione
 class Stazione;
 
 //Enumeratore stato treno
