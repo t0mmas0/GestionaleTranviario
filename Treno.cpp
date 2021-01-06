@@ -27,6 +27,9 @@ void Treno::attiva(int ora){
 void Treno::muta() {
 	//Il treno automaticamente muta il proprio stato in base allo stato attuale
 	switch (stato){
+	case parcheggio:
+		//Se il treno è in parcheggio deve verificare se può uscirne chiamando la stazione
+		chiama_stazione();
 	case movimento:
 		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocita
 		avanza();
