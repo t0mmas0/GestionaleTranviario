@@ -44,6 +44,7 @@ void Treno::muta() {
 			chiama_stazione();
 		break;
 	case stazione:
+		//Deve verificare di essere uscito dalla zona stazione
 		//Se il treno è in stazione, continua ad avanzare
 		avanza();
 	case fermata:

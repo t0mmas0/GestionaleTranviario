@@ -1,4 +1,4 @@
-//Simone Peraro 1216334
+Ôªø//Simone Peraro 1216334
 //Interfaccia Treno e sottoclassi derivate
 
 #ifndef GESTIONETRANVIARIA_TRENO_H
@@ -7,22 +7,31 @@
 #include <list>
 #include <vector>
 #include <memory>
-
 #include "Stazione.h"
 
-//Forward declaration. PoichË la classe Stazione include la classe Treno, 
-//e la classe Treno include la classe Stazione, Ë necessario anticipare la dichiarazione della classe Stazione
+//Forward declaration. Poich√® la classe Stazione include la classe Treno, 
+//e la classe Treno include la classe Stazione, √® necessario anticipare la dichiarazione della classe Stazione
 class Stazione;
 
 //Enumeratore stato treno
-//In attesa: il treno Ë fermo sul binario e non esegue alcuna operazione
-//In movimento: il treno si muove lungo i binari, rispettando i limiti di velocit‡ e fermandosi nel caso in cui arrivi alla fermata
-//In parcheggio: il treno Ë in un binario di parcheggio prossimo alla stazione. Tenter‡ di uscire appena si libera un posto
-//In fermata: il treno Ë fermo per la salita/discesa dei passeggeri. Registra il tempo di fermata, e al termine dei 5 minuti, riparte
-//Attivato: il treno Ë stato appena inserito nel treffico tranviario. A breve entrer‡ in attesa e aspetter‡ di potersi muovere
-//Distrutto: il treno si Ë fermato o ha superato la stazione finale. Non Ë pi˘ necessario gestirlo e puÚ essere rimosso dal traffico tranviario
-//In stazione: il treno Ë entrato in zona stazione e ha rallentato la propria velocit‡
-enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5, stazione = 6};
+enum Stato :int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5, stazione = 6 };
+//Attivato: il treno √® stato appena inserito nel treffico tranviario. A breve entrer√† in attesa e aspetter√† di potersi muovere
+//In attesa: il treno √® fermo sul binario e non esegue alcuna operazione
+//In stazione: il treno √® entrato in zona stazione e ha rallentato la propria velocit√†
+//In movimento: il treno si muove lungo i binari, rispettando i limiti di velocit√† e fermandosi nel caso in cui arrivi alla fermata
+//In parcheggio: il treno √® in un binario di parcheggio prossimo alla stazione. Tenter√† di uscire appena si libera un posto
+//In fermata: il treno √® fermo per la salita/discesa dei passeggeri. Registra il tempo di fermata, e al termine dei 5 minuti, riparte
+//Distrutto: il treno si √® fermato o ha superato la stazione finale. Non √® pi√π necessario gestirlo e pu√≤ essere rimosso dal traffico tranviario
+
+//Ciclo di vita del treno:
+//																			‚îå-----------------------------------------------------------------------------------------------‚îê
+//			(automatico)	     (manuale)				(automatico)		|	    (automatico)						  (automatico)			 (automatico)		   (auto|matico)
+//(attivato)	-->		(attesa)	--->	(stazione)		--->		(movimento)		 ‚î¨--->				  (stazione)	--->		(fermata)	--->	(stazione)		‚î¥--->		(distrutto)
+//																				   oppure|						   ^
+//																						 ‚îî--->	   (parcheggio) ---‚îò
+//
+//In ogni momento, l'attivit√† del treno pu√≤ essere sospesa impostando lo stato ad attesa
+
 
 class Treno {
 public:
@@ -49,7 +58,7 @@ public:
 	int get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
 
-	virtual void set_velocita(int v = 0);	//Imposta la velocita. PoichË questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
+	virtual void set_velocita(int v = 0);	//Imposta la velocita. Poich√® questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
 
 	Treno& operator=(const Treno& treno);						//Assegnamento di copia
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
