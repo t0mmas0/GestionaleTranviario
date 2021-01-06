@@ -6,22 +6,11 @@
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
-	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ attesa }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{reverse} {
+	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{reverse} {
 }
 
 Treno::Treno(const Treno& treno)
 	: orario{ treno.orario }, identificativo{ treno.identificativo }, velocita{ treno.velocita }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{ treno.stato }, Stazioni{ treno.Stazioni }, iteratore_stazioni{ treno.iteratore_stazioni }, Orari{ treno.Orari }, indice_orario{ treno.indice_orario }, attivato{ false }, reverse{ treno.reverse }{
-}
-
-void Treno::attiva(int ora){
-	if (attivato)
-		throw std::logic_error("Errore. Si sta cercando di attivare un treno già attivato");
-	orario = ora;
-	cambia_stato(attesa);
-	calcola_ritardo();
-	//A questo punto il treno deve essere pronto a partire appena viene cambiato il suo stato. Devo aggiornare i riferimenti alla prossima stazione
-	iteratore_stazioni++;
-	indice_orario++;
 }
 
 //TODO: USCIRE DALLO STATO STAZIONE E DAL TRANSITO
@@ -138,6 +127,13 @@ void Treno::calcola_ritardo(){
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
+void Treno::prenota_fermata(){
+	if ((*iteratore_stazioni)->isFreeStop())
+		std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
+	(*iteratore_stazioni)->PrenotaStazionameto(this);
+	cambia_stato(stazione);
+}
+
 int Treno::get_id() const {
 	return identificativo;
 }
@@ -200,6 +196,13 @@ Regionale::Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
+void Regionale::attiva(int orario){
+	if (attivato)
+		std::logic_error("Errore. Si sta attivando un treno già attivato");
+	//Devo cercare un binario libero
+	prenota_fermata();
+}
+
 void Regionale::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
@@ -237,6 +240,18 @@ void Regionale::effettua_fermata(){
 
 AltaVelocita::AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
+}
+
+void AltaVelocita::attiva(int orario){
+	//Verifico da che tipo di stazione sto partendo
+	if ((*iteratore_stazioni)->isPrincipale()) {
+		//Sto partendo da una stazione principale. Devo prenotare un binario di transito
+		prenota_fermata();
+	}
+	else {
+		//Sto partendo da una stazione locale. Devo prenotare un binario di transito
+		prenota_transito();
+	}
 }
 
 void AltaVelocita::set_velocita(int v){
@@ -291,6 +306,18 @@ void AltaVelocita::effettua_fermata(){
 
 SuperVelocita::SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
+}
+
+void SuperVelocita::attiva(int orario){
+	//Verifico da che tipo di stazione sto partendo
+	if ((*iteratore_stazioni)->isPrincipale()) {
+		//Sto partendo da una stazione principale. Devo prenotare un binario di transito
+		prenota_fermata();
+	}
+	else {
+		//Sto partendo da una stazione locale. Devo prenotare un binario di transito
+		prenota_transito();
+	}
 }
 
 void SuperVelocita::set_velocita(int v){

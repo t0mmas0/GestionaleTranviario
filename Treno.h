@@ -45,13 +45,16 @@ public:
 	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
 	// TODO: Move
 
-	void attiva(int ora);										//Attiva per la prima volta il treno sulla linea
+	
 	void muta();												//Muta automaticamento lo stato del treno
 	void avanza();												//Fa avanzare il treno
 	void aggiorna_fermata();									//Conta il tempo di fermata
 	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocita
 	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
+	void prenota_fermata();
+	void prenota_transito();
 
+	virtual void attiva(int ora) = 0;										//Attiva per la prima volta il treno sulla linea
 	virtual void chiama_stazione() = 0;										//Chiama stazione
 	virtual void effettua_fermata() = 0;
 
@@ -90,6 +93,7 @@ protected:
 class Regionale : public Treno {
 public:
 	Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
 	void effettua_fermata() override;
@@ -100,6 +104,7 @@ private:
 class AltaVelocita : public Treno {
 public:
 	AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
 	void effettua_fermata() override;
@@ -110,6 +115,7 @@ private:
 class SuperVelocita : public Treno {
 public:
 	SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
 	void effettua_fermata() override;
