@@ -14,22 +14,24 @@
 class Stazione;
 
 //Enumeratore stato treno
-enum Stato :int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5, stazione = 6 };
-//Attivato: il treno è stato appena inserito nel treffico tranviario. A breve entrerà in attesa e aspetterà di potersi muovere
+enum Stato :int { creato = 0, attesa = 1, stazione = 2, transito = 3, movimento = 4, parcheggio = 5, fermata = 6, distrutto = 7 };
+//Creato: il treno è stato appena creato. Tuttavia non è ancora stato inserito nel traffico tranviario
 //In attesa: il treno è fermo sul binario e non esegue alcuna operazione
-//In stazione: il treno è entrato in zona stazione e ha rallentato la propria velocità
-//In movimento: il treno si muove lungo i binari, rispettando i limiti di velocità e fermandosi nel caso in cui arrivi alla fermata
-//In parcheggio: il treno è in un binario di parcheggio prossimo alla stazione. Tenterà di uscire appena si libera un posto
-//In fermata: il treno è fermo per la salita/discesa dei passeggeri. Registra il tempo di fermata, e al termine dei 5 minuti, riparte
-//Distrutto: il treno si è fermato o ha superato la stazione finale. Non è più necessario gestirlo e può essere rimosso dal traffico tranviario
+//In stazione: il treno è in zona stazione e rallenta la propria velocità
+//In transito: il treno è nel binario di transito di una stazione
+//In movimento: il treno si muove lungo i binari
+//In parcheggio: il treno è in un binario di parcheggio presso una stazione
+//In fermata: il treno è fermo per la salita/discesa dei passeggeri
+//Distrutto: il treno si è fermato o ha superato la stazione finale
 
-//Ciclo di vita del treno:
-//																			┌-----------------------------------------------------------------------------------------------┐
-//			(automatico)	     (manuale)				(automatico)		|	    (automatico)						  (automatico)			 (automatico)		   (auto|matico)
-//(attivato)	-->		(attesa)	--->	(stazione)		--->		(movimento)		 ┬--->				  (stazione)	--->		(fermata)	--->	(stazione)		┴--->		(distrutto)
-//																				   oppure|						   ^
-//																						 └--->	   (parcheggio) ---┘
-//
+//Ciclo di vita di un treno (con modalità di cambio stato)
+//																┌-----------------------------------------------------------------------------------------------┐
+//			(manuale)						(automatico)		|	    (automatico)				(automatico)			 (automatico)				   (auto|matico)
+//(creato)		-->		(stazione/transito)		--->		(movimento)		 ┬--->			(stazione)	--->		(fermata)	--->	(stazione)				├--->		(distrutto)
+//																	   oppure|					^																|
+//																			 └--->(parcheggio) -┤oppure															|
+//																								v							 (automatico)						|
+//																							(transito) ----------------------------------------------------------
 //In ogni momento, l'attività del treno può essere sospesa impostando lo stato ad attesa
 
 
