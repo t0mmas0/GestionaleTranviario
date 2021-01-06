@@ -11,17 +11,18 @@
 #include "Treno.h"
 #include "vector"
 #include "Semaforo.h"
-
+class Treno;
 class Stazione {
 protected:
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
-    Semaforo accessoStazione;
-    Semaforo uscitaDeposito;
-    std::vector <Treno> binarioOrdinario{4};
-    std::vector <Treno> deposito{ 5 };
+
+    Semaforo semBinariStazionamento;
+    std::vector <Treno> binariStazionamento{4};
     int i = 0;
-    void liberaDeposito(Treno t);
+
+    std::vector <Treno> deposito{5};
+
 
 
 public:
@@ -29,9 +30,11 @@ public:
     Stazione(int km, std::string nome);
     int getDistance();
     std::string getNome();
-    bool PrenotaBinario(Treno t);
-    void liberaBinario(Treno t);
-    bool UscitaDeposito(Treno t);
+    bool isFreeStop();
+    void PrenotaStazionameto(Treno t);
+    void PrenotaDeposito(Treno t);
+    void liberaBinarioStazionamento(Treno t);
+    void liberaDeposito(Treno t);
 
 
 

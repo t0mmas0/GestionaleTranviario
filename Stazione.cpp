@@ -7,52 +7,11 @@
  */
 
 Stazione::Stazione(int km, std::string nome) : Km(km),nome(nome) {
-    accessoStazione = Semaforo();
-    accessoStazione.setVerde();
-    uscitaDeposito = Semaforo();
-    uscitaDeposito.setVerde();
+    semBinariStazionamento = Semaforo();
+    semBinariStazionamento.setVerde();
+
 }
 
-
-bool Stazione::UscitaDeposito(Treno t) {
-    if(uscitaDeposito.getStatus()){
-        return PrenotaBinario(t);
-    }
-    return false;
-}
-
-bool Stazione::PrenotaBinario(Treno t) {
-    std::cout<<"Richiesta di accesso alla Stazione";
-    if(accessoStazione.getStatus()){
-        std::cout<<"Richiesta Binario dal treno" << t.get_id() << "Alla Stazione" << this->nome;
-        if(i<4){
-            std::cout << "Richiesta Accettata e Confermata";
-            binarioOrdinario.push_back(t);
-            i++;
-            if (i=4) {
-                accessoStazione.setRosso();
-                uscitaDeposito.setRosso();
-            }
-            return true;
-        }
-    }
-        std::cout << "Stazione piena reindirizzamento al deposito";
-        deposito.push_back(t);
-        //Verificando col semaforo non si dovrebbe mai arrivare qua
-        return false;
-}
-
-void Stazione::liberaBinario(Treno t) {
-    std::cout<<"Richiesta Partenza dal treno" << "t.nome" << "Dalla Stazione" << this->nome;
-    binarioOrdinario.erase(std::remove(binarioOrdinario.begin(), binarioOrdinario.end(), t), binarioOrdinario.end());
-    std::cout<<"Richiesta Accettata";
-    i--;
-}
-
-void Stazione::liberaDeposito(Treno t) {
-    deposito.erase(std::remove(binarioOrdinario.begin(), binarioOrdinario.end(), t), binarioOrdinario.end());
-    std::cout<<"Richiesta Accettata";
-}
 
 int Stazione::getDistance() {
     return this->Km;
@@ -62,3 +21,32 @@ std::string Stazione::getNome() {
     return this->nome;
 }
 
+bool Stazione::isFreeStop() {
+    return semBinariStazionamento.getStatus();
+}
+
+void Stazione::liberaDeposito(Treno t) {
+    deposito.erase(std::remove(deposito.begin(), deposito.end(), t), deposito.end());
+    std::cout<<"Il Treno N." <<t.get_id()<<"ha lasciato il deposito";
+}
+
+void Stazione::liberaBinarioStazionamento(Treno t) {
+    binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), t), binariStazionamento.end());
+    std::cout<<"il Treno N." <<t.get_id()<<"ha liberato il binario";
+    i--;
+    semBinariStazionamento.setVerde();
+}
+
+void Stazione::PrenotaStazionameto(Treno t) {
+    std::cout<<"Accesso al Binario di Stazionamento del treno" << t.get_id() << "Alla Stazione" << this->nome;
+    binariStazionamento.push_back(t);
+    i++;
+    if (i==4) {
+        semBinariStazionamento.setRosso();
+    }
+
+}
+
+void Stazione::PrenotaDeposito(Treno t) {
+    deposito.push_back(t);
+}

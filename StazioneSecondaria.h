@@ -9,12 +9,16 @@
 
 class StazioneSecondaria:public Stazione {
 private:
-    std::vector <Treno> binarioTransito{2};
+    Semaforo semBinariTransito;
+    std::vector <Treno> binariTransito{2};
     int j=0;
+
+
 public:
     StazioneSecondaria(int km, std::string nome);
-    bool richiestaTransito(Treno t);
-    void uscitaBinarioTransitoStazione(Treno t);
+    bool isFreePass();
+    void PrenotaTransito(Treno t);
+    void liberaBinarioTransito(Treno t);
 };
 
 

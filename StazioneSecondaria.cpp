@@ -6,23 +6,32 @@
 #include "StazioneSecondaria.h"
 #include "algorithm"
 
-bool StazioneSecondaria::richiestaTransito(Treno t) {
-    if (j<2) {
-        binarioTransito.push_back(t);
-        std::cout << "Richiesta di transito accettata";
-        j++;
-        return true;
-    }
-    std::cout << "Richiesta di transito rifiutata, binari occupati";
-    return false;
-}
-
 StazioneSecondaria::StazioneSecondaria(int km, std::string nome) : Stazione(km,nome) {
 
 }
 
-void StazioneSecondaria::uscitaBinarioTransitoStazione(Treno t) {
-    binarioOrdinario.erase(std::remove(binarioOrdinario.begin(), binarioOrdinario.end(), t), binarioOrdinario.end());
-    std::cout << "Binario liberato correttamente";
+bool StazioneSecondaria::isFreePass() {
+    return semBinariTransito.getStatus();
+}
+
+void StazioneSecondaria::PrenotaTransito(Treno t) {
+    std::cout<<"Accesso al Binario di Stazionamento del treno" << t.get_id() << "Alla Stazione" << this->nome;
+    binariTransito.push_back(t);
+    j++;
+    if (j==2) {
+        semBinariTransito.setRosso();
+    }
 
 }
+
+void StazioneSecondaria::liberaBinarioTransito(Treno t) {
+    binariTransito.erase(std::remove(binariTransito.begin(), binariTransito.end(), t), binariTransito.end());
+    std::cout<<"il Treno N." <<t.get_id()<<"ha liberato il binario di transito";
+    i--;
+    semBinariTransito.setVerde();
+}
+
+
+
+
+
