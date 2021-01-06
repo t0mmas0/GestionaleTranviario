@@ -30,7 +30,7 @@ void StazioneSecondaria::liberaBinarioTransito(Treno t) {
     i--;
     semBinariTransito.setVerde();
 }
-
+@override
 bool StazioneSecondaria::isPrincipale() {
  return false;
 }

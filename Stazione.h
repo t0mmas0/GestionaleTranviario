@@ -14,7 +14,7 @@
 class Treno;
 class Stazione {
 private:
-    bool isPrincipale();
+    bool Principale = true;
 protected:
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
@@ -37,7 +37,7 @@ public:
     void PrenotaDeposito(Treno t);
     void liberaBinarioStazionamento(Treno t);
     void liberaDeposito(Treno t);
-
+    bool isPrincipale();
 
 
 

@@ -12,7 +12,7 @@ private:
     Semaforo semBinariTransito;
     std::vector <Treno> binariTransito{2};
     int j=0;
-    bool isPrincipale();
+
 
 public:
     StazioneSecondaria(int km, std::string nome);

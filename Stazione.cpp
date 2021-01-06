@@ -52,5 +52,5 @@ void Stazione::PrenotaDeposito(Treno t) {
 }
 
 bool Stazione::isPrincipale() {
-    return true;
+    return isPrincipale();
 }
