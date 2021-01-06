@@ -24,6 +24,7 @@ void Treno::attiva(int ora){
 	indice_orario++;
 }
 
+//TODO: USCIRE DALLO STATO STAZIONE E DAL TRANSITO
 void Treno::muta() {
 	//Il treno automaticamente muta il proprio stato in base allo stato attuale
 	switch (stato){
@@ -44,7 +45,7 @@ void Treno::muta() {
 			chiama_stazione();
 		break;
 	case stazione:
-		//Deve verificare di essere uscito dalla zona stazione
+		//TODO: Deve verificare di essere uscito dalla zona stazione
 		//Se il treno è in stazione, continua ad avanzare
 		avanza();
 	case fermata:
@@ -256,12 +257,12 @@ void AltaVelocita::chiama_stazione(){
 		(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 		return;
 	}
-	//TODO: Il transito viene richiesto?
 	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
-	if (!((*iteratore_stazioni)->RichiediTransito(this))) {
+	if (!((*iteratore_stazioni)->isFreePass())) {
 		cambia_stato(parcheggio);
 		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 	}
+	(*iteratore_stazioni)->PrenotaTransito(this);
 }
 
 void AltaVelocita::effettua_fermata(){
@@ -312,10 +313,11 @@ void SuperVelocita::chiama_stazione(){
 	}
 
 	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
-	if (!((*iteratore_stazioni)->RichiediTransito(this))) {
+	if (!((*iteratore_stazioni)->isFreePass())) {
 		cambia_stato(parcheggio);
 		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 	}
+	(*iteratore_stazioni)->PrenotaTransito(this);	//TODO: testare il passaggio - non sembra riconoscere il tipo
 }
 
 void SuperVelocita::effettua_fermata(){
