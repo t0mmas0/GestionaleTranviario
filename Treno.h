@@ -15,6 +15,13 @@
 class Stazione;
 
 //Enumeratore stato treno
+//In attesa: il treno è fermo sul binario e non esegue alcuna operazione
+//In movimento: il treno si muove lungo i binari, rispettando i limiti di velocità e fermandosi nel caso in cui arrivi alla fermata
+//In parcheggio: il treno è in un binario di parcheggio prossimo alla stazione. Tenterà di uscire appena si libera un posto
+//In fermata: il treno è fermo per la salita/discesa dei passeggeri. Registra il tempo di fermata, e al termine dei 5 minuti, riparte
+//Attivato: il treno è stato appena inserito nel treffico tranviario. A breve entrerà in attesa e aspetterà di potersi muovere
+//Distrutto: il treno si è fermato o ha superato la stazione finale. Non è più necessario gestirlo e può essere rimosso dal traffico tranviario
+//In stazione: il treno è entrato in zona stazione e ha rallentato la propria velocità
 enum Stato:int { attesa = 0, movimento = 1, parcheggio = 2, fermata = 3, attivato = 4, distrutto = 5, stazione = 6};
 
 class Treno {
