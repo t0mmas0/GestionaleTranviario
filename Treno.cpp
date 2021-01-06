@@ -88,7 +88,7 @@ void Treno::aggiorna_fermata(){
 		posizione = (*iteratore_stazioni)->getDistance();
 		
 		//Richiedo l'uscita dalla stazione
-		(*iteratore_stazioni)->liberaBinario(this);
+		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
 
 		//Cambio lo stato del treno
 		cambia_stato(stazione);
@@ -120,7 +120,7 @@ void Treno::cambia_stato(Stato s){
 	else if (stato = movimento)
 		set_velocita(); //Verrà chiamato il metodo override che imposterà la velocita massima consentita dal tipo del treno
 	else if (stato = distrutto)
-		std::cout << "Il treno " << identificativo << " è giunto a destinazione e ha liberato il binario, presso la stazione di " << (*iteratore_stazioni)->getNome << " alle ore " << orario << " con un ritardo di " << ritardo << " minuti";
+		std::cout << "Il treno " << identificativo << " è giunto a destinazione e ha liberato il binario, presso la stazione di " << (*iteratore_stazioni)->getNome() << " alle ore " << orario << " con un ritardo di " << ritardo << " minuti";
 }
 
 void Treno::calcola_ritardo(){
@@ -223,14 +223,14 @@ void Regionale::effettua_fermata(){
 	if (reverse) {
 		if (iteratore_stazioni == Stazioni.begin()) {
 			cambia_stato(distrutto);
-			(*iteratore_stazioni)->liberaBinario(this);
+			(*iteratore_stazioni)->liberaBinarioStazionamento(this);
 			return;
 		}
 	}
 
 	if (iteratore_stazioni == Stazioni.end() - 1) {
 		cambia_stato(distrutto);
-		(*iteratore_stazioni)->liberaBinario(this);
+		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
 	}
 }
 
@@ -307,7 +307,7 @@ void SuperVelocita::chiama_stazione(){
 			(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 		}
 		//Altrimenti chiedo la fermata e proseguo
-		(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+		(*iteratore_stazioni)->PrenotaStazionamento(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
 		return;
 	}
 
