@@ -29,20 +29,20 @@ bool Stazione::isFreeStop(Treno *t) {
     return semBinariStazionamento.getStatus();
 }
 
-void Stazione::liberaDeposito(Treno *t) {
-    deposito.erase(std::remove(deposito.begin(), deposito.end(), *t), deposito.end());
+void Stazione::liberaDeposito(const std::shared_ptr<Treno> t) {
+    deposito.erase(std::remove(deposito.begin(), deposito.end(), t), deposito.end());
     std::cout<<"Il Treno N." <<t->get_id()<<"ha lasciato il deposito";
 }
 
-void Stazione::liberaBinarioStazionamento(Treno *t) {
+void Stazione::liberaBinarioStazionamento(const std::shared_ptr<Treno> t) {
     if (t->isReverse()){
-        binariStazionamentoInverso.erase(std::remove(binariStazionamentoInverso.begin(), binariStazionamentoInverso.end(), *t),
+        binariStazionamentoInverso.erase(std::remove(binariStazionamentoInverso.begin(), binariStazionamentoInverso.end(), t),
                                          binariStazionamentoInverso.end());
         std::cout << "il Treno N." << t->get_id() << "ha liberato il binario";
         is--;
         semBinariStazionamentoInverso.setVerde();
     }else {
-        binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), *t),
+        binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), t),
                                   binariStazionamento.end());
         std::cout << "il Treno N." << t->get_id() << "ha liberato il binario";
         i--;

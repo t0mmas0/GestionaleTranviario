@@ -40,7 +40,7 @@ public:
 
 	Treno();																											//Costruttore di default
 	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);		//Costruttore
-	Treno(const Treno& treno);																							//Costruttore di copia
+
 
 	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
 	// TODO: Move
@@ -68,7 +68,7 @@ public:
 
 	int get_id() const;				//Resituisce l'identificativo
 	int get_velocita() const;		//Resituisce la velocita
-	int get_posizione() const;		//Resituisce la posizione
+	double get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
 	bool isReverse() const;			//Restituisce true se il treno viaggia al contrario
 	int get_orario() const;

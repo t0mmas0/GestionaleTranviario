@@ -16,7 +16,7 @@ std::list<std::shared_ptr<Stazione>> LeggiLinea::LeggiStazioni()
 	}
 	std::string line;
 	std::getline(Stream, line);//leggo prima stazione che sarà solo composta da parole
-	Stazioni.push_back(std::make_shared<Stazione>(0, line));
+	Stazioni.emplace_back(std::shared_ptr<Stazione>(0, line));
 	std::string NomeStazione;
 	std::string parola;
 	bool IsSecondaria;

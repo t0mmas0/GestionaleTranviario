@@ -212,8 +212,8 @@ void Treno::prenota_fermata(){
 
 void Treno::prenota_transito(){
 	//Se il binario è disponibile, lo prenoto ed entro in transito
-	if ((*iteratore_stazioni)->isFreePass(this)) {
-		(*iteratore_stazioni)->PrenotaTransito(this);
+	if ((*iteratore_stazioni)->isFreePass(std::shared_ptr<Treno>(this))) {
+		(*iteratore_stazioni)->PrenotaTransito(std::shared_ptr<Treno>(this));
 		cambia_stato(transito);
 	}
 	else if (stato != parcheggio) {
@@ -226,21 +226,21 @@ void Treno::prenota_transito(){
 void Treno::libera_binario(){
 	//Quale tipo di binario devo liberare?
 	if (stato == transito)
-		(*iteratore_stazioni)->liberaBinarioTransito(this);
+		(*iteratore_stazioni)->liberaBinarioTransito(std::shared_ptr<Treno>(this));
 	else
-		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
+		(*iteratore_stazioni)->liberaBinarioStazionamento(std::shared_ptr<Treno>(this));
 }
 
 void Treno::partenza(bool trans){
 	if (trans) {
-		if (!((*iteratore_stazioni)->isFreePass(this)))
-			std::logic_error("Errore. Si sta cercando di far transitare");
-		(*iteratore_stazioni)->PrenotaTransito(this);
+		if (!((*iteratore_stazioni)->isFreePass(std::shared_ptr<Treno>(this))))
+			throw std::logic_error("Errore. Si sta cercando di far transitare");
+		(*iteratore_stazioni)->PrenotaTransito(std::shared_ptr<Treno>(this));
 		cambia_stato(transito);
 	}
 	else {
 		if (!((*iteratore_stazioni)->isFreeStop(this)))
-			std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
+			throw std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
 		(*iteratore_stazioni)->PrenotaStazionamento(std::shared_ptr<Treno>(this));
 		cambia_stato(stazione);
 	}
@@ -265,7 +265,7 @@ int Treno::get_velocita() const {
 	return velocita;
 }
 
-int Treno::get_posizione() const {
+double Treno::get_posizione() const {
 	return posizione;
 }
 
@@ -296,6 +296,8 @@ void Treno::set_velocita(int v){
 bool Treno::operator==(const Treno& treno) const{
 	return identificativo == treno.identificativo;
 }
+
+
 
 Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){

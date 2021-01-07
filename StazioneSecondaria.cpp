@@ -11,38 +11,34 @@ StazioneSecondaria::StazioneSecondaria(int km, std::string nome) : Stazione(km,n
 
 }
 
-bool StazioneSecondaria::isFreePass(Treno *t) {
+bool StazioneSecondaria::isFreePass(const std::shared_ptr<Treno> t) {
     if(t->isReverse()){
         return semBinariTransitoInverso.getStatus();
     }
     return semBinariTransito.getStatus();
 }
 
-void StazioneSecondaria::PrenotaTransito(Treno *t) {
+void StazioneSecondaria::PrenotaTransito(const std::shared_ptr<Treno> t) {
     if(t->isReverse()){
         std::cout<<"Accesso al Binario di Stazionamento del treno" << t->get_id() << "Alla Stazione" << this->nome;
-        binariTransitoInverso.push_back(*t);
-        js++;
+        binariTransitoInverso=t;
         semBinariTransitoInverso.setRosso();
 
     }else {
         std::cout << "Accesso al Binario di Stazionamento del treno" << t->get_id() << "Alla Stazione" << this->nome;
-        binariTransito.push_back(*t);
-        j++;
+        binariTransito=t;
         semBinariTransito.setRosso();
     }
 }
 
-void StazioneSecondaria::liberaBinarioTransito(Treno *t) {
+void StazioneSecondaria::liberaBinarioTransito(const std::shared_ptr<Treno> t) {
     if(t->isReverse()) {
-        binariTransitoInverso.pop_back();
+        binariTransitoInverso = nullptr;
         std::cout << "il Treno N." << t->get_id() << "ha liberato il binario di transito";
-        is--;
         semBinariTransitoInverso.setVerde();
     }else{
-        binariTransito.pop_back();
+        binariTransito = nullptr;
         std::cout << "il Treno N." << t->get_id() << "ha liberato il binario di transito";
-        i--;
         semBinariTransito.setVerde();
     }
 }

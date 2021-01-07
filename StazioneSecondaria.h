@@ -14,17 +14,17 @@ class StazioneSecondaria:public Stazione {
 private:
     Semaforo semBinariTransito;
     Semaforo semBinariTransitoInverso;
-    std::vector <Treno> binariTransito{1};
-    std::vector <Treno> binariTransitoInverso{1};
+    std::shared_ptr<Treno>  binariTransito;
+    std::shared_ptr<Treno>  binariTransitoInverso;
     int j=0;
     int js=0;
 
 
 public:
     StazioneSecondaria(int km, std::string nome);
-    bool isFreePass(Treno *t) override;
-    void PrenotaTransito(Treno *t) override;
-    void liberaBinarioTransito(Treno *t) override;
+    bool isFreePass(const std::shared_ptr<Treno> t) override;
+    void PrenotaTransito(const std::shared_ptr<Treno> t) override;
+    void liberaBinarioTransito(const std::shared_ptr<Treno> t) override;
     bool isPrincipale()override;
 };
 

@@ -39,12 +39,12 @@ public:
     bool isFreeStop(Treno *t);
     void PrenotaStazionamento(const std::shared_ptr<Treno> t);
     void PrenotaDeposito(const std::shared_ptr<Treno> t);
-    void liberaBinarioStazionamento(Treno *t);
-    void liberaDeposito(Treno *t);
+    void liberaBinarioStazionamento(const std::shared_ptr<Treno> t);
+    void liberaDeposito(const std::shared_ptr<Treno> t);
     virtual bool isPrincipale();
-    virtual bool isFreePass(Treno *t)=0;
-    virtual void PrenotaTransito(Treno *t)=0;
-    virtual void liberaBinarioTransito(Treno *t)=0;
+    virtual bool isFreePass(const std::shared_ptr<Treno> t)=0;
+    virtual void PrenotaTransito(const std::shared_ptr<Treno> t)=0;
+    virtual void liberaBinarioTransito(const std::shared_ptr<Treno> t)=0;
 
 
 };
