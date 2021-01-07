@@ -59,7 +59,7 @@ public:
 	void prenota_fermata();
 	void prenota_transito();
 	void libera_binario();
-	void partenza(bool transito = false);
+	void partenza(bool trans = false);
 	void aggiorna_indici();
 
 	virtual void avanza(int v = 0);											//Fa avanzare il treno
