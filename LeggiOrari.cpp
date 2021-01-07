@@ -184,7 +184,13 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 struct MyClassComparator {
 	bool operator()(const std::shared_ptr<Treno>& first, const std::shared_ptr<Treno>& second) const {
 		// Return true if first should go before second
+		if (first->get_orario() < second->get_orario()) {
+
 		return true;
+		}
+		else {
+			return false;
+		}
 	}
 };
 
@@ -193,10 +199,6 @@ void LeggiOrari::sortTreni()
 	TreniDa.sort(MyClassComparator());
 }
 
-bool LeggiOrari::compareTreni(const std::shared_ptr<Treno>& t1, const std::shared_ptr<Treno>& t2)
-{
-	return true;
-}
 
 int LeggiOrari::getVelocita(int tipoTreno)
 {
