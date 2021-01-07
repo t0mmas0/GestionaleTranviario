@@ -11,6 +11,7 @@
 #include "Treno.h"
 #include "vector"
 #include "Semaforo.h"
+#include <memory>
 class Treno;
 class Stazione {
 private:
@@ -21,13 +22,13 @@ protected:
 
     Semaforo semBinariStazionamento;
     Semaforo semBinariStazionamentoInverso;
-    std::vector <Treno> binariStazionamento{2};
-    std::vector <Treno> binariStazionamentoInverso{2};
+    std::vector <std::shared_ptr<Treno>> binariStazionamento{2};
+    std::vector <std::shared_ptr<Treno>> binariStazionamentoInverso{2};
     int i = 0;
     int is = 0;
 
-    std::vector <Treno> deposito{5};
-    std::vector <Treno> depositoInverso{5};
+    std::vector <std::shared_ptr<Treno>> deposito{5};
+    std::vector <std::shared_ptr<Treno>> depositoInverso{5};
 
 
 public:
@@ -36,8 +37,8 @@ public:
     int getDistance();
     std::string getNome();
     bool isFreeStop(Treno *t);
-    void PrenotaStazionamento(Treno *t);
-    void PrenotaDeposito(Treno *t);
+    void PrenotaStazionamento(const std::shared_ptr<Treno> t);
+    void PrenotaDeposito(const std::shared_ptr<Treno> t);
     void liberaBinarioStazionamento(Treno *t);
     void liberaDeposito(Treno *t);
     virtual bool isPrincipale();

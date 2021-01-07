@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "Treno.h"
 #include "Stazione.h"
+#include <memory>
 
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, velocita_limitata{ false }, fermata_effettuata{ false } {
@@ -199,12 +200,12 @@ void Treno::calcola_ritardo(){
 void Treno::prenota_fermata(){
 	if ((*iteratore_stazioni)->isFreeStop(this)) {
 		//Se il binario è disponibile, lo prenoto ed entro in stazione
-		(*iteratore_stazioni)->PrenotaStazionamento(this);
+		(*iteratore_stazioni)->PrenotaStazionamento(std::shared_ptr<Treno>(this));
 		cambia_stato(stazione);
 	}
 	else if (stato != parcheggio){
 		//Altrimenti mi metto in parcheggio (se non lo ero già)
-		(*iteratore_stazioni)->PrenotaDeposito(this);
+		(*iteratore_stazioni)->PrenotaDeposito(std::shared_ptr<Treno>(this));
 		cambia_stato(parcheggio);
 	}
 }
@@ -217,7 +218,7 @@ void Treno::prenota_transito(){
 	}
 	else if (stato != parcheggio) {
 		//Altrimenti mi metto in parcheggio, ma solo se non lo ero già
-		(*iteratore_stazioni)->PrenotaDeposito(this);
+		(*iteratore_stazioni)->PrenotaDeposito(std::shared_ptr<Treno>(this));
 		cambia_stato(parcheggio);
 	}
 }
@@ -240,7 +241,7 @@ void Treno::partenza(bool transito){
 	else {
 		if (!((*iteratore_stazioni)->isFreeStop(this)))
 			std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
-		(*iteratore_stazioni)->PrenotaStazionamento(this);
+		(*iteratore_stazioni)->PrenotaStazionamento(std::shared_ptr<Treno>(this));
 		cambia_stato(stazione);
 	}
 }
