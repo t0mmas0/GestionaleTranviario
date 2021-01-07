@@ -197,9 +197,9 @@ void Treno::calcola_ritardo(){
 }
 
 void Treno::prenota_fermata(){
-	if ((*iteratore_stazioni)->isFreeStop()) {
+	if ((*iteratore_stazioni)->isFreeStop(this)) {
 		//Se il binario è disponibile, lo prenoto ed entro in stazione
-		(*iteratore_stazioni)->PrenotaStazionameto(this);
+		(*iteratore_stazioni)->PrenotaStazionamento(this);
 		cambia_stato(stazione);
 	}
 	else if (stato != parcheggio){
@@ -211,7 +211,7 @@ void Treno::prenota_fermata(){
 
 void Treno::prenota_transito(){
 	//Se il binario è disponibile, lo prenoto ed entro in transito
-	if ((*iteratore_stazioni)->isFreePass()) {
+	if ((*iteratore_stazioni)->isFreePass(this)) {
 		(*iteratore_stazioni)->PrenotaTransito(this);
 		cambia_stato(transito);
 	}
@@ -232,15 +232,15 @@ void Treno::libera_binario(){
 
 void Treno::partenza(bool transito){
 	if (transito) {
-		if (!((*iteratore_stazioni)->isFreePass()))
+		if (!((*iteratore_stazioni)->isFreePass(this)))
 			std::logic_error("Errore. Si sta cercando di far transitare");
 		(*iteratore_stazioni)->PrenotaTransito(this);
 		cambia_stato(transito);
 	}
 	else {
-		if (!((*iteratore_stazioni)->isFreeStop()))
+		if (!((*iteratore_stazioni)->isFreeStop(this)))
 			std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
-		(*iteratore_stazioni)->PrenotaStazionameto(this);
+		(*iteratore_stazioni)->PrenotaStazionamento(this);
 		cambia_stato(stazione);
 	}
 }

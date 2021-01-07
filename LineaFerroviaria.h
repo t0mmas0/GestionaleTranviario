@@ -3,12 +3,12 @@
 #ifndef GESTIONETRANVIARIA_LINEAFERROVIARIA_H
 #define GESTIONETRANVIARIA_LINEAFERROVIARIA_H
 
-#include "Stazione.h";
+#include "Stazione.h"
 #include "vector"
 
 class LineaFerroviaria {
 private:
-    std::vector <Stazione> Linea;
+   // std::vector <Stazione> Linea;
 
 public:
 
