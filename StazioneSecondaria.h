@@ -6,19 +6,26 @@
 #define GESTIONALETRANVIARIO_STAZIONESECONDARIA_H
 
 #include "Stazione.h"
-
+/**
+ * @author Tommaso Bertoldi 1218661
+ * @brief Stazione della linea ferroviaria
+ */
 class StazioneSecondaria:public Stazione {
 private:
     Semaforo semBinariTransito;
-    std::vector <Treno> binariTransito{2};
+    Semaforo semBinariTransitoInverso;
+    std::vector <Treno> binariTransito{1};
+    std::vector <Treno> binariTransitoInverso{1};
     int j=0;
+    int js=0;
 
 
 public:
     StazioneSecondaria(int km, std::string nome);
-    bool isFreePass();
-    void PrenotaTransito(Treno t);
-    void liberaBinarioTransito(Treno t);
+    bool isFreePass(Treno t) override;
+    void PrenotaTransito(Treno t) override;
+    void liberaBinarioTransito(Treno t) override;
+    bool isPrincipale()override;
 };
 
 

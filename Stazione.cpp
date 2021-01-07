@@ -8,7 +8,8 @@
 
 Stazione::Stazione(int km, std::string nome) : Km(km),nome(nome) {
     semBinariStazionamento = Semaforo();
-    semBinariStazionamento.setVerde();
+    semBinariStazionamentoInverso = Semaforo();
+
 
 }
 
@@ -21,7 +22,10 @@ std::string Stazione::getNome() {
     return this->nome;
 }
 
-bool Stazione::isFreeStop() {
+bool Stazione::isFreeStop(Treno t) {
+    if(t.isReverse()){
+        return semBinariStazionamentoInverso.getStatus();
+    }
     return semBinariStazionamento.getStatus();
 }
 
@@ -31,26 +35,48 @@ void Stazione::liberaDeposito(Treno t) {
 }
 
 void Stazione::liberaBinarioStazionamento(Treno t) {
-    binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), t), binariStazionamento.end());
-    std::cout<<"il Treno N." <<t.get_id()<<"ha liberato il binario";
-    i--;
-    semBinariStazionamento.setVerde();
+    if (t.isReverse()){
+        binariStazionamentoInverso.erase(std::remove(binariStazionamentoInverso.begin(), binariStazionamentoInverso.end(), t),
+                                         binariStazionamentoInverso.end());
+        std::cout << "il Treno N." << t.get_id() << "ha liberato il binario";
+        is--;
+        semBinariStazionamentoInverso.setVerde();
+    }else {
+        binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), t),
+                                  binariStazionamento.end());
+        std::cout << "il Treno N." << t.get_id() << "ha liberato il binario";
+        i--;
+        semBinariStazionamento.setVerde();
+    }
 }
 
 void Stazione::PrenotaStazionameto(Treno t) {
-    std::cout<<"Accesso al Binario di Stazionamento del treno" << t.get_id() << "Alla Stazione" << this->nome;
-    binariStazionamento.push_back(t);
-    i++;
-    if (i==4) {
-        semBinariStazionamento.setRosso();
+    if (t.isReverse()){
+        std::cout << "Accesso al Binario di Stazionamento del treno" << t.get_id() << "Alla Stazione" << this->nome;
+        binariStazionamentoInverso.push_back(t);
+        is++;
+        if (is == 2) {
+            semBinariStazionamentoInverso.setRosso();
+        }
     }
-
+    else {
+        std::cout << "Accesso al Binario di Stazionamento del treno" << t.get_id() << "Alla Stazione" << this->nome;
+        binariStazionamento.push_back(t);
+        i++;
+        if (i == 2) {
+            semBinariStazionamento.setRosso();
+        }
+    }
 }
 
 void Stazione::PrenotaDeposito(Treno t) {
-    deposito.push_back(t);
+    if(t.isReverse()){
+        depositoInverso.push_back(t);
+    }else{
+        deposito.push_back(t);
+    }
 }
 
 bool Stazione::isPrincipale() {
-    return isPrincipale();
+    return principale;
 }

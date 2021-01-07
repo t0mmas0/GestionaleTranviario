@@ -9,7 +9,7 @@ bool Semaforo::getStatus() {
 }
 
 Semaforo::Semaforo() {
-    status = false;
+    status = true;
 }
 
 void Semaforo::setRosso() {
