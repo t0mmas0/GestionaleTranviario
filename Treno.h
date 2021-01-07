@@ -46,18 +46,25 @@ public:
 	// TODO: Move
 
 	
-	void muta();												//Muta automaticamento lo stato del treno
-	void avanza();												//Fa avanzare il treno
+	void esegui();												//Muta automaticamento lo stato del treno
+	void sposta_avanti(int v);
+	void sposta_indietro(int v);
+	void testa_ingresso_stazione();
+	void testa_uscita_stazione();
+	void testa_fermata();
+	void effettua_fermata();
 	void aggiorna_fermata();									//Conta il tempo di fermata
 	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocita
 	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
 	void prenota_fermata();
 	void prenota_transito();
+	void libera_binario();
 	void partenza(bool transito = false);
+	void aggiorna_indici();
 
+	virtual void avanza(int v = 0);											//Fa avanzare il treno
 	virtual void attiva(int ora) = 0;										//Attiva per la prima volta il treno sulla linea
 	virtual void chiama_stazione() = 0;										//Chiama stazione
-	virtual void effettua_fermata() = 0;
 
 	int get_id() const;				//Resituisce l'identificativo
 	int get_velocita() const;		//Resituisce la velocita
@@ -88,7 +95,8 @@ protected:
 
 	bool attivato;
 	bool reverse;
-
+	bool velocita_limitata;
+	bool fermata_effettuata;
 };
 
 class Regionale : public Treno {
@@ -96,8 +104,8 @@ public:
 	Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
+	void avanza(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
-	void effettua_fermata() override;
 private:
 	static const int MAX_SPEED = 160;
 };
@@ -107,8 +115,8 @@ public:
 	AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
+	void avanza(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
-	void effettua_fermata() override;
 private:
 	static const int MAX_SPEED = 240;
 };
@@ -118,8 +126,8 @@ public:
 	SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
+	void avanza(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
-	void effettua_fermata() override;
 private:
 	static const int MAX_SPEED = 300;
 };

@@ -6,7 +6,7 @@
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
-	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{reverse} {
+	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, velocita_limitata{ false }, fermata_effettuata{ false } {
 	if (reverse) {
 		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
 		iteratore_stazioni = --(Stazioni.end());
@@ -19,37 +19,47 @@ Treno::Treno(const Treno& treno)
 	: orario{ treno.orario }, identificativo{ treno.identificativo }, velocita{ treno.velocita }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{ treno.stato }, Stazioni{ treno.Stazioni }, iteratore_stazioni{ treno.iteratore_stazioni }, Orari{ treno.Orari }, indice_orario{ treno.indice_orario }, attivato{ false }, reverse{ treno.reverse }{
 }
 
-//TODO: USCIRE DALLO STATO STAZIONE E DAL TRANSITO
-void Treno::muta() {
-	//Il treno automaticamente muta il proprio stato in base allo stato attuale
+//Il treno esegue automaticamente alcune cose in base al proprio stato attuale
+void Treno::esegui() {
 	switch (stato){
-	case parcheggio:
-		//Se il treno è in parcheggio deve verificare se può uscirne chiamando la stazione
-		chiama_stazione();
-	case movimento:
-		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocita
-		avanza();
-		//Deve poi controllare se deve chiamare la stazione
-		if (reverse) {
-			if (posizione <= (*iteratore_stazioni)->getDistance() + 5) {
-				chiama_stazione();
-			}
-			break;
-		}
-		if (posizione >= (*iteratore_stazioni)->getDistance() - 5)
-			chiama_stazione();
+	case creato:
+		std::logic_error("Impossibile far eseguire operazioni ad un treno creato ma non attivato");
 		break;
-	case stazione:
-		//TODO: Deve verificare di essere uscito dalla zona stazione
-		//Se il treno è in stazione, continua ad avanzare
-		avanza();
+	case attesa:
+		//Se il treno è in attesa, non fa assolutamente nulla, ma avvisa di essere fermo
+		std::cout << "Il treno " << identificativo << " e' fermo in attesa al chilometro " << posizione << std::endl;
 	case fermata:
-		//Se il treno è in fermata, allora vi rimane, ma aumenta il tempo di fermata effettuato
+		//Se sono fermo alla fermata, devo controllare se è trascorso abbastanza tempo da poter proseguire e calcolare l'eventuale ritardo
 		aggiorna_fermata();
 		calcola_ritardo();
 		break;
+	case stazione:
+		//Se sono in una zona stazione, continuo ad avanzare a velocità limitata
+		avanza(80);
+		//Se non mi sono ancora fermato, controllo di non essere arrivato alla fermata. Altrimenti controllo di non essere uscito dalla zona stazione
+		if (!fermata_effettuata)
+			testa_fermata();
+		else
+			testa_uscita_stazione();
+		break;
+	case transito:
+		//Se sono in transito non ho restrizioni sulla velocità e posso continuare ad avanzare
+		avanza();
+		//Devo controllare però di non essere uscito dalla zona stazione
+		testa_uscita_stazione();
+		break;
+	case parcheggio:
+		//Se il treno è in parcheggio deve verificare se può uscirne chiamando la stazione
+		chiama_stazione();
+		break;
+	case movimento:
+		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocità
+		avanza();
+		//Deve poi controllare se deve chiamare la stazione
+		testa_ingresso_stazione();
+		break;
 	case distrutto:
-		std::logic_error("Errore. Il treno è distrutto e il suo stato non può essere mutato.");
+		std::logic_error("Errore. Il treno è distrutto e non può eseguire nessuna azione");
 		break;
 	default:
 		break;
@@ -57,66 +67,122 @@ void Treno::muta() {
 	orario++;
 }
 
-void Treno::avanza(){
-	//Controllo se il treno viaggia a ritroso
-	if (reverse) {
-		//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
-		posizione = posizione - (velocita / 60);
-		//Si suppone che la lunghezza della banchina sia infinita, pertanto il treno può fermarsi anche dopo il km della stazione. Poil il treno ripenderà a muoversi dal km della stazione
-		if (posizione <= (*iteratore_stazioni)->getDistance()) {
-			//Sono arrivato ad una stazione. Mi devo fermare?
-			effettua_fermata();
-		}
-		return;
+void Treno::avanza(int v){
+	//Controllo se ho ricevuto precedenti limitazioni sulla velocità - in tal caso rimangono valide, ma solo se è minore di quella prevista.
+	if (velocita_limitata) {
+		if (velocita < v)
+			v = velocita;
 	}
+	//Controllo in che direzione si muove il treno
+	if (reverse)
+		sposta_indietro(v);
+	else
+		sposta_avanti(v);
+}
 
-	//Se non viaggia a ritroso, eseguo le stesse operazioni ma in avanti
-	posizione = posizione + (velocita / 60);
-	if (posizione >= (*iteratore_stazioni)->getDistance())
-		effettua_fermata();
+void Treno::sposta_avanti(int v){
+	//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
+	posizione = posizione + (v / 60.0);
 }
  
+void Treno::sposta_indietro(int v){
+	//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
+	posizione = posizione - (v / 60.0);
+}
+
+void Treno::testa_ingresso_stazione(){
+	if (reverse) {
+		if (posizione <= (*iteratore_stazioni)->getDistance() + 5) {
+			chiama_stazione();
+		}
+	}
+	else {
+		if (posizione >= (*iteratore_stazioni)->getDistance() - 5)
+			chiama_stazione();
+	}
+}
+
+void Treno::testa_uscita_stazione(){
+	if (reverse) {
+		if (posizione <= (*iteratore_stazioni)->getDistance() - 5) {
+			//Sto uscendo dalla stazione, mi rimetto in movimento e libero il binario
+			libera_binario();
+			cambia_stato(movimento);
+			aggiorna_indici();
+			fermata_effettuata = false;
+		}
+	}
+	else {
+		if (posizione >= (*iteratore_stazioni)->getDistance() + 5) {
+			libera_binario();
+			cambia_stato(movimento);
+			aggiorna_indici();
+			fermata_effettuata = false;
+		}
+	}
+}
+
+void Treno::testa_fermata(){
+	//Controllo come si muove il treno
+	if (reverse) {
+		if (posizione <= (*iteratore_stazioni)->getDistance()) {
+			//Sono arrivato alla banchina, devo effettuare la fermata
+			effettua_fermata();
+		}
+	}
+	else {
+		if (posizione >= (*iteratore_stazioni)->getDistance()) {
+			//Sono arrivato alla banchina, devo effettuare la fermata
+			effettua_fermata();
+		}
+	}
+}
+
+void Treno::effettua_fermata(){
+	cambia_stato(fermata);
+	fermata_effettuata = true;
+}
+
 void Treno::aggiorna_fermata(){
 	//Se sono già stato fermo 5 minuti
-	if (minuti_fermata == 4) {
-		//Sono già stato fermo 5 minuti, devo ripartire dal km della stazione (anche se il treno si era fermato più avanti, si ricongiunge alla linea al km di posizione della stazione)
+	if (minuti_fermata >= 4) {
+		//Devo ripartire dal km della stazione (anche se il treno si era fermato più avanti, si ricongiunge alla linea al km di posizione della stazione)
 		minuti_fermata = 0;
 		posizione = (*iteratore_stazioni)->getDistance();
-		
-		//Richiedo l'uscita dalla stazione
-		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
 
 		//Cambio lo stato del treno
 		cambia_stato(stazione);
-
-		//Ho effettuato la fermata, devo aggiornare gli indici
-		if (reverse) {
-			iteratore_stazioni--;
-			indice_orario--;
-		}
-		else {
-			iteratore_stazioni++;
-			indice_orario++;
-		}
 		return;
 	}
 	//Altrimenti aggiorno il tempo
 	minuti_fermata++;
 }
 
+//TODO: gestire le velocità limitate
 void Treno::cambia_stato(Stato s){
-	stato = s;
-	//Azzero la velocita se il treno viene posto in uno stato tale da renderlo immobile
-	if (stato == attesa || stato == parcheggio || stato == fermata)
+	switch (s){
+	case creato:
+		std::logic_error("Impossibile cambiare lo stato in creato. Questo stato è possibile solo dopo la chiamata al costruttore");
+		break;
+	case attesa:
 		velocita = 0;
-	//Imposto la velocita limite se il treno entra nella zona stazione
-	else if (stato == stazione)
-		velocita = 80;
-	//Imposto la velocita massima se il treno viene messo in movimento
-	else if (stato = movimento)
-		set_velocita(); //Verrà chiamato il metodo override che imposterà la velocita massima consentita dal tipo del treno
-	else if (stato = distrutto)
-		std::cout << "Il treno " << identificativo << " è giunto a destinazione e ha liberato il binario, presso la stazione di " << (*iteratore_stazioni)->getNome() << " alle ore " << orario << " con un ritardo di " << ritardo << " minuti";
+		std::cout << "Il treno " << identificativo << " e' stato messo in attesa" << std::endl;
+		break;
+	case stazione:
+ 		break;
+	case transito:
+		break;
+	case movimento:
+		break;
+	case parcheggio:
+		break;
+	case fermata:
+		break;
+	case distrutto:
+		break;
+	default:
+		break;
+	}
 }
 
 void Treno::calcola_ritardo(){
@@ -134,25 +200,37 @@ void Treno::calcola_ritardo(){
 }
 
 void Treno::prenota_fermata(){
-	if (!((*iteratore_stazioni)->isFreeStop())) {
-		(*iteratore_stazioni)->PrenotaDeposito();
-		cambia_stato(parcheggio);
-	}
-	else {
+	if ((*iteratore_stazioni)->isFreeStop()) {
+		//Se il binario è disponibile, lo prenoto ed entro in stazione
 		(*iteratore_stazioni)->PrenotaStazionameto(this);
 		cambia_stato(stazione);
+	}
+	else if (stato != parcheggio){
+		//Altrimenti mi metto in parcheggio (se non lo ero già)
+		(*iteratore_stazioni)->PrenotaDeposito(this);
+		cambia_stato(parcheggio);
 	}
 }
 
 void Treno::prenota_transito(){
-	if (!((*iteratore_stazioni)->isFreePass())) {
-		(*iteratore_stazioni)->PrenotaDeposito();
-		cambia_stato(parcheggio);
-	}
-	else {
+	//Se il binario è disponibile, lo prenoto ed entro in transito
+	if ((*iteratore_stazioni)->isFreePass()) {
 		(*iteratore_stazioni)->PrenotaTransito(this);
 		cambia_stato(transito);
 	}
+	else if (stato != parcheggio) {
+		//Altrimenti mi metto in parcheggio, ma solo se non lo ero già
+		(*iteratore_stazioni)->PrenotaDeposito(this);
+		cambia_stato(parcheggio);
+	}
+}
+
+void Treno::libera_binario(){
+	//Quale tipo di binario devo liberare?
+	if (stato == transito)
+		(*iteratore_stazioni)->liberaBinarioTransito(this);
+	else
+		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
 }
 
 void Treno::partenza(bool transito){
@@ -167,6 +245,17 @@ void Treno::partenza(bool transito){
 			std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
 		(*iteratore_stazioni)->PrenotaStazionameto(this);
 		cambia_stato(stazione);
+	}
+}
+
+void Treno::aggiorna_indici(){
+	if (reverse) {
+		indice_orario--;
+		iteratore_stazioni--;
+	}
+	else {
+		indice_orario++;
+		iteratore_stazioni++;
 	}
 }
 
@@ -190,17 +279,12 @@ void Treno::set_velocita(int v){
 	if (v < 0)
 		throw std::invalid_argument("La velocita non può essere negativa");
 	if (v == 0) {
-
         velocita = 0;
-		stato = attesa;
+		cambia_stato(attesa);
 	}
 	else {
         velocita = v;
-
-		velocita = 0;
-		stato = attesa;
 	}
-
 }
 
 Treno& Treno::operator=(const Treno& treno){
@@ -245,38 +329,24 @@ void Regionale::attiva(int orario){
 }
 
 void Regionale::set_velocita(int v){
+	if (v >= MAX_SPEED)
+		velocita_limitata = false;
+	if (v < MAX_SPEED)
+		velocita_limitata = true;
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
 }
 
-void Regionale::chiama_stazione(){
-	//Il treno si deve fermare sempre
-	if (!((*iteratore_stazioni)->isFreeStop())) {
-		//Se non ci sono binari liberi, vado al parcheggio
-		cambia_stato(parcheggio);
-		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
-	}
-	//Altrimenti chiedo la fermata e proseguo
-	(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+void Regionale::avanza(int v){
+	if (v > MAX_SPEED)
+		v = MAX_SPEED;
+	Treno::avanza(v);
 }
 
-void Regionale::effettua_fermata(){
-	//Mi devo fermare sempre
-	cambia_stato(fermata);
-	//Ora controllo se questa era l'ultima fermata. In tal caso non devo aspettare 5 minuti, ma devo liberare il binario subito
-	if (reverse) {
-		if (iteratore_stazioni == Stazioni.begin()) {
-			cambia_stato(distrutto);
-			(*iteratore_stazioni)->liberaBinarioStazionamento(this);
-			return;
-		}
-	}
-
-	if (iteratore_stazioni == Stazioni.end() - 1) {
-		cambia_stato(distrutto);
-		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
-	}
+void Regionale::chiama_stazione(){
+	//Il treno si deve fermare sempre
+	prenota_fermata();
 }
 
 AltaVelocita::AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
@@ -300,53 +370,30 @@ void AltaVelocita::attiva(int orario){
 }
 
 void AltaVelocita::set_velocita(int v){
+	if (v >= MAX_SPEED)
+		velocita_limitata = false;
+	if (v < MAX_SPEED)
+		velocita_limitata = true;
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
 }
 
+void AltaVelocita::avanza(int v){
+	if (v > MAX_SPEED)
+		v = MAX_SPEED;
+	Treno::avanza(v);
+}
+
 void AltaVelocita::chiama_stazione(){
 	//Il treno si deve fermare solo se è una stazione pricipale
 	if ((*iteratore_stazioni)->isPrincipale()) {
-		if (!((*iteratore_stazioni)->isFreeStop())) {
-			//Se non ci sono binari liberi, vado al parcheggio
-			cambia_stato(parcheggio);
-			(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
-		}
-		//Altrimenti chiedo la fermata e proseguo
-		(*iteratore_stazioni)->PrenotaStazionameto(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
-		return;
+		prenota_fermata();
 	}
-	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
-	if (!((*iteratore_stazioni)->isFreePass())) {
-		cambia_stato(parcheggio);
-		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+	else {
+		//Se la stazione non è principale, il treno richiede il transito
+		prenota_transito();
 	}
-	(*iteratore_stazioni)->PrenotaTransito(this);
-}
-
-void AltaVelocita::effettua_fermata(){
-	//Mi devo fermare solo se è una stazione principale
-	if ((*iteratore_stazioni)->isPrincipale()) {
-		cambia_stato(fermata);
-		return;
-	}
-	//Controllo di non essere arrivato al capolinea
-	if (reverse) {
-		if (iteratore_stazioni == Stazioni.begin()) {
-			cambia_stato(distrutto);
-			return;
-		}
-	}
-	//Eseguo lo stesso controllo per i treni che non viaggiano a ritroso
-	if (iteratore_stazioni == Stazioni.end() - 1) {
-		cambia_stato(distrutto);
-		return;
-	}
-
-	//Altrimenti aggiorno i riferimenti per la prossima stazione
-	iteratore_stazioni--;
-	indice_orario--;
 }
 
 SuperVelocita::SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
@@ -370,52 +417,28 @@ void SuperVelocita::attiva(int orario){
 }
 
 void SuperVelocita::set_velocita(int v){
+	if (v >= MAX_SPEED)
+		velocita_limitata = false;
+	if (v < MAX_SPEED)
+		velocita_limitata = true;
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
 }
 
+void SuperVelocita::avanza(int v){
+	if (v > MAX_SPEED)
+		v = MAX_SPEED;
+	Treno::avanza(v);
+}
+
 void SuperVelocita::chiama_stazione(){
 	//Il treno si deve fermare solo se è una stazione pricipale
 	if ((*iteratore_stazioni)->isPrincipale()) {
-		if (!((*iteratore_stazioni)->isFreeStop())) {
-			//Se non ci sono binari liberi, vado al parcheggio
-			cambia_stato(parcheggio);
-			(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
-		}
-		//Altrimenti chiedo la fermata e proseguo
-		(*iteratore_stazioni)->PrenotaStazionamento(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
-		return;
+		prenota_fermata();
 	}
-
-	//Se la stazione non è principale, il treno richiede il transito. Se la richiesta va a buon fine, prosegue, altrimenti va in parcheggio
-	if (!((*iteratore_stazioni)->isFreePass())) {
-		cambia_stato(parcheggio);
-		(*iteratore_stazioni)->PrenotaDeposito(this); //TODO: testare il passaggio - non sembra riconoscere il tipo
+	else {
+		//Se la stazione non è principale, il treno richiede il transito
+		prenota_transito();
 	}
-	(*iteratore_stazioni)->PrenotaTransito(this);	//TODO: testare il passaggio - non sembra riconoscere il tipo
-}
-
-void SuperVelocita::effettua_fermata(){
-	//Mi devo fermare solo se è una stazione principale
-	if ((*iteratore_stazioni)->isPrincipale()) {
-		cambia_stato(fermata);
-		return;
-	}
-	//Controllo di non essere arrivato al capolinea
-	if (reverse) {
-		if (iteratore_stazioni == Stazioni.begin()) {
-			cambia_stato(distrutto);
-			return;
-		}
-	}
-	//Eseguo lo stesso controllo per i treni che non viaggiano a ritroso
-	if (iteratore_stazioni == Stazioni.end() - 1) {
-		cambia_stato(distrutto);
-		return;
-	}
-
-	//Altrimenti aggiorno i riferimenti per la prossima stazione
-	iteratore_stazioni--;
-	indice_orario--;
 }
