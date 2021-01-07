@@ -151,7 +151,6 @@ void Treno::aggiorna_fermata(){
 	minuti_fermata++;
 }
 
-//TODO: gestire le velocità limitate
 void Treno::cambia_stato(Stato s){
 	switch (s){
 	case creato:
@@ -298,15 +297,13 @@ bool Treno::operator==(const Treno& treno) const{
 	return identificativo == treno.identificativo;
 }
 
-
-
 Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
 void Regionale::attiva(int orario){
 	if (attivato)
-		std::logic_error("Errore. Si sta attivando un treno già attivato");
+		throw std::logic_error("Errore. Si sta attivando un treno già attivato");
 	//Devo cercare un binario libero
 	partenza();
 	//Fingo di aver già effettuato la fermata
