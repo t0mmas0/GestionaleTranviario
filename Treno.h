@@ -38,43 +38,52 @@ enum Stato :int { creato = 0, attesa = 1, stazione = 2, transito = 3, movimento 
 class Treno {
 public:
 
-	Treno();																											//Costruttore di default
+	Treno();																												//Costruttore di default
 	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);		//Costruttore
 
+	//*************************Getters e setters************************************
+	int get_id() const;											//Resituisce il numero del treno
+	int get_velocita() const;									//Resituisce la velocità del treno
+	double get_posizione() const;								//Resituisce la posizione del treno
+	int get_ritardo() const;									//Resituisce il ritardo del treno (aggiornato all'ultima fermata)
+	bool isReverse() const;										//Restituisce true se il treno viaggia al contrario
+	int get_orario() const;										//Restituisce l'orario di partenza previsto per il treno
 
-	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
-	// TODO: Move
+	virtual void set_velocita(int v = 0);						//Imposta la velocità del treno. Poichè questa classe interfaccia non prevede limiti superiori, il valore di default è 0 nel caso in cui il parametro non venga impostato
 
+	//*************************Inizializzazione*************************************
+	virtual void attiva(int ora) = 0;							//Attiva per la prima volta il treno sulla linea
 
-	void esegui();												//Muta automaticamento lo stato del treno
-	void sposta_avanti();
-	void sposta_indietro();
-	void testa_ingresso_stazione();
-	void testa_uscita_stazione();
-	void testa_fermata();
-	void effettua_fermata();
-	void aggiorna_fermata();									//Conta il tempo di fermata
-	void cambia_stato(Stato s);									//Cambia lo stato del treno e imposta la velocita
-	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
-	void prenota_fermata();
-	void prenota_transito();
-	void libera_binario();
-	void partenza(bool trans = false);
-	void aggiorna_indici();
-	void avanza();											//Fa avanzare il treno
+	//*************************Routine e subroutine del treno***********************
+	void esegui();												//Routine del treno: deve essere chiamata ogni minuto. Esegue azioni in base allo stato
+	void cambia_stato(Stato s);									//Subroutine: permette al treno di cambiare il proprio stato e regola la velocità di conseguenza
+
+	//*************************Principali operazioni del treno**********************
+	void avanza();												//Fa avanzare il treno
+	void testa_ingresso_stazione();								//Controlla se il treno è entrato in zona stazione
+	void testa_uscita_stazione();								//Controlla se il treno è uscito dalla zona stazione
+	void testa_fermata();										//Controlla se il treno è arrivato alla banchina
+	void aggiorna_fermata();									//Conta i minuti di fermata. Trascorsi 5 minuti, imposta lo stato a stazione e fa ripartire il treno
+
+	//*************************Funzioni di appoggio*********************************
+	void sposta_avanti();										//Sposta il treno in avanti
+	void sposta_indietro();										//Sposta il treno indietro
+
+	virtual void chiama_stazione() = 0;							//Chiama la stazione e agisce in base al tipo di treno e di stazione
 	
-	virtual void attiva(int ora) = 0;										//Attiva per la prima volta il treno sulla linea
-	virtual void chiama_stazione() = 0;										//Chiama stazione
+	void libera_binario();										//Libera il binario sul quale si trovava il treno
+	void aggiorna_indici();										//Calcola il ritardo con cui il treno è arrivato alla fermata
 
-	int get_id() const;				//Resituisce l'identificativo
-	int get_velocita() const;		//Resituisce la velocita
-	double get_posizione() const;		//Resituisce la posizione
-	int get_ritardo() const;		//Resituisce il ritardo
-	bool isReverse() const;			//Restituisce true se il treno viaggia al contrario
-	int get_orario() const;
+	void effettua_fermata();									//Ferma il treno alla banchina
+	void calcola_ritardo();										//Calcola il ritardo del treno in stazione
 
-	virtual void set_velocita(int v = 0);	//Imposta la velocita. Poichè questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
-	bool operator ==(const Treno& treno) const;			//Operatore di confronto
+	//************************Funzioni di prenotazione dei binari*******************
+	void partenza(bool trans = false);							//Prenota un binario per la partenza del treno dalla stazione di partenza
+	void prenota_fermata();										//Prenota un binario di fermata
+	void prenota_transito();									//Prenota un binario di transito
+	
+	//************************Operatori utili***************************************
+	bool operator ==(const Treno& treno) const;					//Operatore di confronto
 
 protected:
 	int orario_partenza;
