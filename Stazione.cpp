@@ -77,7 +77,7 @@ void Stazione::PrenotaDeposito(const std::shared_ptr<Treno> t) {
     }
 }
 
-bool Stazione::isPrincipale() {
+bool Stazione::isPrincipale() const {
     return principale;
 }
 

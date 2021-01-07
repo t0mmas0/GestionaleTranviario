@@ -14,9 +14,9 @@
 #include <memory>
 class Treno;
 class Stazione {
-private:
-    bool principale = true;
+
 protected:
+    bool principale;
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
 
@@ -41,7 +41,7 @@ public:
     void PrenotaDeposito(const std::shared_ptr<Treno> t);
     void liberaBinarioStazionamento(const std::shared_ptr<Treno> t);
     void liberaDeposito(const std::shared_ptr<Treno> t);
-    virtual bool isPrincipale();
+    bool isPrincipale() const;
     virtual bool isFreePass(const std::shared_ptr<Treno> t)=0;
     virtual void PrenotaTransito(const std::shared_ptr<Treno> t)=0;
     virtual void liberaBinarioTransito(const std::shared_ptr<Treno> t)=0;

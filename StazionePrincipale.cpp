@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 StazionePrincipale::StazionePrincipale(int km, std::string nome) : Stazione(km, nome) {
-
+principale = true;
 
 }
 bool StazionePrincipale::isFreePass(const std::shared_ptr<Treno> t) {

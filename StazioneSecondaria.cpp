@@ -5,10 +5,9 @@
  */
 #include <iostream>
 #include "StazioneSecondaria.h"
-#include "algorithm"
 
 StazioneSecondaria::StazioneSecondaria(int km, std::string nome) : Stazione(km,nome) {
-
+principale = false;
 }
 
 bool StazioneSecondaria::isFreePass(const std::shared_ptr<Treno> t) {
@@ -43,9 +42,7 @@ void StazioneSecondaria::liberaBinarioTransito(const std::shared_ptr<Treno> t) {
     }
 }
 
-bool StazioneSecondaria::isPrincipale() {
- return false;
-}
+
 
 
 

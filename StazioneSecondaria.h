@@ -24,7 +24,7 @@ public:
     bool isFreePass(const std::shared_ptr<Treno> t) override;
     void PrenotaTransito(const std::shared_ptr<Treno> t) override;
     void liberaBinarioTransito(const std::shared_ptr<Treno> t) override;
-    bool isPrincipale()override;
+
 };
 
 
