@@ -230,8 +230,8 @@ void Treno::libera_binario(){
 		(*iteratore_stazioni)->liberaBinarioStazionamento(this);
 }
 
-void Treno::partenza(bool transito){
-	if (transito) {
+void Treno::partenza(bool trans){
+	if (trans) {
 		if (!((*iteratore_stazioni)->isFreePass(this)))
 			std::logic_error("Errore. Si sta cercando di far transitare");
 		(*iteratore_stazioni)->PrenotaTransito(this);
