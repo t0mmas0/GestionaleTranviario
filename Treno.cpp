@@ -155,23 +155,29 @@ void Treno::aggiorna_fermata(){
 void Treno::cambia_stato(Stato s){
 	switch (s){
 	case creato:
-		std::logic_error("Impossibile cambiare lo stato in creato. Questo stato è possibile solo dopo la chiamata al costruttore");
+		throw std::logic_error("Impossibile cambiare lo stato in creato. Questo stato è possibile solo dopo la chiamata al costruttore");
 		break;
 	case attesa:
 		velocita = 0;
 		std::cout << "Il treno " << identificativo << " e' stato messo in attesa" << std::endl;
 		break;
 	case stazione:
+		velocita = 80;
  		break;
 	case transito:
+		set_velocita();
 		break;
 	case movimento:
+		set_velocita();
 		break;
 	case parcheggio:
+		velocita = 0;
 		break;
 	case fermata:
+		velocita = 0;
 		break;
 	case distrutto:
+		velocita = 0;
 		break;
 	default:
 		break;
