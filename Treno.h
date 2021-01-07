@@ -74,9 +74,7 @@ public:
 	int get_orario() const;
 
 	virtual void set_velocita(int v = 0);	//Imposta la velocita. Poichè questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
-
-	Treno& operator=(const Treno& treno);						//Assegnamento di copia
-	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
+	bool operator ==(const Treno& treno) const;			//Operatore di confronto
 
 protected:
 	int orario_partenza;
