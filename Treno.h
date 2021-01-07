@@ -70,6 +70,7 @@ public:
 	int get_velocita() const;		//Resituisce la velocita
 	int get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
+	bool isReverse() const;			//Restituisce true se il treno viaggia al contrario
 
 	virtual void set_velocita(int v = 0);	//Imposta la velocita. Poichè questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
 

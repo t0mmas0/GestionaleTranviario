@@ -275,6 +275,10 @@ int Treno::get_ritardo() const {
 	return ritardo;
 }
 
+bool Treno::isReverse() const{
+	return reverse;
+}
+
 void Treno::set_velocita(int v){
 	if (v < 0)
 		throw std::invalid_argument("La velocita non può essere negativa");
