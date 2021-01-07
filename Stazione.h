@@ -22,7 +22,7 @@ protected:
     Semaforo semBinariStazionamento;
     Semaforo semBinariStazionamentoInverso;
     std::vector <Treno> binariStazionamento{2};
-    std::vector <treno> binariStazionamentoInverso{2};
+    std::vector <Treno> binariStazionamentoInverso{2};
     int i = 0;
     int is = 0;
 
@@ -35,15 +35,15 @@ public:
     Stazione(int km, std::string nome);
     int getDistance();
     std::string getNome();
-    bool isFreeStop(Treno t);
-    void PrenotaStazionameto(Treno t);
-    void PrenotaDeposito(Treno t);
-    void liberaBinarioStazionamento(Treno t);
-    void liberaDeposito(Treno t);
+    bool isFreeStop(Treno *t);
+    void PrenotaStazionamento(Treno *t);
+    void PrenotaDeposito(Treno *t);
+    void liberaBinarioStazionamento(Treno *t);
+    void liberaDeposito(Treno *t);
     virtual bool isPrincipale();
-    virtual bool isFreePass(Treno t)=0;
-    virtual void PrenotaTransito(Treno t)=0;
-    virtual void liberaBinarioTransito(Treno t)=0;
+    virtual bool isFreePass(Treno *t)=0;
+    virtual void PrenotaTransito(Treno *t)=0;
+    virtual void liberaBinarioTransito(Treno *t)=0;
 
 
 };

@@ -22,9 +22,9 @@ private:
 
 public:
     StazioneSecondaria(int km, std::string nome);
-    bool isFreePass(Treno t) override;
-    void PrenotaTransito(Treno t) override;
-    void liberaBinarioTransito(Treno t) override;
+    bool isFreePass(Treno *t) override;
+    void PrenotaTransito(Treno *t) override;
+    void liberaBinarioTransito(Treno *t) override;
     bool isPrincipale()override;
 };
 
