@@ -71,6 +71,7 @@ public:
 	int get_posizione() const;		//Resituisce la posizione
 	int get_ritardo() const;		//Resituisce il ritardo
 	bool isReverse() const;			//Restituisce true se il treno viaggia al contrario
+	int get_orario() const;
 
 	virtual void set_velocita(int v = 0);	//Imposta la velocita. Poichè questa interfaccia non ha una velocita limite predefinita, essa viene posta a 0 di default
 
@@ -78,6 +79,7 @@ public:
 	bool Treno::operator ==(const Treno& treno) const;			//Operatore di confronto
 
 protected:
+	int orario_partenza;
 	int orario;
 	int identificativo;
 	int velocita;

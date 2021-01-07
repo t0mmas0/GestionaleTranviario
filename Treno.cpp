@@ -6,13 +6,14 @@
 #include "Stazione.h"
 
 Treno::Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
-	: orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, velocita_limitata{ false }, fermata_effettuata{ false } {
+	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, velocita_limitata{ false }, fermata_effettuata{ false } {
 	if (reverse) {
 		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
 		iteratore_stazioni = --(Stazioni.end());
 		posizione = (*iteratore_stazioni)->getDistance();
 		indice_orario = Orari.size() - 1;
 	}
+	orario_partenza = Orari[indice_orario];
 }
 
 Treno::Treno(const Treno& treno)
@@ -277,6 +278,10 @@ int Treno::get_ritardo() const {
 
 bool Treno::isReverse() const{
 	return reverse;
+}
+
+int Treno::get_orario() const{
+	return orario_partenza;
 }
 
 void Treno::set_velocita(int v){
