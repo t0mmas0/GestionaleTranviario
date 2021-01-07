@@ -17,7 +17,7 @@ Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::
 	orario_partenza = Orari[indice_orario];
 }
 
-//Il treno esegue automaticamente alcune cose in base al proprio stato attuale
+//Il treno esegue automaticamente alcune operazioni in base allo stato in cui si trova
 void Treno::esegui() {
 	switch (stato){
 	case creato:
@@ -53,10 +53,11 @@ void Treno::esegui() {
 	case movimento:
 		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocità
 		avanza();
-		//Deve poi controllare se deve chiamare la stazione
+		//Deve poi controllare se deve chiamare la stazione e se vi può entrare
 		testa_ingresso_stazione();
 		break;
 	case distrutto:
+		//TODO: verificare ultima stazione
 		throw std::logic_error("Errore. Il treno è distrutto e non può eseguire nessuna azione");
 		break;
 	default:
