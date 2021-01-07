@@ -80,3 +80,15 @@ void Stazione::PrenotaDeposito(const std::shared_ptr<Treno> t) {
 bool Stazione::isPrincipale() {
     return principale;
 }
+
+bool Stazione::isFreePass(const std::shared_ptr<Treno> t) {
+    return false;
+}
+
+void Stazione::PrenotaTransito(const std::shared_ptr<Treno> t) {
+
+}
+
+void Stazione::liberaBinarioTransito(const std::shared_ptr<Treno> t) {
+
+}

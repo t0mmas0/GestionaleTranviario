@@ -42,9 +42,9 @@ public:
     void liberaBinarioStazionamento(const std::shared_ptr<Treno> t);
     void liberaDeposito(const std::shared_ptr<Treno> t);
     virtual bool isPrincipale();
-    virtual bool isFreePass(const std::shared_ptr<Treno> t)=0;
-    virtual void PrenotaTransito(const std::shared_ptr<Treno> t)=0;
-    virtual void liberaBinarioTransito(const std::shared_ptr<Treno> t)=0;
+    virtual bool isFreePass(const std::shared_ptr<Treno> t);
+    virtual void PrenotaTransito(const std::shared_ptr<Treno> t);
+    virtual void liberaBinarioTransito(const std::shared_ptr<Treno> t);
 
 
 };

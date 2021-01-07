@@ -1,5 +1,6 @@
 //autore Marco Nardi 1218629
 #include "LeggiLinea.h"
+#include "StazionePrincipale.h"
 #include <sstream>
 
 
@@ -16,7 +17,7 @@ std::list<std::shared_ptr<Stazione>> LeggiLinea::LeggiStazioni()
 	}
 	std::string line;
 	std::getline(Stream, line);//leggo prima stazione che sarà solo composta da parole
-	Stazioni.emplace_back(std::shared_ptr<Stazione>(0, line));
+	Stazioni.emplace_back(std::make_shared<StazionePrincipale>(0, line));
 	std::string NomeStazione;
 	std::string parola;
 	bool IsSecondaria;
@@ -47,7 +48,7 @@ std::list<std::shared_ptr<Stazione>> LeggiLinea::LeggiStazioni()
 				Stazioni.emplace_back(std::make_shared<StazioneSecondaria>(kmDaOrigine, NomeStazione));
 			}
 			else {
-				Stazioni.emplace_back(std::make_shared<Stazione>(kmDaOrigine, NomeStazione));
+				Stazioni.emplace_back(std::make_shared<StazionePrincipale>(kmDaOrigine, NomeStazione));
 			}
 			previouskm = kmDaOrigine;
 		}

@@ -16,8 +16,7 @@ private:
     Semaforo semBinariTransitoInverso;
     std::shared_ptr<Treno>  binariTransito;
     std::shared_ptr<Treno>  binariTransitoInverso;
-    int j=0;
-    int js=0;
+
 
 
 public:
