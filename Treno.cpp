@@ -7,7 +7,7 @@
 #include <memory>
 
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
-	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, velocita_limitata{ false }, fermata_effettuata{ false } {
+	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false } {
 	if (reverse) {
 		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
 		iteratore_stazioni = --(Stazioni.end());
@@ -316,10 +316,6 @@ void Regionale::attiva(int orario){
 }
 
 void Regionale::set_velocita(int v){
-	if (v >= MAX_SPEED)
-		velocita_limitata = false;
-	if (v < MAX_SPEED)
-		velocita_limitata = true;
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
@@ -357,10 +353,6 @@ void AltaVelocita::attiva(int orario){
 }
 
 void AltaVelocita::set_velocita(int v){
-	if (v >= MAX_SPEED)
-		velocita_limitata = false;
-	if (v < MAX_SPEED)
-		velocita_limitata = true;
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
@@ -404,10 +396,6 @@ void SuperVelocita::attiva(int orario){
 }
 
 void SuperVelocita::set_velocita(int v){
-	if (v >= MAX_SPEED)
-		velocita_limitata = false;
-	if (v < MAX_SPEED)
-		velocita_limitata = true;
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);

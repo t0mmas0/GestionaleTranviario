@@ -96,7 +96,6 @@ protected:
 
 	bool attivato;
 	bool reverse;
-	bool velocita_limitata;
 	bool fermata_effettuata;
 };
 
