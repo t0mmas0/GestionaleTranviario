@@ -39,13 +39,13 @@ class Treno {
 public:
 
 	Treno();																											//Costruttore di default
-	Treno(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);		//Costruttore
+	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);		//Costruttore
 	Treno(const Treno& treno);																							//Costruttore di copia
 
 	// TODO: Copia e Move dovrebbero essere virtuali per gestire i tipi specifici?
 	// TODO: Move
 
-	
+
 	void esegui();												//Muta automaticamento lo stato del treno
 	void sposta_avanti(int v);
 	void sposta_indietro(int v);
@@ -90,8 +90,8 @@ protected:
 
 	Stato stato;
 
-	std::list<std::shared_ptr<Stazione>>& Stazioni;
-	std::list<std::shared_ptr<Stazione>>::iterator iteratore_stazioni;
+	const std::list<std::shared_ptr<Stazione>>& Stazioni;
+	std::list<std::shared_ptr<Stazione>>::const_iterator iteratore_stazioni;
 
 	std::vector<int>& Orari;
 	int indice_orario;
@@ -104,7 +104,7 @@ protected:
 
 class Regionale : public Treno {
 public:
-	Regionale(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void avanza(int v = MAX_SPEED) override;
@@ -115,7 +115,7 @@ private:
 
 class AltaVelocita : public Treno {
 public:
-	AltaVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void avanza(int v = MAX_SPEED) override;
@@ -126,7 +126,7 @@ private:
 
 class SuperVelocita : public Treno {
 public:
-	SuperVelocita(int id, std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void avanza(int v = MAX_SPEED) override;
