@@ -21,7 +21,7 @@ Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::
 void Treno::esegui() {
 	switch (stato){
 	case creato:
-		std::logic_error("Impossibile far eseguire operazioni ad un treno creato ma non attivato");
+		throw std::logic_error("Impossibile far eseguire operazioni ad un treno creato ma non attivato");
 		break;
 	case attesa:
 		//Se il treno è in attesa, non fa assolutamente nulla, ma avvisa di essere fermo
@@ -33,7 +33,7 @@ void Treno::esegui() {
 		break;
 	case stazione:
 		//Se sono in una zona stazione, continuo ad avanzare a velocità limitata
-		avanza(80);
+		avanza();
 		//Se non mi sono ancora fermato, controllo di non essere arrivato alla fermata. Altrimenti controllo di non essere uscito dalla zona stazione
 		if (!fermata_effettuata)
 			testa_fermata();
@@ -57,7 +57,7 @@ void Treno::esegui() {
 		testa_ingresso_stazione();
 		break;
 	case distrutto:
-		std::logic_error("Errore. Il treno è distrutto e non può eseguire nessuna azione");
+		throw std::logic_error("Errore. Il treno è distrutto e non può eseguire nessuna azione");
 		break;
 	default:
 		break;
@@ -65,27 +65,22 @@ void Treno::esegui() {
 	orario++;
 }
 
-void Treno::avanza(int v){
-	//Controllo se ho ricevuto precedenti limitazioni sulla velocità - in tal caso rimangono valide, ma solo se è minore di quella prevista.
-	if (velocita_limitata) {
-		if (velocita < v)
-			v = velocita;
-	}
+void Treno::avanza(){
 	//Controllo in che direzione si muove il treno
 	if (reverse)
-		sposta_indietro(v);
+		sposta_indietro();
 	else
-		sposta_avanti(v);
+		sposta_avanti();
 }
 
-void Treno::sposta_avanti(int v){
+void Treno::sposta_avanti(){
 	//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
-	posizione = posizione + (v / 60.0);
+	posizione = posizione + (velocita / 60.0);
 }
  
-void Treno::sposta_indietro(int v){
+void Treno::sposta_indietro(){
 	//Aggiorno la posizione del treno, convertendo la velocita da km/h a km/minuto
-	posizione = posizione - (v / 60.0);
+	posizione = posizione - (velocita / 60.0);
 }
 
 void Treno::testa_ingresso_stazione(){
@@ -321,12 +316,6 @@ void Regionale::set_velocita(int v){
 	Treno::set_velocita(v);
 }
 
-void Regionale::avanza(int v){
-	if (v > MAX_SPEED)
-		v = MAX_SPEED;
-	Treno::avanza(v);
-}
-
 void Regionale::chiama_stazione(){
 	//Il treno si deve fermare sempre
 	prenota_fermata();
@@ -356,12 +345,6 @@ void AltaVelocita::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
-}
-
-void AltaVelocita::avanza(int v){
-	if (v > MAX_SPEED)
-		v = MAX_SPEED;
-	Treno::avanza(v);
 }
 
 void AltaVelocita::chiama_stazione(){
@@ -399,12 +382,6 @@ void SuperVelocita::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
 	Treno::set_velocita(v);
-}
-
-void SuperVelocita::avanza(int v){
-	if (v > MAX_SPEED)
-		v = MAX_SPEED;
-	Treno::avanza(v);
 }
 
 void SuperVelocita::chiama_stazione(){

@@ -47,8 +47,8 @@ public:
 
 
 	void esegui();												//Muta automaticamento lo stato del treno
-	void sposta_avanti(int v);
-	void sposta_indietro(int v);
+	void sposta_avanti();
+	void sposta_indietro();
 	void testa_ingresso_stazione();
 	void testa_uscita_stazione();
 	void testa_fermata();
@@ -61,8 +61,8 @@ public:
 	void libera_binario();
 	void partenza(bool trans = false);
 	void aggiorna_indici();
-
-	virtual void avanza(int v = 0);											//Fa avanzare il treno
+	void avanza();											//Fa avanzare il treno
+	
 	virtual void attiva(int ora) = 0;										//Attiva per la prima volta il treno sulla linea
 	virtual void chiama_stazione() = 0;										//Chiama stazione
 
@@ -104,7 +104,6 @@ public:
 	Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
-	void avanza(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
 private:
 	static const int MAX_SPEED = 160;
@@ -115,7 +114,6 @@ public:
 	AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
-	void avanza(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
 private:
 	static const int MAX_SPEED = 240;
@@ -126,7 +124,6 @@ public:
 	SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
-	void avanza(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
 private:
 	static const int MAX_SPEED = 300;
