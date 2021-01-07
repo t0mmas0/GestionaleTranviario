@@ -16,10 +16,6 @@ Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::
 	orario_partenza = Orari[indice_orario];
 }
 
-Treno::Treno(const Treno& treno)
-	: orario{ treno.orario }, identificativo{ treno.identificativo }, velocita{ treno.velocita }, posizione{ treno.posizione }, ritardo{ treno.ritardo }, minuti_fermata{ treno.minuti_fermata }, stato{ treno.stato }, Stazioni{ treno.Stazioni }, iteratore_stazioni{ treno.iteratore_stazioni }, Orari{ treno.Orari }, indice_orario{ treno.indice_orario }, attivato{ false }, reverse{ treno.reverse }{
-}
-
 //Il treno esegue automaticamente alcune cose in base al proprio stato attuale
 void Treno::esegui() {
 	switch (stato){
@@ -294,27 +290,6 @@ void Treno::set_velocita(int v){
 	else {
         velocita = v;
 	}
-}
-
-Treno& Treno::operator=(const Treno& treno){
-	orario = treno.orario;
-	identificativo = treno.identificativo;
-
-    velocita = treno.velocita,
-
-	ritardo = treno.ritardo;
-	minuti_fermata = treno.minuti_fermata;
-
-	posizione = treno.posizione;
-
-	stato = treno.stato;
-
-	Stazioni = treno.Stazioni;
-	iteratore_stazioni = treno.iteratore_stazioni;
-
-	Orari = treno.Orari;
-	indice_orario = treno.indice_orario;
-	return *this;
 }
 
 bool Treno::operator==(const Treno& treno) const{
