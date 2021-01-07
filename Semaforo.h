@@ -11,6 +11,7 @@ class Semaforo {
 private:
     bool status;
 public:
+
     Semaforo();
 
     void setRosso();

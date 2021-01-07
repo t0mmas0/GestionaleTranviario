@@ -14,17 +14,20 @@
 class Treno;
 class Stazione {
 private:
-    bool Principale = true;
+    bool principale = true;
 protected:
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
 
     Semaforo semBinariStazionamento;
-    std::vector <Treno> binariStazionamento{4};
+    Semaforo semBinariStazionamentoInverso;
+    std::vector <Treno> binariStazionamento{2};
+    std::vector <treno> binariStazionamentoInverso{2};
     int i = 0;
+    int is = 0;
 
     std::vector <Treno> deposito{5};
-
+    std::vector <Treno> depositoInverso{5};
 
 
 public:
@@ -32,13 +35,15 @@ public:
     Stazione(int km, std::string nome);
     int getDistance();
     std::string getNome();
-    bool isFreeStop();
+    bool isFreeStop(Treno t);
     void PrenotaStazionameto(Treno t);
     void PrenotaDeposito(Treno t);
     void liberaBinarioStazionamento(Treno t);
     void liberaDeposito(Treno t);
-    bool isPrincipale();
-
+    virtual bool isPrincipale();
+    virtual bool isFreePass(Treno t)=0;
+    virtual void PrenotaTransito(Treno t)=0;
+    virtual void liberaBinarioTransito(Treno t)=0;
 
 
 };
