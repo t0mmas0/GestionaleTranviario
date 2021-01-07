@@ -16,9 +16,49 @@ Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::
 	}
 	orario_partenza = Orari[indice_orario];
 }
-//******************************************************************************************************************
+
+
+//******************************Getters e Setters******************************************************************
+
+int Treno::get_id() const {
+	return identificativo;
+}
+
+int Treno::get_velocita() const {
+	return velocita;
+}
+
+double Treno::get_posizione() const {
+	return posizione;
+}
+
+int Treno::get_ritardo() const {
+	return ritardo;
+}
+
+bool Treno::isReverse() const {
+	return reverse;
+}
+
+int Treno::get_orario() const {
+	return orario_partenza;
+}
+
+void Treno::set_velocita(int v) {
+	if (v < 0)
+		throw std::invalid_argument("La velocita non può essere negativa");
+	if (v == 0) {
+		velocita = 0;
+		cambia_stato(attesa);
+	}
+	else {
+		velocita = v;
+	}
+}
+
+
+
 //******************************Routine e subroutine principali del treno*******************************************
-//******************************************************************************************************************
 
 //Routine: il treno esegue alcune azioni in base allo stato in cui si trova
 void Treno::esegui() {
@@ -101,9 +141,6 @@ void Treno::cambia_stato(Stato s) {
 	}
 }
 
-//******************************************************************************************************************
-//******************************************************************************************************************
-//******************************************************************************************************************
 
 
 //*****************************Principali operazioni del treno******************************************************
@@ -190,6 +227,8 @@ void Treno::aggiorna_fermata() {
 	minuti_fermata++;
 }
 
+
+
 //*****************************Funzioni di appoggio*****************************************************************
 
 //Sposta il treno avanti
@@ -244,6 +283,8 @@ void Treno::calcola_ritardo() {
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
+
+
 //*****************************Funzioni di prenotazione dei binari**************************************************
 
 //Prenota un binario per la partenza del treno dalla stazione di partenza
@@ -292,45 +333,14 @@ void Treno::prenota_transito(){
 
 
 
-int Treno::get_id() const {
-	return identificativo;
-}
-
-int Treno::get_velocita() const {
-	return velocita;
-}
-
-double Treno::get_posizione() const {
-	return posizione;
-}
-
-int Treno::get_ritardo() const {
-	return ritardo;
-}
-
-bool Treno::isReverse() const{
-	return reverse;
-}
-
-int Treno::get_orario() const{
-	return orario_partenza;
-}
-
-void Treno::set_velocita(int v){
-	if (v < 0)
-		throw std::invalid_argument("La velocita non può essere negativa");
-	if (v == 0) {
-        velocita = 0;
-		cambia_stato(attesa);
-	}
-	else {
-        velocita = v;
-	}
-}
+//*****************************Operatori utili**********************************************************************
 
 bool Treno::operator==(const Treno& treno) const{
 	return identificativo == treno.identificativo;
 }
+
+//-------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------
 
 Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
