@@ -17,7 +17,7 @@ private:
 	std::ifstream Stream;
 public:
 	LeggiLinea(const std::string& file);
-	std::list<std::shared_ptr<Stazione>> LeggiStazioni();
+	std::list<std::shared_ptr<Stazione>> leggiStazioni();
 
 };
 

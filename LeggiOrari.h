@@ -19,9 +19,8 @@ private:
 	std::list<std::shared_ptr<Treno>> TreniPer;//treni da fine a 0
 	std::string NomeFile;
 	std::ifstream Stream;
-	void correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> orari, int velocita, bool reverse, int tipoTreno);
+	void correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno);
 	void sortTreni();
-	bool compareTreni(const std::shared_ptr<Treno>& t1, const std::shared_ptr<Treno>& t2);
 	int getVelocita(int tipoTreno);
 public:
 	LeggiOrari(const std::string& file);

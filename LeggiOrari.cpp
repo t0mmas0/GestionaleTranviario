@@ -19,6 +19,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 	int tipoTreno;
 	int n;
 	for (line; std::getline(Stream, line); ) {
+		bool esistente = false;
 		std::vector<int> orari;
 		std::stringstream sstream(line);//bind linea allo stringstream per estrapolare i dati
 		int i = 0;
@@ -43,8 +44,23 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 		if (orari.size() == 0) {// se non c'era neanche un orario
 			throw std::logic_error("serve almeno l'orario di partenza nel file");
 		}
+		for (auto i = TreniDa.begin(); i != TreniDa.end(); ++i) {
+			if (idTreno == (*i)->get_id()) {
+				esistente = true;
+				break;
+			}
+		}
+		for (auto i = TreniPer.begin(); i != TreniPer.end(); ++i) {
+			if (idTreno == (*i)->get_id()) {
+				esistente = true;
+				break;
+			}
+		}
+		if (esistente) {
+			continue;
+		}
 		if (Stazioni.size() > orari.size()) {//se ci sono piu stazioni di orari vuol dire che 
-			int i = 1;
+			/*int i = 1;
 			orari.resize(Stazioni.size());
 			for (auto it = Stazioni.begin(); it != Stazioni.end(); ++it) {
 				if (tipoTreno != 1) {//inserisco quelli mancanti ipotizzando che ci siano gia quelle principali
@@ -58,18 +74,33 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 
 				}
 				i++;
-			}
-			if (tipoTreno != 1 && orari.size()< Stazioni.size()) {//caso in cuimancassero anche le principali
+			}*/
+			if (tipoTreno != 1 && orari.size() < Stazioni.size()) {//caso in cuimancassero anche le principali
 
 			}
 			int origSize = orari.size();
-			orari.resize(Stazioni.size());
+			orari.resize(Stazioni.size(), -1);
 			if (tipoTreno != 1) {
 				int i = 1;
 				int j = 1;
 				for (auto it = ++Stazioni.begin(); it != Stazioni.end(); ++it) {
 					if ((*it)->isPrincipale()) {
-						std::swap(orari[j], orari[i]);
+						if (orari[i] != 0 && i==j+1) {
+							if (i ==j+1) {
+
+								orari.resize(orari.size() - 1);
+								orari.insert(orari.begin() + j, 0);
+								j += 2;
+							}
+							else {
+								j++;
+							}
+						}
+						else {
+
+							std::swap(orari[j], orari[i]);
+							j++;
+						}
 
 					}
 					i++;
@@ -81,6 +112,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 			orari.erase(orari.begin() + Stazioni.size(), orari.end());
 		}
 		correggiOrari(Stazioni, orari, velocita, reverse, tipoTreno);
+		//controlla se treno esiste gia
 		if (tipoTreno == 1) {
 			if (reverse) {
 				TreniPer.emplace_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
@@ -111,7 +143,8 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 	Stream.close();
 }
 
-void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> orari, int velocita, bool reverse, int tipoTreno)
+
+void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno)
 {
 	int i = 1;
 	bool fermataPrev = false;
@@ -148,12 +181,12 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 		}
 	}
 	if (reverse) {
-		for (auto it = --Stazioni.end(); it != Stazioni.begin(); --it) {
-			auto next = std::next(it, 1);
+		for (auto it = ++Stazioni.rbegin(); it != Stazioni.rend(); ++it) {
+			auto prev = std::prev(it, 1);
 			int km = (*it)->getDistance();
 
-			int kmPrima = (*(next))->getDistance();
-			int kmInMezzo = km - kmPrima;
+			int kmPrima = (*(prev))->getDistance();
+			int kmInMezzo = kmPrima - km;
 			int tempoInMezzo = 0;
 			if (fermataPrev) {
 				tempoInMezzo += 5;
@@ -186,7 +219,7 @@ struct MyClassComparator {
 		// Return true if first should go before second
 		if (first->get_orario() < second->get_orario()) {
 
-		return true;
+			return true;
 		}
 		else {
 			return false;

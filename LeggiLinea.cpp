@@ -9,7 +9,7 @@ LeggiLinea::LeggiLinea(const std::string& file) :NomeFile(file)
 
 }
 
-std::list<std::shared_ptr<Stazione>> LeggiLinea::LeggiStazioni()
+std::list<std::shared_ptr<Stazione>> LeggiLinea::leggiStazioni()
 {
 	Stream.open(NomeFile);//apro file
 	if (!Stream) {//se file non trovato lancio eccezione
