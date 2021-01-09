@@ -110,7 +110,7 @@ protected:
 
 class Regionale : public Treno {
 public:
-	Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
@@ -120,7 +120,7 @@ private:
 
 class AltaVelocita : public Treno {
 public:
-	AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void chiama_stazione() override;
@@ -130,7 +130,7 @@ private:
 
 class SuperVelocita : public Treno {
 public:
-	SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);
+	SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
 	void chiama_stazione() override;

@@ -343,7 +343,7 @@ bool Treno::operator==(const Treno& treno) const{
 //-------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------
 
-Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
+Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
@@ -370,7 +370,7 @@ void Regionale::chiama_stazione(){
 	prenota_fermata();
 }
 
-AltaVelocita::AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
+AltaVelocita::AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
@@ -407,7 +407,7 @@ void AltaVelocita::chiama_stazione(){
 	}
 }
 
-SuperVelocita::SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse)
+SuperVelocita::SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
