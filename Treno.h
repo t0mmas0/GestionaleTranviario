@@ -61,6 +61,7 @@ public:																												//Costruttore di default
 	void testa_ingresso_stazione();								//Controlla se il treno è entrato in zona stazione
 	void testa_uscita_stazione();								//Controlla se il treno è uscito dalla zona stazione
 	void testa_fermata();										//Controlla se il treno è arrivato alla banchina
+	void testa_transito();										//Controlla se il treno in transito ha superato la stazione
 	void aggiorna_fermata();									//Conta i minuti di fermata. Trascorsi 5 minuti, imposta lo stato a stazione e fa ripartire il treno
 
 	//*************************Funzioni di appoggio*********************************

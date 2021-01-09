@@ -6,6 +6,8 @@
 #include "Stazione.h"
 #include <memory>
 
+//TODO: resettare posizione parcheggio
+
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
 	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false } {
@@ -86,6 +88,8 @@ void Treno::esegui() {
 	case transito:
 		//Se sono in transito non ho restrizioni sulla velocità e posso continuare ad avanzare
 		avanza();
+		//Avviso in caso di superamento della stazione
+		testa_transito();
 		//Devo controllare però di non essere uscito dalla zona stazione
 		testa_uscita_stazione();
 		break;
@@ -211,6 +215,27 @@ void Treno::testa_fermata() {
 			calcola_ritardo();
 			//Anche se il treno si è fermato più avanti, virtualmente si trova al km della stazione
 			posizione = (*iteratore_stazioni)->getDistance();
+		}
+	}
+}
+
+void Treno::testa_transito(){
+	if (reverse) {
+		if (posizione <= (*iteratore_stazioni)->getDistance()) {
+			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+			//Controllo se questa è la stazione capolinea
+			if (iteratore_stazioni == Stazioni.begin()) {
+				cambia_stato(distrutto);
+				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
+			}			
+		}
+	}
+	else{
+		if (posizione >= (*iteratore_stazioni)->getDistance()) {
+			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+			if (std::next(iteratore_stazioni) == Stazioni.end()) {
+				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
+			}
 		}
 	}
 }
