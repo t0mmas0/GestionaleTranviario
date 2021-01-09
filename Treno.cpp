@@ -7,6 +7,8 @@
 #include <memory>
 
 //TODO: resettare posizione parcheggio
+//TODO: liberare binari di transito al capolinea
+//TODO: liberare binari di fermata al capolinea
 
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
@@ -104,7 +106,6 @@ void Treno::esegui() {
 		testa_ingresso_stazione();
 		break;
 	case distrutto:
-		//TODO: verificare ultima stazione
 		throw std::logic_error("Errore. Il treno è distrutto e non può eseguire nessuna azione");
 		break;
 	default:
@@ -219,6 +220,7 @@ void Treno::testa_fermata() {
 	}
 }
 
+//Controlla se il treno ha superato la stazione lungo il binario di transito
 void Treno::testa_transito(){
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance()) {
@@ -269,6 +271,7 @@ void Treno::sposta_indietro() {
 	posizione = posizione - (velocita / 60.0);
 }
 
+//Libera il binario su cui si trovava il treno
 void Treno::libera_binario() {
 	//Quale tipo di binario devo liberare?
 	if (stato == transito)
@@ -293,6 +296,21 @@ void Treno::aggiorna_indici() {
 void Treno::effettua_fermata() {
 	cambia_stato(fermata);
 	fermata_effettuata = true;
+	//Controllo se era l'ultima fermata
+	if (reverse) {
+		if (iteratore_stazioni == Stazioni.begin()) {
+			std::cout << "Il treno " << identificativo << " è arrivato alla fermata finale e verrà distrutto" << std::endl;
+			cambia_stato(distrutto);
+			//TODOD: libera il binario 
+		}
+	}
+	else {
+		if (std::next(iteratore_stazioni, 1) == Stazioni.end()) {
+			std::cout << "Il treno " << identificativo << " è arrivato alla fermata finale e verrà distrutto" << std::endl;
+			cambia_stato(distrutto);
+			//TODO: libera il binario
+		}
+	}
 }
 
 //Calcola il ritardo con cui il treno è arrivato alla fermata
