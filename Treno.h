@@ -39,7 +39,7 @@ class Treno {
 public:
 
 	Treno();																												//Costruttore di default
-	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& Orari, bool reverse = false);		//Costruttore
+	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);		//Costruttore
 
 	//*************************Getters e setters************************************
 	int get_id() const;											//Resituisce il numero del treno
@@ -100,7 +100,7 @@ protected:
 	const std::list<std::shared_ptr<Stazione>>& Stazioni;
 	std::list<std::shared_ptr<Stazione>>::const_iterator iteratore_stazioni;
 
-	std::vector<int>& Orari;
+	std::vector<int> Orari;
 	int indice_orario;
 
 	bool attivato;
