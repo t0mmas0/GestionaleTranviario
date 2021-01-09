@@ -36,9 +36,7 @@ enum Stato :int { creato = 0, attesa = 1, stazione = 2, transito = 3, movimento 
 
 
 class Treno {
-public:
-
-	Treno();																												//Costruttore di default
+public:																												//Costruttore di default
 	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);		//Costruttore
 
 	//*************************Getters e setters************************************
