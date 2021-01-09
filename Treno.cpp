@@ -163,7 +163,6 @@ void Treno::avanza(){
 
 //Controlla se il treno è entrato in zona stazione. A seguito del controllo lo stato del treno sarà uno tra: {movimento, stazione, transito, parcheggio}
 void Treno::testa_ingresso_stazione() {
-	//TODO: cout
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance() + 5)
 			chiama_stazione();
