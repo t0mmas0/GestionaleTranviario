@@ -68,6 +68,7 @@ public:																												//Costruttore di default
 	void sposta_avanti();										//Sposta il treno in avanti
 	void sposta_indietro();										//Sposta il treno indietro
 
+	virtual void pre_chiamata() = 0;
 	virtual void chiama_stazione() = 0;							//Chiama la stazione e agisce in base al tipo di treno e di stazione
 	
 	void libera_binario();										//Libera il binario sul quale si trovava il treno
@@ -105,13 +106,20 @@ protected:
 	bool attivato;
 	bool reverse;
 	bool fermata_effettuata;
+	bool annunciato;
 };
+
+
+//************************************************************************************************************
+//************************************************************************************************************
+
 
 class Regionale : public Treno {
 public:
 	Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
+	void pre_chiamata() override;
 	void chiama_stazione() override;
 private:
 	static const int MAX_SPEED = 160;
@@ -122,6 +130,7 @@ public:
 	AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
+	void pre_chiamata() override;
 	void chiama_stazione() override;
 private:
 	static const int MAX_SPEED = 240;
@@ -132,6 +141,7 @@ public:
 	SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);
 	void attiva(int orario) override;
 	void set_velocita(int v = MAX_SPEED) override;
+	void pre_chiamata() override;
 	void chiama_stazione() override;
 private:
 	static const int MAX_SPEED = 300;
