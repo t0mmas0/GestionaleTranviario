@@ -23,6 +23,8 @@ private:
 	void sortTreni();
 	int getVelocita(int tipoTreno);
 public:
+	std::list<std::shared_ptr<Treno>> getTreniDa();
+	std::list<std::shared_ptr<Treno>> getTreniPer();
 	LeggiOrari(const std::string& file);
 	void leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni);
 };

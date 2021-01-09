@@ -2,8 +2,36 @@
 #include<sstream>
 #include <stdexcept>
 #include <algorithm>
+
+//functor per sortare i treni
+struct TreniComparator {
+	bool operator()(const std::shared_ptr<Treno>& primo, const std::shared_ptr<Treno>& secondo) const {
+		// Returna treu se primo va prima del secondo
+		if (primo->get_orario() < secondo->get_orario()) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+};
+
+
+std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniDa()
+{
+	TreniDa.sort(TreniComparator());//ordino rispetto orario di partenza
+	return TreniDa;
+}
+
+std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniPer(){
+	TreniPer.sort(TreniComparator());//ordino rispetto orario di partenza
+	return TreniPer;
+}
+
 LeggiOrari::LeggiOrari(const std::string& file) :NomeFile(file)
 {
+	
 }
 
 void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni) {
@@ -12,14 +40,13 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 	if (!Stream) {//se file non trovato lancio eccezione
 		throw std::runtime_error("Impossibile aprire file");
 	}
-	int orarioPartenza;
 	int idTreno;
 	std::string line;
-	bool reverse;
+	bool reverse;//tiene conto il verso del treno
 	int tipoTreno;
-	int n;
+	int n;//variabile dove salvo dati letti da file
 	for (line; std::getline(Stream, line); ) {
-		bool esistente = false;
+		bool esistente = false;//variabile nel caso il esista gia un trenocon lo stesso id
 		std::vector<int> orari;
 		std::stringstream sstream(line);//bind linea allo stringstream per estrapolare i dati
 		int i = 0;
@@ -50,43 +77,27 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 				break;
 			}
 		}
-		for (auto i = TreniPer.begin(); i != TreniPer.end(); ++i) {
-			if (idTreno == (*i)->get_id()) {
-				esistente = true;
-				break;
+		if (esistente) {
+			for (auto i = TreniPer.begin(); i != TreniPer.end(); ++i) {
+				if (idTreno == (*i)->get_id()) {
+					esistente = true;
+					break;
+				}
 			}
 		}
 		if (esistente) {
 			continue;
 		}
-		if (Stazioni.size() > orari.size()) {//se ci sono piu stazioni di orari vuol dire che 
-			/*int i = 1;
-			orari.resize(Stazioni.size());
-			for (auto it = Stazioni.begin(); it != Stazioni.end(); ++it) {
-				if (tipoTreno != 1) {//inserisco quelli mancanti ipotizzando che ci siano gia quelle principali
-
-					if (!(*it)->isPrincipale()) {
-
-						orari.insert(orari.begin() + i, 0);
-					}
-				}
-				else {
-
-				}
-				i++;
-			}*/
-			if (tipoTreno != 1 && orari.size() < Stazioni.size()) {//caso in cuimancassero anche le principali
-
-			}
+		if (Stazioni.size() > orari.size()) {//algoritmo nel caso manchino orari (riempe con 0 gli orari vuoti) 
 			int origSize = orari.size();
-			orari.resize(Stazioni.size(), -1);
-			if (tipoTreno != 1) {
+			orari.resize(Stazioni.size(), 0);
+			if (tipoTreno != 1) {//qua serve solo per alta/super velocita
 				int i = 1;
 				int j = 1;
 				for (auto it = ++Stazioni.begin(); it != Stazioni.end(); ++it) {
 					if ((*it)->isPrincipale()) {
-						if (orari[i] != 0 && i==j+1) {
-							if (i ==j+1) {
+						if (orari[i] != 0 && i == j + 1) {
+							if (i == j + 1) {
 
 								orari.resize(orari.size() - 1);
 								orari.insert(orari.begin() + j, 0);
@@ -108,11 +119,11 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 			}
 
 		}
-		if (Stazioni.size() < orari.size()) {
+		if (Stazioni.size() < orari.size()) {//se ci sono piu orari di stazioni tolgo gli ultimi
 			orari.erase(orari.begin() + Stazioni.size(), orari.end());
 		}
-		correggiOrari(Stazioni, orari, velocita, reverse, tipoTreno);
-		//controlla se treno esiste gia
+		correggiOrari(Stazioni, orari, velocita, reverse, tipoTreno);//chiamo funzione correggi orari
+		//per ogni treno inserisco col giusto costruttore nella giusta lista
 		if (tipoTreno == 1) {
 			if (reverse) {
 				TreniPer.emplace_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
@@ -145,11 +156,12 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 
 
 void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno)
-{
+{//putroppo non sono riuscito a creare un algoritmo unico per treni reverse e non reverse in quanto non si può assegnare un reverse iterator a un iterator
 	int i = 1;
-	bool fermataPrev = false;
+	bool fermataPrev = false;//bool che tiene conto se il treno si e' fermato nella stazione prima, in quel caso aggiungo 5 in al tempo
 	if (!reverse) {
 		for (auto it = ++Stazioni.begin(); it != Stazioni.end(); ++it) {
+			//ottengo i km in mezzo e calcolo il tempo 
 			auto prev = std::prev(it, 1);
 			int km = (*it)->getDistance();
 
@@ -180,7 +192,7 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 			i++;
 		}
 	}
-	if (reverse) {
+	if (reverse) {//stesso algoritmo ma con dati al contrario
 		for (auto it = ++Stazioni.rbegin(); it != Stazioni.rend(); ++it) {
 			auto prev = std::prev(it, 1);
 			int km = (*it)->getDistance();
@@ -212,24 +224,6 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 			i++;
 		}
 	}
-}
-
-struct MyClassComparator {
-	bool operator()(const std::shared_ptr<Treno>& first, const std::shared_ptr<Treno>& second) const {
-		// Return true if first should go before second
-		if (first->get_orario() < second->get_orario()) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-};
-
-void LeggiOrari::sortTreni()
-{
-	TreniDa.sort(MyClassComparator());
 }
 
 
