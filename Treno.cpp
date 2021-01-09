@@ -6,10 +6,6 @@
 #include "Stazione.h"
 #include <memory>
 
-//TODO: resettare posizione parcheggio
-//TODO: liberare binari di transito al capolinea
-//TODO: liberare binari di fermata al capolinea
-
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
 	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false } {
@@ -162,10 +158,10 @@ void Treno::avanza(){
 
 //Controlla se il treno è entrato in zona stazione. A seguito del controllo lo stato del treno sarà uno tra: {movimento, stazione, transito, parcheggio}
 void Treno::testa_ingresso_stazione() {
+	//TODO: cout
 	if (reverse) {
-		if (posizione <= (*iteratore_stazioni)->getDistance() + 5) {
+		if (posizione <= (*iteratore_stazioni)->getDistance() + 5)
 			chiama_stazione();
-		}
 	}
 	else {
 		if (posizione >= (*iteratore_stazioni)->getDistance() - 5)
@@ -229,6 +225,7 @@ void Treno::testa_transito(){
 			if (iteratore_stazioni == Stazioni.begin()) {
 				cambia_stato(distrutto);
 				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
+				libera_binario();
 			}			
 		}
 	}
@@ -237,6 +234,7 @@ void Treno::testa_transito(){
 			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
 			if (std::next(iteratore_stazioni) == Stazioni.end()) {
 				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
+				libera_binario();
 			}
 		}
 	}
@@ -301,14 +299,14 @@ void Treno::effettua_fermata() {
 		if (iteratore_stazioni == Stazioni.begin()) {
 			std::cout << "Il treno " << identificativo << " è arrivato alla fermata finale e verrà distrutto" << std::endl;
 			cambia_stato(distrutto);
-			//TODOD: libera il binario 
+			libera_binario();
 		}
 	}
 	else {
 		if (std::next(iteratore_stazioni, 1) == Stazioni.end()) {
 			std::cout << "Il treno " << identificativo << " è arrivato alla fermata finale e verrà distrutto" << std::endl;
 			cambia_stato(distrutto);
-			//TODO: libera il binario
+			libera_binario();
 		}
 	}
 }
@@ -358,6 +356,11 @@ void Treno::prenota_fermata(){
 		//Altrimenti mi metto in parcheggio (se non lo ero già)
 		(*iteratore_stazioni)->PrenotaDeposito(std::shared_ptr<Treno>(this));
 		cambia_stato(parcheggio);
+		//Sposto il treno al chilometro del parcheggio, anche se la chiamata avviene oltre
+		if (reverse)
+			posizione = (*iteratore_stazioni)->getDistance() + 5;
+		else
+			posizione = (*iteratore_stazioni)->getDistance() - 5;
 	}
 }
 
@@ -372,6 +375,11 @@ void Treno::prenota_transito(){
 		//Altrimenti mi metto in parcheggio, ma solo se non lo ero già
 		(*iteratore_stazioni)->PrenotaDeposito(std::shared_ptr<Treno>(this));
 		cambia_stato(parcheggio);
+		//Sposto il treno al chilometro del parcheggio, anche se la chiamata avviene oltre
+		if (reverse)
+			posizione = (*iteratore_stazioni)->getDistance() + 5;
+		else
+			posizione = (*iteratore_stazioni)->getDistance() - 5;
 	}
 }
 
