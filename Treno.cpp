@@ -457,6 +457,9 @@ void Regionale::chiama_stazione(){
 	prenota_fermata();
 }
 
+int Regionale::max_speed() {
+	return MAX_SPEED;
+}
 
 
 
@@ -539,6 +542,9 @@ void AltaVelocita::chiama_stazione(){
 	}
 }
 
+int Regionale::max_speed() {
+	return MAX_SPEED;
+}
 
 
 
@@ -620,4 +626,8 @@ void SuperVelocita::chiama_stazione(){
 		//Se la stazione non è principale, il treno richiede il transito
 		prenota_transito();
 	}
+}
+
+int Regionale::max_speed() {
+	return MAX_SPEED;
 }

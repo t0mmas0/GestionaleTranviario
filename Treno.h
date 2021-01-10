@@ -71,6 +71,7 @@ public:																												//Costruttore di default
 
 	virtual void pre_chiamata() = 0;
 	virtual void chiama_stazione() = 0;							//Chiama la stazione e agisce in base al tipo di treno e di stazione
+	virtual int max_speed() = 0;
 	
 	void libera_binario();										//Libera il binario sul quale si trovava il treno
 	void aggiorna_indici();										//Calcola il ritardo con cui il treno è arrivato alla fermata
@@ -122,6 +123,7 @@ public:
 	void set_velocita(int v = MAX_SPEED) override;
 	void pre_chiamata() override;
 	void chiama_stazione() override;
+	int max_speed() override; 
 private:
 	static const int MAX_SPEED = 160;
 };
@@ -133,6 +135,7 @@ public:
 	void set_velocita(int v = MAX_SPEED) override;
 	void pre_chiamata() override;
 	void chiama_stazione() override;
+	int max_speed() override;
 private:
 	static const int MAX_SPEED = 240;
 };
