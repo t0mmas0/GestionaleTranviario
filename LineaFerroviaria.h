@@ -18,8 +18,10 @@ private:
     std::list<std::shared_ptr<Treno>> treniAttiviAndata;
     std::list<std::shared_ptr<Treno>> treniAttiviRitorno;
     int orario;
-    bool static compara(std::_List_iterator<std::shared_ptr<Treno> > a, std::_List_iterator<std::shared_ptr<Treno> > b);
-    bool static comparaInversi(std::_List_iterator<std::shared_ptr<Treno> > a, std::_List_iterator<std::shared_ptr<Treno> >  b);
+    /*
+    bool static compara(std::shared_ptr<Treno> a, std::shared_ptr<Treno> b);
+    bool static comparaInversi(std::shared_ptr<Treno> a, std::shared_ptr<Treno> b);
+    */
 
 public:
     LineaFerroviaria(std::string fileOrari,std::string fileLinea );
