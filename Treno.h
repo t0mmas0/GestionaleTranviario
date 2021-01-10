@@ -35,10 +35,9 @@ enum Stato :int { creato = 0, attesa = 1, stazione = 2, transito = 3, movimento 
 //In ogni momento, l'attività del treno può essere sospesa impostando lo stato ad attesa
 
 
-class Treno {
+class Treno: public std::enable_shared_from_this<Treno> {
 public:																												//Costruttore di default
 	Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse = false);		//Costruttore
-
 	//*************************Getters e setters************************************
 	int get_id() const;											//Resituisce il numero del treno
 	int get_velocita() const;									//Resituisce la velocità del treno

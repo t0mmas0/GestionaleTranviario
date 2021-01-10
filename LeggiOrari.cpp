@@ -128,7 +128,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 				TreniPer.emplace_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
 			}
 			else {
-				TreniDa.emplace_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
+				TreniDa.push_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
 			}
 		}
 		else if (tipoTreno == 2) {

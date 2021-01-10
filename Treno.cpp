@@ -8,8 +8,9 @@
 
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
-	: orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false }, annunciato{ false } {
+	:std::enable_shared_from_this<Treno>(), orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false }, annunciato{ false } {
 	if (reverse) {
+
 		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
 		iteratore_stazioni = --(Stazioni.end());
 		posizione = (*iteratore_stazioni)->getDistance();
@@ -349,7 +350,7 @@ void Treno::partenza(bool trans) {
 		cambia_stato(transito);
 	}
 	else {
-		if (!((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this))))
+		if (!((*iteratore_stazioni)->isFreeStop(shared_from_this())))
 			throw std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
 		(*iteratore_stazioni)->PrenotaStazionamento(std::shared_ptr<Treno>(this));
 		cambia_stato(stazione);
