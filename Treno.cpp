@@ -286,9 +286,9 @@ void Treno::sposta_indietro() {
 void Treno::libera_binario() {
 	//Quale tipo di binario devo liberare?
 	if (stato == transito)
-		(*iteratore_stazioni)->liberaBinarioTransito(std::shared_ptr<Treno>(this));
+		(*iteratore_stazioni)->liberaBinarioTransito(this->shared_from_this());
 	else
-		(*iteratore_stazioni)->liberaBinarioStazionamento(std::shared_ptr<Treno>(this));
+		(*iteratore_stazioni)->liberaBinarioStazionamento(this->shared_from_this());
 }
 
 //Aggiorna l'indice del vettore di orari e dell'itetratore di stazioni
