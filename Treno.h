@@ -46,6 +46,7 @@ public:																												//Costruttore di default
 	int get_ritardo() const;									//Resituisce il ritardo del treno (aggiornato all'ultima fermata)
 	bool isReverse() const;										//Restituisce true se il treno viaggia al contrario
 	int get_orario() const;										//Restituisce l'orario di partenza previsto per il treno
+	Stato get_stato() const;									//Resitituisce lo stato del treno
 
 	virtual void set_velocita(int v = 0);						//Imposta la velocità del treno. Poichè questa classe interfaccia non prevede limiti superiori, il valore di default è 0 nel caso in cui il parametro non venga impostato
 

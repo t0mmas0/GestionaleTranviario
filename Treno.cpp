@@ -45,6 +45,10 @@ int Treno::get_orario() const {
 	return orario_partenza;
 }
 
+Stato Treno::get_stato() const{
+	return stato;
+}
+
 void Treno::set_velocita(int v) {
 	if (v < 0)
 		throw std::invalid_argument("La velocita non può essere negativa");
