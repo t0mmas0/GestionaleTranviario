@@ -40,7 +40,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 	int idTreno;
 	std::string line;
 	bool reverse;//tiene conto il verso del treno
-	int tipoTreno;
+	int tipoTreno = 1;
 	int n;//variabile dove salvo dati letti da file
 	for (line; std::getline(Stream, line); ) {
 		bool esistente = false;//variabile nel caso il esista gia un trenocon lo stesso id
