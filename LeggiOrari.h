@@ -22,6 +22,7 @@ private:
 	void correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno);
 	void sortTreni();
 	int getVelocita(int tipoTreno);
+	
 public:
 	std::list<std::shared_ptr<Treno>> getTreniDa();
 	std::list<std::shared_ptr<Treno>> getTreniPer();

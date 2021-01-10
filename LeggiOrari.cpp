@@ -3,29 +3,26 @@
 #include <stdexcept>
 #include <algorithm>
 
-//functor per sortare i treni
-struct TreniComparator {
-	bool operator()(const std::shared_ptr<Treno>& primo, const std::shared_ptr<Treno>& secondo) const {
-		// Returna treu se primo va prima del secondo
-		if (primo->get_orario() < secondo->get_orario()) {
 
-			return true;
-		}
-		else {
-			return false;
-		}
+bool treniCompare(const std::shared_ptr<Treno>& primo, const std::shared_ptr<Treno>& secondo) {
+	// Returna true se primo va prima del secondo
+	if (primo->get_orario() < secondo->get_orario()) {
+
+		return true;
 	}
-};
-
+	else {
+		return false;
+	}
+}
 
 std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniDa()
 {
-	TreniDa.sort(TreniComparator());//ordino rispetto orario di partenza
+	TreniDa.sort(treniCompare);//ordino rispetto orario di partenza
 	return TreniDa;
 }
 
 std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniPer(){
-	TreniPer.sort(TreniComparator());//ordino rispetto orario di partenza
+	TreniPer.sort(treniCompare);//ordino rispetto orario di partenza
 	return TreniPer;
 }
 
