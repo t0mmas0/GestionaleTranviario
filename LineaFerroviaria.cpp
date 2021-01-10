@@ -23,12 +23,18 @@ LineaFerroviaria::LineaFerroviaria(std::string fileOrari, std::string fileLinea)
 
 void LineaFerroviaria::esegui() {
 	while (true) {
-		for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); (*i)->get_stato() == distrutto; i--) {
-			treniAttiviAndata.erase(i);
+		if (treniAttiviAndata.size() != 0) {
+			for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); (*i)->get_stato() == distrutto; i--) {
+				treniAttiviAndata.erase(i);
+			}
 		}
-		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); (*i)->get_stato() == distrutto; i++) {
-			treniAttiviRitorno.erase(i);
+		if (treniAttiviRitorno.size() != 0) {
+			for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); (*i)->get_stato() == distrutto; i++) {
+				treniAttiviRitorno.erase(i);
+			}
 		}
+		
+		
 		sort();
 		controlloTamponamenti();
 		gestioneMovimento();
@@ -61,38 +67,44 @@ bool comparaInversi(std::shared_ptr<Treno> a, std::shared_ptr<Treno> b) {
 }
 
 void LineaFerroviaria::sort() {
-	treniAttiviAndata.sort(compara);
-	treniAttiviRitorno.sort(comparaInversi);
+	if (treniAttiviAndata.size() != 0) {
+		treniAttiviAndata.sort(compara);
+	}
+	if (treniAttiviRitorno.size() != 0) {
+		treniAttiviRitorno.sort(comparaInversi);
+	}
 	
 }
 
 void LineaFerroviaria::controlloTamponamenti() {
-	for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end();
-		i != std::next(treniAttiviAndata.begin()); i--) {
-		std::list<std::shared_ptr<Treno>>::const_iterator j = std::prev(i);
-		if ((*i)->get_stato() == movimento ||
-			((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
-			double front = (*i)->get_posizione() + (*i)->get_velocita() / 60;
-			double back = (*j)->get_posizione() + (*j)->get_velocita() / 60;
-			if (front - back < 10) {
-				(*j)->set_velocita((*i)->get_velocita());
+	if (treniAttiviAndata.size() != 0) {
+		for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end();
+			i != std::next(treniAttiviAndata.begin()); i--) {
+			std::list<std::shared_ptr<Treno>>::const_iterator j = std::prev(i);
+			if ((*i)->get_stato() == movimento ||
+				((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
+				double front = (*i)->get_posizione() + (*i)->get_velocita() / 60;
+				double back = (*j)->get_posizione() + (*j)->get_velocita() / 60;
+				if (front - back < 10) {
+					(*j)->set_velocita((*i)->get_velocita());
+				}
 			}
 		}
 	}
-	for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin();
-		i != std::prev(--treniAttiviAndata.end()); i++) {
-		std::list<std::shared_ptr<Treno>>::const_iterator j = std::next(i);
-		if ((*i)->get_stato() == movimento ||
-			((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
-			double back = (*i)->get_posizione() + (*i)->get_velocita() / 60;
-			double front = (*j)->get_posizione() + (*j)->get_velocita() / 60;
-			if (front - back < 10) {
-				(*j)->set_velocita((*i)->get_velocita());
+	if (treniAttiviRitorno.size() != 0) {
+		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin();
+			i != std::prev(--treniAttiviAndata.end()); i++) {
+			std::list<std::shared_ptr<Treno>>::const_iterator j = std::next(i);
+			if ((*i)->get_stato() == movimento ||
+				((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
+				double back = (*i)->get_posizione() + (*i)->get_velocita() / 60;
+				double front = (*j)->get_posizione() + (*j)->get_velocita() / 60;
+				if (front - back < 10) {
+					(*j)->set_velocita((*i)->get_velocita());
+				}
 			}
 		}
 	}
-
-
 }
 
 void LineaFerroviaria::attivaTreni() {
@@ -147,10 +159,17 @@ void LineaFerroviaria::attivaTreni() {
 }
 
 void LineaFerroviaria::gestioneMovimento() {
-	for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); --i != treniAttiviAndata.begin(); i--) {
-		(*i)->esegui();
+	if (treniAttiviAndata.size() != 0) {
+		for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); --i != treniAttiviAndata.begin(); i--) {
+			(*i)->esegui();
+		}
 	}
-	for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin();i != treniAttiviAndata.end(); i++) {
-		(*i)->esegui();
+	if (treniAttiviRitorno.size() != 0) {
+		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); i != treniAttiviAndata.end(); i++) {
+			(*i)->esegui();
+		}
 	}
+
+	
+	
 }
