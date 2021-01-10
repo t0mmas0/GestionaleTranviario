@@ -428,6 +428,7 @@ void Regionale::attiva(int orario){
 	fermata_effettuata = true;
 	//Imposto il treno come già attivato
 	attivato = true;
+	esegui();
 }
 
 void Regionale::set_velocita(int v){
@@ -487,6 +488,7 @@ void AltaVelocita::attiva(int orario){
 		partenza(true);
 	}
 	attivato = true;
+	esegui();
 }
 
 void AltaVelocita::set_velocita(int v){
@@ -573,6 +575,7 @@ void SuperVelocita::attiva(int orario){
 		partenza(true);
 	}
 	attivato = true;
+	esegui();
 }
 
 void SuperVelocita::set_velocita(int v){
