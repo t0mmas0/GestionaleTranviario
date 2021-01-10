@@ -165,7 +165,7 @@ void LineaFerroviaria::attivaTreni() {
 
 void LineaFerroviaria::gestioneMovimento() {
 	if (treniAttiviAndata.size() != 0) {
-		for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); --i != treniAttiviAndata.begin(); i--) {
+		for (std::list<std::shared_ptr<Treno>>::const_reverse_iterator i = treniAttiviAndata.rbegin(); i != treniAttiviAndata.rend(); i++) {
 			(*i)->esegui();
 		}
 	}
@@ -174,7 +174,4 @@ void LineaFerroviaria::gestioneMovimento() {
 			(*i)->esegui();
 		}
 	}
-
-	
-	
 }
