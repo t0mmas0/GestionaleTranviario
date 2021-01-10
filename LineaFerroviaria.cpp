@@ -47,21 +47,21 @@ void LineaFerroviaria::sort() {
     std::sort(treniAttiviRitorno.begin(), treniAttiviRitorno.end(), comparaInversi);
 }
 
-bool  LineaFerroviaria::compara(std::shared_ptr<Treno> a, std::shared_ptr<Treno> b) {
-    if ((*a).get_posizione()==(*b).get_posizione()){
-        if((*a).max_speed()>=(*b).max_speed())
+bool  LineaFerroviaria::compara(std::_List_iterator<std::shared_ptr<Treno> > a, std::_List_iterator<std::shared_ptr<Treno> > b) {
+    if ((*a)->get_posizione()==(*b)->get_posizione()){
+        if((*a)->max_speed()>=(*b)->max_speed())
             return false;
         return true;
     }
-    return (*a).get_posizione()<(*b).get_posizione();
+    return (*a)->get_posizione()<(*b)->get_posizione();
 }
-bool  LineaFerroviaria::comparaInversi(std::shared_ptr<Treno> a, std::shared_ptr<Treno> b) {
-    if ((*a).get_posizione()==(*b).get_posizione()){
-        if((*a).max_speed()<=(*b).max_speed())
+bool  LineaFerroviaria::comparaInversi(std::_List_iterator<std::shared_ptr<Treno> >  a, std::_List_iterator<std::shared_ptr<Treno> >  b) {
+    if ((*a)->get_posizione()==(*b)->get_posizione()){
+        if((*a)->max_speed()<=(*b)->max_speed())
             return false;
         return true;
     }
-    return (*a).get_posizione()<(*b).get_posizione();
+    return (*a)->get_posizione()<(*b)->get_posizione();
 }
 
 void LineaFerroviaria::controlloTamponamenti() {
