@@ -8,7 +8,7 @@
  * @brief  linea ferroviaria
  */
 
-LineaFerroviaria::LineaFerroviaria(std::string fileLinea, std::string fileOrari)
+LineaFerroviaria::LineaFerroviaria(std::string fileOrari, std::string fileLinea)
 {
 	LeggiLinea readerL{ fileLinea };
 	linea = readerL.leggiStazioni();
