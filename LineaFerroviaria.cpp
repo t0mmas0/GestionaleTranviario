@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include <algorithm>
 #include "LineaFerroviaria.h"
 #include "LeggiLinea.h"
@@ -42,8 +42,10 @@ void LineaFerroviaria::esegui() {
 
 		///incremento orario
 		orario++;
+		std::cout << "Simulazione al minuto " << orario << std::endl;
 		///darimuovere sennò se spacca tutto
-		break;
+		if (treniAndata.size() == 0 && treniRitorno.size() == 0)
+			break;
 	}
 }
 

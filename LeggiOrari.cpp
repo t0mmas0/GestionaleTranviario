@@ -60,7 +60,6 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 			}
 			else {//il resto sono orari
 				orari.push_back(n);
-				std::cout << "Pushato elemento\nSize:" << orari.size() << std::endl;
 			}
 			i++;
 		}
