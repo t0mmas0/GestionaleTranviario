@@ -31,20 +31,20 @@ bool Stazione::isFreeStop(const std::shared_ptr<Treno> t) {
 
 void Stazione::liberaDeposito(const std::shared_ptr<Treno> t) {
     deposito.erase(std::remove(deposito.begin(), deposito.end(), t), deposito.end());
-    std::cout<<"Il Treno N." <<t->get_id()<<"ha lasciato il deposito";
+    std::cout<<"Il Treno N." <<t->get_id()<<"ha lasciato il deposito\n";
 }
 
 void Stazione::liberaBinarioStazionamento(const std::shared_ptr<Treno> t) {
     if (t->isReverse()){
         binariStazionamentoInverso.erase(std::remove(binariStazionamentoInverso.begin(), binariStazionamentoInverso.end(), t),
                                          binariStazionamentoInverso.end());
-        std::cout << "il Treno N." << t->get_id() << "ha liberato il binario";
+        std::cout << "il Treno N." << t->get_id() << "ha liberato il binario\n";
         is--;
         semBinariStazionamentoInverso.setVerde();
     }else {
         binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), t),
                                   binariStazionamento.end());
-        std::cout << "il Treno N." << t->get_id() << "ha liberato il binario";
+        std::cout << "il Treno N." << t->get_id() << "ha liberato il binario\n";
         i--;
         semBinariStazionamento.setVerde();
     }
@@ -52,7 +52,7 @@ void Stazione::liberaBinarioStazionamento(const std::shared_ptr<Treno> t) {
 
 void Stazione::PrenotaStazionamento(const std::shared_ptr<Treno> t) {
     if (t->isReverse()){
-        std::cout << "Accesso al Binario di Stazionamento del treno" << t->get_id() << "Alla Stazione" << this->nome;
+        std::cout << "Accesso al Binario di Stazionamento del treno " << t->get_id() << " alla Stazione" << this->nome << std::endl;
         binariStazionamentoInverso.push_back(t);
         is++;
         if (is == 2) {
@@ -60,7 +60,7 @@ void Stazione::PrenotaStazionamento(const std::shared_ptr<Treno> t) {
         }
     }
     else {
-        std::cout << "Accesso al Binario di Stazionamento del treno" << t->get_id() << "Alla Stazione" << this->nome;
+        std::cout << "Accesso al Binario di Stazionamento del treno " << t->get_id() << " alla Stazione " << this->nome << std::endl;
         binariStazionamento.push_back(t);
         i++;
         if (i == 2) {
