@@ -118,7 +118,7 @@ void Treno::esegui() {
 		break;
 	}
 	orario++;	//Trascorre il minuto
-	std::cout << "Il treno " << identificativo << " e' in stato " << stato << std::endl;
+	std::cout << "Il treno " << identificativo << " e' al km " << posizione << std::endl;
 }
 
 //Subroutine: cambia lo stato del treno e regola la velocità
@@ -425,6 +425,7 @@ void Regionale::attiva(int orario){
 	//Fingo di aver già effettuato la fermata
 	stato = fermata;
 	minuti_fermata = 4;
+	fermata_effettuata = true;
 	//Imposto il treno come già attivato
 	attivato = true;
 }
@@ -479,6 +480,7 @@ void AltaVelocita::attiva(int orario){
 		//Fingo di aver già effettuato la fermata
 		stato = fermata;
 		minuti_fermata = 4;
+		fermata_effettuata = true;
 	}
 	else {
 		//Sto partendo da una stazione locale. Devo prenotare un binario di transito
@@ -564,6 +566,7 @@ void SuperVelocita::attiva(int orario){
 		//Fingo di aver già effettuato la fermata
 		stato = fermata;
 		minuti_fermata = 4;
+		fermata_effettuata = true;
 	}
 	else {
 		//Sto partendo da una stazione locale. Devo prenotare un binario di transito
