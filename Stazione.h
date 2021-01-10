@@ -36,7 +36,7 @@ public:
     Stazione(int km, std::string nome);
     int getDistance();
     std::string getNome();
-    bool isFreeStop(Treno *t);
+    bool isFreeStop(const std::shared_ptr<Treno> t);
     void PrenotaStazionamento(const std::shared_ptr<Treno> t);
     void PrenotaDeposito(const std::shared_ptr<Treno> t);
     void liberaBinarioStazionamento(const std::shared_ptr<Treno> t);
