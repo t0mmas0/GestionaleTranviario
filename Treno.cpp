@@ -417,6 +417,7 @@ Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazion
 void Regionale::attiva(int orario){
 	if (attivato)
 		throw std::logic_error("Errore. Si sta attivando un treno già attivato");
+	orario_partenza = orario;
 	//Devo cercare un binario libero
 	partenza();
 	//Fingo di aver già effettuato la fermata
