@@ -118,6 +118,7 @@ void Treno::esegui() {
 		break;
 	}
 	orario++;	//Trascorre il minuto
+	std::cout << "Il treno " << identificativo << " e' in stato " << stato << std::endl;
 }
 
 //Subroutine: cambia lo stato del treno e regola la velocità
@@ -151,6 +152,7 @@ void Treno::cambia_stato(Stato s) {
 	default:
 		break;
 	}
+	stato = s;
 }
 
 
