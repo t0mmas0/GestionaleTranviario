@@ -147,6 +147,7 @@ public:
 	void set_velocita(int v = MAX_SPEED) override;
 	void pre_chiamata() override;
 	void chiama_stazione() override;
+	int max_speed() override;
 private:
 	static const int MAX_SPEED = 300;
 };

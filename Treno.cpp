@@ -349,7 +349,7 @@ void Treno::partenza(bool trans) {
 		cambia_stato(transito);
 	}
 	else {
-		if (!((*iteratore_stazioni)->isFreeStop(this)))
+		if (!((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this))))
 			throw std::logic_error("Errore. Si sta cercando di far partire un treno senza che vi siano binari disponibili");
 		(*iteratore_stazioni)->PrenotaStazionamento(std::shared_ptr<Treno>(this));
 		cambia_stato(stazione);
@@ -358,7 +358,7 @@ void Treno::partenza(bool trans) {
 
 //Prenota un binario di fermata
 void Treno::prenota_fermata(){
-	if ((*iteratore_stazioni)->isFreeStop(this)) {
+	if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this))) {
 		//Se il binario è disponibile, lo prenoto ed entro in stazione
 		(*iteratore_stazioni)->PrenotaStazionamento(std::shared_ptr<Treno>(this));
 		cambia_stato(stazione);
@@ -434,7 +434,7 @@ void Regionale::set_velocita(int v){
 void Regionale::pre_chiamata() {
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
-			if ((*iteratore_stazioni)->isFreeStop(this))
+			if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this)))
 				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 			else
 				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
@@ -443,7 +443,7 @@ void Regionale::pre_chiamata() {
 	}
 	else {
 		if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
-			if ((*iteratore_stazioni)->isFreeStop(this))
+			if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this)))
 				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 			else
 				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
@@ -493,7 +493,7 @@ void AltaVelocita::pre_chiamata() {
 	if ((*iteratore_stazioni)->isPrincipale()) {
 		if (reverse) {
 			if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
-				if ((*iteratore_stazioni)->isFreeStop(this))
+				if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this)))
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
@@ -502,7 +502,7 @@ void AltaVelocita::pre_chiamata() {
 		}
 		else {
 			if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
-				if ((*iteratore_stazioni)->isFreeStop(this))
+				if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this)))
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
@@ -542,7 +542,7 @@ void AltaVelocita::chiama_stazione(){
 	}
 }
 
-int Regionale::max_speed() {
+int AltaVelocita::max_speed() {
 	return MAX_SPEED;
 }
 
@@ -578,7 +578,7 @@ void SuperVelocita::pre_chiamata() {
 	if ((*iteratore_stazioni)->isPrincipale()) {
 		if (reverse) {
 			if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
-				if ((*iteratore_stazioni)->isFreeStop(this))
+				if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this)))
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
@@ -587,7 +587,7 @@ void SuperVelocita::pre_chiamata() {
 		}
 		else {
 			if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
-				if ((*iteratore_stazioni)->isFreeStop(this))
+				if ((*iteratore_stazioni)->isFreeStop(std::shared_ptr<Treno>(this)))
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
@@ -628,6 +628,6 @@ void SuperVelocita::chiama_stazione(){
 	}
 }
 
-int Regionale::max_speed() {
+int SuperVelocita::max_speed() {
 	return MAX_SPEED;
 }
