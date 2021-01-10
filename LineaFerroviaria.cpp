@@ -79,7 +79,7 @@ void LineaFerroviaria::sort() {
 }
 
 void LineaFerroviaria::controlloTamponamenti() {
-	if (treniAttiviAndata.size() != 0) {
+	if (treniAttiviAndata.size() > 1) {
 		for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end();
 			i != std::next(treniAttiviAndata.begin()); i--) {
 			std::list<std::shared_ptr<Treno>>::const_iterator j = std::prev(i);
@@ -93,7 +93,7 @@ void LineaFerroviaria::controlloTamponamenti() {
 			}
 		}
 	}
-	if (treniAttiviRitorno.size() != 0) {
+	if (treniAttiviRitorno.size() > 1) {
 		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin();
 			i != std::prev(--treniAttiviAndata.end()); i++) {
 			std::list<std::shared_ptr<Treno>>::const_iterator j = std::next(i);
@@ -110,26 +110,29 @@ void LineaFerroviaria::controlloTamponamenti() {
 }
 
 void LineaFerroviaria::attivaTreni() {
-	for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAndata.begin(); i != treniAndata.end(); i++) {
+	std::list<std::shared_ptr<Treno>>::const_iterator i = treniAndata.begin();
+	while (i != treniAndata.end()) {
 		if ((*i)->get_orario() > orario)
 			break;
 		if ((*linea.begin())->isFreeStop((*i))) {
 			(*i)->attiva(orario);
 			treniAttiviAndata.emplace(treniAttiviAndata.begin(), (*i));
-			treniAndata.erase(i);
+			//mi faccio restituire il puntatore al prossimo elemento, non serve incrementare il puntatore 
+			i = treniAndata.erase(i);
 		}
 		else {
 			break;
 		}
 	}
-	for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniRitorno.begin(); i != treniRitorno.end(); i++) {
+	i = treniRitorno.begin();
+	while (i != treniRitorno.end()) {
 		if ((*i)->get_orario() > orario)
 			break;
 		if ((*linea.end())->isPrincipale()) {
 			if ((*linea.begin())->isFreeStop((*i))) {
 				(*i)->attiva(orario);
 				treniAttiviRitorno.push_back(*i);
-				treniRitorno.erase(i);
+				i = treniRitorno.erase(i);
 			}
 			else {
 				break;
@@ -140,7 +143,7 @@ void LineaFerroviaria::attivaTreni() {
 				if ((*linea.begin())->isFreePass((*i))) {
 					(*i)->attiva(orario);
 					treniAttiviRitorno.push_back(*i);
-					treniRitorno.erase(i);
+					i = treniRitorno.erase(i);
 				}
 				else {
 					break;
@@ -150,7 +153,7 @@ void LineaFerroviaria::attivaTreni() {
 				if ((*linea.begin())->isFreeStop((*i))) {
 					(*i)->attiva(orario);
 					treniAttiviRitorno.push_back(*i);
-					treniRitorno.erase(i);
+					i = treniRitorno.erase(i);
 				}
 				else {
 					break;
