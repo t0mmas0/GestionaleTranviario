@@ -114,7 +114,7 @@ void LineaFerroviaria::attivaTreni() {
 	while (i != treniAndata.end()) {
 		if ((*i)->get_orario() > orario)
 			break;
-		if ((*linea.begin())->isFreeStop((*i))) {
+		if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 			(*i)->attiva(orario);
 			treniAttiviAndata.emplace(treniAttiviAndata.begin(), (*i));
 			//mi faccio restituire il puntatore al prossimo elemento, non serve incrementare il puntatore 
@@ -129,7 +129,7 @@ void LineaFerroviaria::attivaTreni() {
 		if ((*i)->get_orario() > orario)
 			break;
 		if ((*linea.end())->isPrincipale()) {
-			if ((*linea.begin())->isFreeStop((*i))) {
+			if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 				(*i)->attiva(orario);
 				treniAttiviRitorno.push_back(*i);
 				i = treniRitorno.erase(i);
@@ -140,7 +140,7 @@ void LineaFerroviaria::attivaTreni() {
 		}
 		else {
 			if ((*i)->max_speed() > 160) {
-				if ((*linea.begin())->isFreePass((*i))) {
+				if ((*linea.begin())->isFreePass((*i)->get_id(), (*i)->isReverse())) {
 					(*i)->attiva(orario);
 					treniAttiviRitorno.push_back(*i);
 					i = treniRitorno.erase(i);
@@ -150,7 +150,7 @@ void LineaFerroviaria::attivaTreni() {
 				}
 			}
 			else {
-				if ((*linea.begin())->isFreeStop((*i))) {
+				if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 					(*i)->attiva(orario);
 					treniAttiviRitorno.push_back(*i);
 					i = treniRitorno.erase(i);
