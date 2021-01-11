@@ -186,20 +186,37 @@ void Treno::testa_uscita_stazione() {
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance() - 5) {
 			//Sto uscendo dalla stazione, mi rimetto in movimento e libero il binario
-			libera_binario();
-			cambia_stato(movimento);
-			aggiorna_indici();
-			fermata_effettuata = false;
-			annunciato = false;
+			//Devo prenotare il binario di uscita, controllo se è libero
+			if ((*iteratore_stazioni)->isFreeUscita()) {
+				//Reimposto la velocità a quella di stazione, se per caso mi son fermato prima dell'uscita
+				velocita = 80;
+				(*iteratore_stazioni)->prenotaUscita(identificativo, reverse);
+				libera_binario();
+				cambia_stato(movimento);
+				aggiorna_indici();
+				fermata_effettuata = false;
+				annunciato = false;
+			}
+			else {	//Se non è libero sto fermo
+				velocita = 0;
+			}
+			
 		}
 	}
 	else {
 		if (posizione >= (*iteratore_stazioni)->getDistance() + 5) {
-			libera_binario();
-			cambia_stato(movimento);
-			aggiorna_indici();
-			fermata_effettuata = false;
-			annunciato = false;
+			if ((*iteratore_stazioni)->isFreeUscita()) {
+				velocita = 80;
+				(*iteratore_stazioni)->prenotaUscita(identificativo, reverse);
+				libera_binario();
+				cambia_stato(movimento);
+				aggiorna_indici();
+				fermata_effettuata = false;
+				annunciato = false;
+			}
+			else {
+				velocita = 0;
+			}
 		}
 	}
 }
