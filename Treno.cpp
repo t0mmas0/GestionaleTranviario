@@ -364,7 +364,7 @@ void Treno::prenota_fermata(){
 	if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse)) {
 		//Se il binario è disponibile, lo prenoto ed entro in stazione
 		//Se sono in parcheggio libero il binario
-		if (parcheggio) {
+		if (stato == parcheggio) {
 			(*iteratore_stazioni)->liberaDeposito(identificativo, reverse);
 		}
 		(*iteratore_stazioni)->PrenotaStazionamento(identificativo, reverse);

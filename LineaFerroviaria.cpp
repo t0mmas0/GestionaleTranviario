@@ -24,14 +24,30 @@ LineaFerroviaria::LineaFerroviaria(std::string fileOrari, std::string fileLinea)
 void LineaFerroviaria::esegui() {
 	while (true) {
 		if (treniAttiviAndata.size() != 0) {
-			for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); (*i)->get_stato() == distrutto; i--) {
-				treniAttiviAndata.erase(i);
+			if (treniAttiviAndata.size() == 1) {
+				auto i = treniAttiviAndata.begin();
+				if ((*i)->get_stato() == distrutto)
+					treniAttiviAndata.erase(i);
 			}
+			else {
+				for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); (*i)->get_stato() == distrutto; i--) {
+					treniAttiviAndata.erase(i);
+				}
+			}
+			
 		}
 		if (treniAttiviRitorno.size() != 0) {
-			for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); (*i)->get_stato() == distrutto; i++) {
-				treniAttiviRitorno.erase(i);
+			if (treniAttiviRitorno.size() == 1) {
+				auto i = treniAttiviRitorno.begin();
+				if ((*i)->get_stato() == distrutto)
+					treniAttiviRitorno.erase(i);
 			}
+			else {
+				for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); (*i)->get_stato() == distrutto; i++) {
+					treniAttiviRitorno.erase(i);
+				}
+			}
+			
 		}
 		
 		
@@ -116,7 +132,8 @@ void LineaFerroviaria::attivaTreni() {
 			break;
 		if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 			(*i)->attiva(orario);
-			treniAttiviAndata.emplace(treniAttiviAndata.begin(), (*i));
+			//treniAttiviAndata.emplace(treniAttiviAndata.begin(), (*i));
+			treniAttiviAndata.push_front((*i));
 			//mi faccio restituire il puntatore al prossimo elemento, non serve incrementare il puntatore 
 			i = treniAndata.erase(i);
 		}
@@ -124,11 +141,13 @@ void LineaFerroviaria::attivaTreni() {
 			break;
 		}
 	}
+
+
 	i = treniRitorno.begin();
 	while (i != treniRitorno.end()) {
 		if ((*i)->get_orario() > orario)
 			break;
-		if ((*linea.end())->isPrincipale()) {
+		if ((*linea.rbegin())->isPrincipale()) {
 			if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 				(*i)->attiva(orario);
 				treniAttiviRitorno.push_back(*i);

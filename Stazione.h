@@ -22,8 +22,8 @@ protected:
 
     Semaforo semBinariStazionamento;
     Semaforo semBinariStazionamentoInverso;
-    std::vector <int> binariStazionamento{2};
-    std::vector <int> binariStazionamentoInverso{2};
+    std::vector <int> binariStazionamento;
+    std::vector <int> binariStazionamentoInverso;
     int i = 0;
     int is = 0;
 

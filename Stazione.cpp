@@ -6,7 +6,7 @@
  * @brief Stazione della linea ferroviaria
  */
 
-Stazione::Stazione(int km, std::string nome) : Km(km),nome(nome) {
+Stazione::Stazione(int km, std::string nome) : Km(km),nome(nome), binariStazionamento(2), binariStazionamentoInverso(2) {
     semBinariStazionamento = Semaforo();
     semBinariStazionamentoInverso = Semaforo();
 
