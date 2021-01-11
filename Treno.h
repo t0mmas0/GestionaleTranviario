@@ -47,7 +47,7 @@ public:																												//Costruttore di default
 	int get_orario() const;										//Restituisce l'orario di partenza previsto per il treno
 	Stato get_stato() const;									//Resitituisce lo stato del treno
 
-	virtual void set_velocita(int v = 0);						//Imposta la velocità del treno. Poichè questa classe interfaccia non prevede limiti superiori, il valore di default è 0 nel caso in cui il parametro non venga impostato
+	virtual void set_velocita(int v);						//Imposta la velocità del treno. Poichè questa classe interfaccia non prevede limiti superiori, il valore di default è 0 nel caso in cui il parametro non venga impostato
 
 	//*************************Inizializzazione*************************************
 	virtual void attiva(int ora) = 0;							//Attiva per la prima volta il treno sulla linea

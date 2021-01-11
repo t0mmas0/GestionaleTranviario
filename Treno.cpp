@@ -118,7 +118,7 @@ void Treno::esegui() {
 		break;
 	}
 	orario++;	//Trascorre il minuto
-	std::cout << "Il treno " << identificativo << " e' al km " << posizione << std::endl;
+	std::cout << "Il treno " << identificativo << " e' al km " << posizione << " e segna le ore " << orario << std::endl;
 }
 
 //Subroutine: cambia lo stato del treno e regola la velocità
@@ -135,10 +135,10 @@ void Treno::cambia_stato(Stato s) {
 		velocita = 80;
 		break;
 	case transito:
-		set_velocita();
+		set_velocita(max_speed());
 		break;
 	case movimento:
-		set_velocita();
+		set_velocita(max_speed());
 		break;
 	case parcheggio:
 		velocita = 0;
@@ -424,10 +424,11 @@ Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazion
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
-void Regionale::attiva(int orario){
+void Regionale::attiva(int ora){
 	if (attivato)
 		throw std::logic_error("Errore. Si sta attivando un treno già attivato");
-	orario_partenza = orario;
+	orario_partenza = ora;
+	orario = ora;
 	//Devo cercare un binario libero
 	partenza();
 	//Fingo di aver già effettuato la fermata
@@ -442,6 +443,7 @@ void Regionale::attiva(int orario){
 void Regionale::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
+	std::cout << "La velocità che sto ipostando e' " << v;
 	Treno::set_velocita(v);
 }
 
@@ -481,10 +483,12 @@ AltaVelocita::AltaVelocita(int id, const std::list<std::shared_ptr<Stazione>>& S
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
-void AltaVelocita::attiva(int orario){
+void AltaVelocita::attiva(int ora){
 	//Verifico da che tipo di stazione sto partendo
 	if ((*iteratore_stazioni)->isPrincipale()) {
 		//Sto partendo da una stazione principale. Devo prenotare un binario di transito
+		orario_partenza = ora;
+		orario = ora;
 		partenza();
 		//Fingo di aver già effettuato la fermata
 		stato = fermata;
@@ -568,10 +572,12 @@ SuperVelocita::SuperVelocita(int id, const std::list<std::shared_ptr<Stazione>>&
 	: Treno(id, Stazioni, Orari, reverse){
 }
 
-void SuperVelocita::attiva(int orario){
+void SuperVelocita::attiva(int ora){
 	//Verifico da che tipo di stazione sto partendo
 	if ((*iteratore_stazioni)->isPrincipale()) {
 		//Sto partendo da una stazione principale. Devo prenotare un binario di transito
+		orario_partenza = ora;
+		orario = ora;
 		partenza();
 		//Fingo di aver già effettuato la fermata
 		stato = fermata;
