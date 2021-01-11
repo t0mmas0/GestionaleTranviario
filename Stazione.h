@@ -36,13 +36,13 @@ public:
     Stazione(int km, std::string nome);
     int getDistance();
     std::string getNome();
-    bool isFreeStop(const std::shared_ptr<Treno> t);
+    bool isFreeStop(int id, bool reverse);
     void PrenotaStazionamento(int id, bool reverse);
     void PrenotaDeposito(int id, bool reverse);
     void liberaBinarioStazionamento(int id, bool reverse);
     void liberaDeposito(int id, bool reverse);
     bool isPrincipale() const;
-    virtual bool isFreePass(const std::shared_ptr<Treno> t)=0;
+    virtual bool isFreePass(int id, bool reverse)=0;
     virtual void PrenotaTransito(int id, bool reverse)=0;
     virtual void liberaBinarioTransito(int id, bool reverse)=0;
 

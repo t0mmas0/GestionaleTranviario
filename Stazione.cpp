@@ -22,8 +22,8 @@ std::string Stazione::getNome() {
     return this->nome;
 }
 
-bool Stazione::isFreeStop(const std::shared_ptr<Treno> t) {
-    if(t->isReverse()){
+bool Stazione::isFreeStop(int id, bool reverse) {
+    if(reverse){
         return semBinariStazionamentoInverso.getStatus();
     }
     return semBinariStazionamento.getStatus();

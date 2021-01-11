@@ -10,8 +10,8 @@ StazioneSecondaria::StazioneSecondaria(int km, std::string nome) : Stazione(km,n
 principale = false;
 }
 
-bool StazioneSecondaria::isFreePass(const std::shared_ptr<Treno> t) {
-    if(t->isReverse()){
+bool StazioneSecondaria::isFreePass(int id, bool reverse) {
+    if(reverse){
         return semBinariTransitoInverso.getStatus();
     }
     return semBinariTransito.getStatus();

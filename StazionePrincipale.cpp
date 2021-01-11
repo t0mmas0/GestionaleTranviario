@@ -10,7 +10,7 @@ StazionePrincipale::StazionePrincipale(int km, std::string nome) : Stazione(km, 
 principale = true;
 
 }
-bool StazionePrincipale::isFreePass(const std::shared_ptr<Treno> t) {
+bool StazionePrincipale::isFreePass(int id, bool reverse) {
     throw  std::runtime_error("Funzione non prevista per questa derivata");
 }
 

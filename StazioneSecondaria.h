@@ -21,7 +21,7 @@ private:
 
 public:
     StazioneSecondaria(int km, std::string nome);
-    bool isFreePass(const std::shared_ptr<Treno> t) override;
+    bool isFreePass(int id, bool reverse) override;
     void PrenotaTransito(int id, bool reverse) override;
     void liberaBinarioTransito(int id, bool reverse) override;
 
