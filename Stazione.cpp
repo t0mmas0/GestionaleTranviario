@@ -29,30 +29,37 @@ bool Stazione::isFreeStop(const std::shared_ptr<Treno> t) {
     return semBinariStazionamento.getStatus();
 }
 
-void Stazione::liberaDeposito(const std::shared_ptr<Treno> t) {
-    deposito.erase(std::remove(deposito.begin(), deposito.end(), t), deposito.end());
-    std::cout<<"Il Treno N." <<t->get_id()<<"ha lasciato il deposito\n";
+void Stazione::liberaDeposito(int id, bool reverse) {
+    if (reverse){
+
+
+    }else {
+
+    }
+
+    std::cout<<"Il Treno N." <<id<<"ha lasciato il deposito\n";
 }
 
-void Stazione::liberaBinarioStazionamento(const std::shared_ptr<Treno> t) {
-    if (t->isReverse()){
-        binariStazionamentoInverso.erase(std::remove(binariStazionamentoInverso.begin(), binariStazionamentoInverso.end(), t),
+void Stazione::liberaBinarioStazionamento(int id, bool reverse) {
+    if (reverse){
+        binariStazionamentoInverso.erase(std::remove(binariStazionamentoInverso.begin(), binariStazionamentoInverso.end(), id),
                                          binariStazionamentoInverso.end());
-        std::cout << "il Treno N." << t->get_id() << "ha liberato il binario\n";
+        std::cout << "il Treno N." << id << "ha liberato il binario\n";
         is--;
         semBinariStazionamentoInverso.setVerde();
     }else {
-        binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), t),
+        binariStazionamento.erase(std::remove(binariStazionamento.begin(), binariStazionamento.end(), id),
                                   binariStazionamento.end());
-        std::cout << "il Treno N." << t->get_id() << "ha liberato il binario\n";
+
+        std::cout << "il Treno N." << id << "ha liberato il binario\n";
         i--;
         semBinariStazionamento.setVerde();
     }
 }
 
-void Stazione::PrenotaStazionamento(const std::shared_ptr<Treno> t) {
-    if (t->isReverse()){
-        std::cout << "Accesso al Binario di Stazionamento del treno " << t->get_id() << " alla Stazione" << this->nome << std::endl;
+void Stazione::PrenotaStazionamento(int t , bool reverse) {
+    if (reverse){
+        std::cout << "Accesso al Binario di Stazionamento del treno " << t << " alla Stazione" << this->nome << std::endl;
         binariStazionamentoInverso.push_back(t);
         is++;
         if (is == 2) {
@@ -60,8 +67,8 @@ void Stazione::PrenotaStazionamento(const std::shared_ptr<Treno> t) {
         }
     }
     else {
-        std::cout << "Accesso al Binario di Stazionamento del treno " << t->get_id() << " alla Stazione " << this->nome << std::endl;
-        binariStazionamento.push_back(t);
+        std::cout << "Accesso al Binario di Stazionamento del treno " << t << " alla Stazione " << this->nome << std::endl;
+        binariStazionamento[i]=t;
         i++;
         if (i == 2) {
             semBinariStazionamento.setRosso();
@@ -69,8 +76,8 @@ void Stazione::PrenotaStazionamento(const std::shared_ptr<Treno> t) {
     }
 }
 
-void Stazione::PrenotaDeposito(const std::shared_ptr<Treno> t) {
-    if(t->isReverse()){
+void Stazione::PrenotaDeposito(int t,bool reverse) {
+    if(reverse){
         depositoInverso.push_back(t);
     }else{
         deposito.push_back(t);

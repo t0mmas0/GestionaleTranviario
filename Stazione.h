@@ -22,13 +22,13 @@ protected:
 
     Semaforo semBinariStazionamento;
     Semaforo semBinariStazionamentoInverso;
-    std::vector <std::shared_ptr<Treno>> binariStazionamento{2};
-    std::vector <std::shared_ptr<Treno>> binariStazionamentoInverso{2};
+    std::vector <int> binariStazionamento{2};
+    std::vector <int> binariStazionamentoInverso{2};
     int i = 0;
     int is = 0;
 
-    std::vector <std::shared_ptr<Treno>> deposito{5};
-    std::vector <std::shared_ptr<Treno>> depositoInverso{5};
+    std::vector <int> deposito{5};
+    std::vector <int> depositoInverso{5};
 
 
 public:
@@ -37,10 +37,10 @@ public:
     int getDistance();
     std::string getNome();
     bool isFreeStop(const std::shared_ptr<Treno> t);
-    void PrenotaStazionamento(const std::shared_ptr<Treno> t);
-    void PrenotaDeposito(const std::shared_ptr<Treno> t);
-    void liberaBinarioStazionamento(const std::shared_ptr<Treno> t);
-    void liberaDeposito(const std::shared_ptr<Treno> t);
+    void PrenotaStazionamento(int id, bool reverse);
+    void PrenotaDeposito(int id, bool reverse);
+    void liberaBinarioStazionamento(int id, bool reverse);
+    void liberaDeposito(int id, bool reverse);
     bool isPrincipale() const;
     virtual bool isFreePass(const std::shared_ptr<Treno> t)=0;
     virtual void PrenotaTransito(const std::shared_ptr<Treno> t)=0;
