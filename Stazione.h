@@ -20,13 +20,17 @@ protected:
     int Km;     //km della tratta a cui si trova la stazione
     std::string nome ;
 
+
     Semaforo semBinariStazionamento;
     Semaforo semBinariStazionamentoInverso;
+    Semaforo uscita;
+    Semaforo uscitaInversa;
     std::vector <int> binariStazionamento;
     std::vector <int> binariStazionamentoInverso;
     int i = 0;
     int is = 0;
-
+    int binarioPostStazione;
+    int binarioPostStazioneInverso;
     std::vector <int> deposito{5};
     std::vector <int> depositoInverso{5};
 
@@ -42,6 +46,9 @@ public:
     void liberaBinarioStazionamento(int id, bool reverse);
     void liberaDeposito(int id, bool reverse);
     bool isPrincipale() const;
+    bool isFreeUscita();
+    void prenotaUscita(int t,bool reverse);
+    void liberaUscita(bool reverse);
     virtual bool isFreePass(int id, bool reverse)=0;
     virtual void PrenotaTransito(int id, bool reverse)=0;
     virtual void liberaBinarioTransito(int id, bool reverse)=0;

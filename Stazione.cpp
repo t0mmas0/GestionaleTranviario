@@ -89,3 +89,27 @@ bool Stazione::isPrincipale() const {
     return principale;
 }
 
+bool Stazione::isFreeUscita() {
+    return uscita.getStatus();
+}
+
+void Stazione::prenotaUscita(int t,bool reverse) {
+        if(reverse){
+            binarioPostStazioneInverso = t;
+            uscitaInversa.setRosso();
+        }else{
+            binarioPostStazione = t;
+            uscita.setRosso();
+        }
+}
+
+void Stazione::liberaUscita(bool reverse) {
+    if(reverse){
+        binarioPostStazioneInverso = -1;
+        uscitaInversa.setVerde();
+    }else{
+        binarioPostStazione = -1;
+        uscita.setVerde();
+    }
+}
+
