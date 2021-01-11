@@ -8,7 +8,10 @@
 
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
-	:std::enable_shared_from_this<Treno>(), orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false }, annunciato{ false }, transitato{false} {
+	:std::enable_shared_from_this<Treno>(), orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, 
+	posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, 
+	Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false }, 
+	annunciato{ false }, transitato{ false }, liberato{ false } {
 	if (reverse) {
 
 		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
@@ -103,6 +106,9 @@ void Treno::esegui() {
 	case movimento:
 		//Se il treno è in movimento, allora deve continuare a muoversi secondo la propria velocità
 		avanza();
+		//Devo controllare se liberare il binario di uscita dalla stazione
+		if (!liberato)
+			libera_uscita();
 		//Deve controllare se annunciarsi alla stazione (se non lo ha già fatto)
 		if (!annunciato)
 			pre_chiamata();
@@ -196,6 +202,7 @@ void Treno::testa_uscita_stazione() {
 				aggiorna_indici();
 				fermata_effettuata = false;
 				annunciato = false;
+				liberato = false;
 			}
 			else {	//Se non è libero sto fermo
 				velocita = 0;
@@ -213,6 +220,7 @@ void Treno::testa_uscita_stazione() {
 				aggiorna_indici();
 				fermata_effettuata = false;
 				annunciato = false;
+				liberato = false;
 			}
 			else {
 				velocita = 0;
@@ -310,6 +318,24 @@ void Treno::libera_binario() {
 	}
 	else
 		(*iteratore_stazioni)->liberaBinarioStazionamento(identificativo, reverse);
+}
+
+void Treno::libera_uscita(){
+	if (reverse) {
+		//Controllo la posizione del treno (+15km rispetto alla stazione PRECEDENTE)
+		if (posizione <= (*std::prev(iteratore_stazioni))->getDistance() - 15) {
+			(*std::prev(iteratore_stazioni))->liberaUscita(reverse);
+			liberato = true;
+			std::cout << "Il treno " << identificativo << " ha liberato il binario di uscita dalla stazione " << (*std::prev(iteratore_stazioni))->getNome() << std::endl;
+		}
+	}
+	else {
+		if (posizione >= (*std::prev(iteratore_stazioni))->getDistance() + 15) {
+			(*std::prev(iteratore_stazioni))->liberaUscita(reverse);
+			liberato = true;
+			std::cout << "Il treno " << identificativo << " ha liberato il binario di uscita dalla stazione " << (*std::prev(iteratore_stazioni))->getNome() << std::endl;
+		}
+	}
 }
 
 //Aggiorna l'indice del vettore di orari e dell'itetratore di stazioni
