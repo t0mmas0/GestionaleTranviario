@@ -360,6 +360,7 @@ void Treno::partenza(bool trans) {
 }
 
 //Prenota un binario di fermata
+//TODO: CHE SUCCEDE SE QUEL MONA DI TRENO ARRIVA 800 MINUTI PRIMA DEL PREVISTO?
 void Treno::prenota_fermata(){
 	if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse)) {
 		//Se il binario è disponibile, lo prenoto ed entro in stazione
