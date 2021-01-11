@@ -323,7 +323,7 @@ void Treno::libera_binario() {
 void Treno::libera_uscita(){
 	if (reverse) {
 		//Controllo la posizione del treno (+15km rispetto alla stazione PRECEDENTE)
-		if (posizione <= (*std::prev(iteratore_stazioni))->getDistance() - 15) {
+		if (posizione <= (*std::next(iteratore_stazioni))->getDistance() - 15) {
 			(*std::prev(iteratore_stazioni))->liberaUscita(reverse);
 			liberato = true;
 			std::cout << "Il treno " << identificativo << " ha liberato il binario di uscita dalla stazione " << (*std::prev(iteratore_stazioni))->getNome() << std::endl;
