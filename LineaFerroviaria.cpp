@@ -45,7 +45,7 @@ void LineaFerroviaria::esegui() {
 					treniAttiviRitorno.erase(i);
 			}
 			else {
-				for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); (*i)->get_stato() == distrutto; i++) {
+				for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviRitorno.begin(); (*i)->get_stato() == distrutto; i++) {
 					treniAttiviRitorno.erase(i);
 					if (treniAttiviRitorno.size() == 1)
 						break;
@@ -64,7 +64,7 @@ void LineaFerroviaria::esegui() {
 		orario++;
 		std::cout << "Simulazione al minuto " << orario << std::endl;
 		///darimuovere sennò se spacca tutto
-		if (treniAndata.size() == 0 && treniRitorno.size() == 0)
+		if ((treniAndata.size() == 0 && treniRitorno.size() == 0) && (treniAttiviAndata.size() == 0 && treniAttiviRitorno.size() == 0))
 			break;
 	}
 }
@@ -114,8 +114,7 @@ void LineaFerroviaria::controlloTamponamenti() {
 		}
 	}
 	if (treniAttiviRitorno.size() > 1) {
-		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin();
-			i != std::prev(--treniAttiviAndata.end()); i++) {
+		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviRitorno.begin(); i != std::prev(--treniAttiviRitorno.end()); i++) {
 			std::list<std::shared_ptr<Treno>>::const_iterator j = std::next(i);
 			if ((*i)->get_stato() == movimento ||
 				((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
@@ -193,7 +192,7 @@ void LineaFerroviaria::gestioneMovimento() {
 		}
 	}
 	if (treniAttiviRitorno.size() != 0) {
-		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviAndata.begin(); i != treniAttiviAndata.end(); i++) {
+		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviRitorno.begin(); i != treniAttiviRitorno.end(); i++) {
 			(*i)->esegui();
 		}
 	}

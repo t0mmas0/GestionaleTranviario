@@ -19,12 +19,12 @@ bool StazioneSecondaria::isFreePass(int id, bool reverse) {
 
 void StazioneSecondaria::PrenotaTransito(int id, bool reverse) {
     if(reverse){
-        std::cout<<"Accesso al Binario di Stazionamento del treno" << id << "Alla Stazione" << this->nome;
+        std::cout << "Accesso al Binario di transito del treno" << id << " alla Stazione" << this->nome << std::endl;
         binariTransitoInverso=id;
         semBinariTransitoInverso.setRosso();
 
     }else {
-        std::cout << "Accesso al Binario di Stazionamento del treno" << id << "Alla Stazione" << this->nome;
+        std::cout << "Accesso al Binario di transito del treno" << id << " alla Stazione" << this->nome << std::endl;
         binariTransito=id;
         semBinariTransito.setRosso();
     }

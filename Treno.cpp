@@ -8,13 +8,12 @@
 
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
-	:std::enable_shared_from_this<Treno>(), orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false }, annunciato{ false } {
+	:std::enable_shared_from_this<Treno>(), orario_partenza{ 0 }, orario{ 0 }, identificativo{ id }, velocita{ 0 }, posizione{ 0 }, ritardo{ 0 }, minuti_fermata{ 0 }, stato{ creato }, Stazioni{ Stazioni }, iteratore_stazioni{ Stazioni.begin() }, Orari{ Orari }, indice_orario{ 0 }, attivato{ false }, reverse{ reverse }, fermata_effettuata{ false }, annunciato{ false }, transitato{false} {
 	if (reverse) {
 
 		//Se il treno viaggia invertito, devo correggere gli indici in modo da partire dalla fine
 		iteratore_stazioni = --(Stazioni.end());
 		posizione = (*iteratore_stazioni)->getDistance();
-		indice_orario = Orari.size() - 1;
 	}
 	orario_partenza = Orari[indice_orario];
 }
@@ -92,7 +91,8 @@ void Treno::esegui() {
 		//Se sono in transito non ho restrizioni sulla velocità e posso continuare ad avanzare
 		avanza();
 		//Avviso in caso di superamento della stazione
-		testa_transito();
+		if (!transitato)
+			testa_transito();
 		//Devo controllare però di non essere uscito dalla zona stazione
 		testa_uscita_stazione();
 		break;
@@ -234,6 +234,7 @@ void Treno::testa_transito(){
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance()) {
 			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+			transitato = true;
 			//Controllo se questa è la stazione capolinea
 			if (iteratore_stazioni == Stazioni.begin()) {
 				cambia_stato(distrutto);
@@ -245,6 +246,7 @@ void Treno::testa_transito(){
 	else{
 		if (posizione >= (*iteratore_stazioni)->getDistance()) {
 			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+			transitato = true;
 			if (std::next(iteratore_stazioni) == Stazioni.end()) {
 				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
 				libera_binario();
@@ -285,8 +287,10 @@ void Treno::sposta_indietro() {
 //Libera il binario su cui si trovava il treno
 void Treno::libera_binario() {
 	//Quale tipo di binario devo liberare?
-	if (stato == transito)
+	if (stato == transito) {
 		(*iteratore_stazioni)->liberaBinarioTransito(identificativo, reverse);
+		transitato = false;
+	}
 	else
 		(*iteratore_stazioni)->liberaBinarioStazionamento(identificativo, reverse);
 }
@@ -294,13 +298,12 @@ void Treno::libera_binario() {
 //Aggiorna l'indice del vettore di orari e dell'itetratore di stazioni
 void Treno::aggiorna_indici() {
 	if (reverse) {
-		indice_orario--;
 		iteratore_stazioni--;
 	}
 	else {
-		indice_orario++;
 		iteratore_stazioni++;
 	}
+	indice_orario++;
 }
 
 //Ferma il treno alla banchina
@@ -388,7 +391,7 @@ void Treno::prenota_transito(){
 	//Se il binario è disponibile, lo prenoto ed entro in transito
 	if ((*iteratore_stazioni)->isFreePass(identificativo, reverse)) {
 		//Se sono in parcheggio libero il binario
-		if (parcheggio) {
+		if (stato == parcheggio) {
 			(*iteratore_stazioni)->liberaDeposito(identificativo, reverse);
 		}
 		(*iteratore_stazioni)->PrenotaTransito(identificativo, reverse);
@@ -538,6 +541,7 @@ void AltaVelocita::pre_chiamata() {
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
 					std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+				annunciato = true;
 			}
 		}
 		else {
@@ -546,6 +550,7 @@ void AltaVelocita::pre_chiamata() {
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+				annunciato = true;
 			}
 		}
 	}

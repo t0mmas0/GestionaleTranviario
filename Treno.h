@@ -108,6 +108,7 @@ protected:
 	bool reverse;
 	bool fermata_effettuata;
 	bool annunciato;
+	bool transitato;
 };
 
 
