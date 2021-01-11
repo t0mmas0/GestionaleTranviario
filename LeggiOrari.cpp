@@ -124,7 +124,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 		//per ogni treno inserisco col giusto costruttore nella giusta lista
 		if (tipoTreno == 1) {
 			if (reverse) {
-				TreniPer.emplace_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
+				TreniPer.push_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
 			}
 			else {
 				TreniDa.push_back(std::make_shared<Regionale>(idTreno, Stazioni, orari, reverse));
@@ -132,18 +132,18 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 		}
 		else if (tipoTreno == 2) {
 			if (reverse) {
-				TreniPer.emplace_back(std::make_shared<AltaVelocita>(idTreno, Stazioni, orari, reverse));
+				TreniPer.push_back(std::make_shared<AltaVelocita>(idTreno, Stazioni, orari, reverse));
 			}
 			else {
-				TreniDa.emplace_back(std::make_shared<AltaVelocita>(idTreno, Stazioni, orari, reverse));
+				TreniDa.push_back(std::make_shared<AltaVelocita>(idTreno, Stazioni, orari, reverse));
 			}
 		}
 		else {
 			if (reverse) {
-				TreniPer.emplace_back(std::make_shared<SuperVelocita>(idTreno, Stazioni, orari, reverse));
+				TreniPer.push_back(std::make_shared<SuperVelocita>(idTreno, Stazioni, orari, reverse));
 			}
 			else {
-				TreniDa.emplace_back(std::make_shared<SuperVelocita>(idTreno, Stazioni, orari, reverse));
+				TreniDa.push_back(std::make_shared<SuperVelocita>(idTreno, Stazioni, orari, reverse));
 			}
 		}
 
