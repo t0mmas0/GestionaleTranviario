@@ -56,6 +56,7 @@ public:																												//Costruttore di default
 	void esegui();												//Routine del treno: deve essere chiamata ogni minuto. Esegue azioni in base allo stato
 	void cambia_stato(Stato s);									//Subroutine: permette al treno di cambiare il proprio stato e regola la velocità di conseguenza
 
+protected:
 	//*************************Principali operazioni del treno**********************
 	void avanza();												//Fa avanzare il treno
 	void testa_ingresso_stazione();								//Controlla se il treno è entrato in zona stazione
@@ -86,27 +87,28 @@ public:																												//Costruttore di default
 	//************************Operatori utili***************************************
 	bool operator ==(const Treno& treno) const;					//Operatore di confronto
 
-protected:
-	int orario_partenza;
-	int orario;
-	int identificativo;
-	int velocita;
-	int ritardo;
-	int minuti_fermata;
 
-	double posizione;
+	//Variabili membro
+	int orario_partenza;		//Indica l'orario di partenza effettiva del treno dal capolinea
+	int orario;					//Indica l'ora corrente
+	int identificativo;			//Indica il numero del treno
+	int velocita;				//Indica la velocità attuale del treno
+	int ritardo;				//Indica il ritardo del treno
+	int minuti_fermata;			//Indica il tempo trascorso in fermata
 
-	Stato stato;
+	double posizione;			//Indica la posizione del treno
 
-	const std::list<std::shared_ptr<Stazione>>& Stazioni;
-	std::list<std::shared_ptr<Stazione>>::const_iterator iteratore_stazioni;
+	Stato stato;				//Registra lo stato attuale del treno
 
-	std::vector<int> Orari;
-	int indice_orario;
+	const std::list<std::shared_ptr<Stazione>>& Stazioni;						//Lista di stazioni lungo la linea ferroviaria, ordinate dal km 0
+	std::list<std::shared_ptr<Stazione>>::const_iterator iteratore_stazioni;	//Iteratore alla stazione corrente
 
-	bool attivato;
-	bool reverse;
-	bool fermata_effettuata;
+	std::vector<int> Orari;		//Vettore di orari ordinato dalla stazione di partenza
+	int indice_orario;			//Indice all'orario di arrivo alla prossima stazione
+
+	bool attivato;				//Registra se il treno è già stato attivato
+	bool reverse;				//Registra se il treno viaggia a velocità inversa
+	bool fermata_effettuata;	//Registra se ha effettuato la fermata alla prossima stazione
 	bool annunciato;
 	bool transitato;
 };
