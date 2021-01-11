@@ -74,6 +74,7 @@ protected:
 	virtual void chiama_stazione() = 0;							//Chiama la stazione e agisce in base al tipo di treno e di stazione
 	
 	void libera_binario();										//Libera il binario sul quale si trovava il treno
+	void libera_uscita();
 	void aggiorna_indici();										//Calcola il ritardo con cui il treno è arrivato alla fermata
 
 	void effettua_fermata();									//Ferma il treno alla banchina
@@ -111,6 +112,7 @@ protected:
 	bool fermata_effettuata;	//Registra se ha effettuato la fermata alla prossima stazione
 	bool annunciato;
 	bool transitato;
+	bool liberato;
 };
 
 
