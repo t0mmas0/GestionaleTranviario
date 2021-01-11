@@ -45,6 +45,7 @@ public:																												//Costruttore di default
 	int get_ritardo() const;									//Resituisce il ritardo del treno (aggiornato all'ultima fermata)
 	bool isReverse() const;										//Restituisce true se il treno viaggia al contrario
 	int get_orario() const;										//Restituisce l'orario di partenza previsto per il treno
+	virtual int max_speed() = 0;								//Restituisce la massima velocità del treno in base al tipo
 	Stato get_stato() const;									//Resitituisce lo stato del treno
 
 	virtual void set_velocita(int v);						//Imposta la velocità del treno. Poichè questa classe interfaccia non prevede limiti superiori, il valore di default è 0 nel caso in cui il parametro non venga impostato
@@ -71,7 +72,6 @@ protected:
 
 	virtual void pre_chiamata() = 0;
 	virtual void chiama_stazione() = 0;							//Chiama la stazione e agisce in base al tipo di treno e di stazione
-	virtual int max_speed() = 0;
 	
 	void libera_binario();										//Libera il binario sul quale si trovava il treno
 	void aggiorna_indici();										//Calcola il ritardo con cui il treno è arrivato alla fermata
