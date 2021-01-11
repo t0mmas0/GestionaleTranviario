@@ -14,10 +14,10 @@ bool StazionePrincipale::isFreePass(const std::shared_ptr<Treno> t) {
     throw  std::runtime_error("Funzione non prevista per questa derivata");
 }
 
-void StazionePrincipale::PrenotaTransito(const std::shared_ptr<Treno> t) {
+void StazionePrincipale::PrenotaTransito(int id, bool reverse) {
     throw  std::runtime_error("Funzione non prevista per questa derivata");
 }
 
-void StazionePrincipale::liberaBinarioTransito(const std::shared_ptr<Treno> t) {
+void StazionePrincipale::liberaBinarioTransito(int id, bool reverse) {
     throw  std::runtime_error("Funzione non prevista per questa derivata");
 }

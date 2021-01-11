@@ -31,13 +31,14 @@ bool Stazione::isFreeStop(const std::shared_ptr<Treno> t) {
 
 void Stazione::liberaDeposito(int id, bool reverse) {
     if (reverse){
-
-
+        depositoInverso.erase(std::remove(depositoInverso.begin(), depositoInverso.end(), id),
+                              depositoInverso.end());
+        std::cout<<"Il Treno N." <<id<<"ha lasciato il deposito\n";
     }else {
-
+        deposito.erase(std::remove(deposito.begin(), deposito.end(), id),
+                       deposito.end());
+        std::cout<<"Il Treno N." <<id<<"ha lasciato il deposito\n";
     }
-
-    std::cout<<"Il Treno N." <<id<<"ha lasciato il deposito\n";
 }
 
 void Stazione::liberaBinarioStazionamento(int id, bool reverse) {

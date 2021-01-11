@@ -43,8 +43,8 @@ public:
     void liberaDeposito(int id, bool reverse);
     bool isPrincipale() const;
     virtual bool isFreePass(const std::shared_ptr<Treno> t)=0;
-    virtual void PrenotaTransito(const std::shared_ptr<Treno> t)=0;
-    virtual void liberaBinarioTransito(const std::shared_ptr<Treno> t)=0;
+    virtual void PrenotaTransito(int id, bool reverse)=0;
+    virtual void liberaBinarioTransito(int id, bool reverse)=0;
 
 
 };

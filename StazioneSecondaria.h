@@ -14,16 +14,16 @@ class StazioneSecondaria:public Stazione {
 private:
     Semaforo semBinariTransito;
     Semaforo semBinariTransitoInverso;
-    std::shared_ptr<Treno>  binariTransito;
-    std::shared_ptr<Treno>  binariTransitoInverso;
+    int  binariTransito;
+    int  binariTransitoInverso;
 
 
 
 public:
     StazioneSecondaria(int km, std::string nome);
     bool isFreePass(const std::shared_ptr<Treno> t) override;
-    void PrenotaTransito(const std::shared_ptr<Treno> t) override;
-    void liberaBinarioTransito(const std::shared_ptr<Treno> t) override;
+    void PrenotaTransito(int id, bool reverse) override;
+    void liberaBinarioTransito(int id, bool reverse) override;
 
 };
 
