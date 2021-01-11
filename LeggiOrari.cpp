@@ -3,6 +3,7 @@
 #include<sstream>
 #include <stdexcept>
 #include <algorithm>
+#include <iostream>
 
 
 bool treniCompare(const std::shared_ptr<Treno>& primo, const std::shared_ptr<Treno>& secondo) {
@@ -22,14 +23,14 @@ std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniDa()
 	return TreniDa;
 }
 
-std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniPer(){
+std::list<std::shared_ptr<Treno>> LeggiOrari::getTreniPer() {
 	TreniPer.sort(treniCompare);//ordino rispetto orario di partenza
 	return TreniPer;
 }
 
 LeggiOrari::LeggiOrari(const std::string& file) :NomeFile(file)
 {
-	
+
 }
 
 void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni) {
@@ -120,7 +121,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 		if (Stazioni.size() < orari.size()) {//se ci sono piu orari di stazioni tolgo gli ultimi
 			orari.erase(orari.begin() + Stazioni.size(), orari.end());
 		}
-		correggiOrari(Stazioni, orari, velocita, reverse, tipoTreno);//chiamo funzione correggi orari
+		correggiOrari(Stazioni, orari, velocita, reverse, tipoTreno, idTreno);//chiamo funzione correggi orari
 		//per ogni treno inserisco col giusto costruttore nella giusta lista
 		if (tipoTreno == 1) {
 			if (reverse) {
@@ -153,7 +154,7 @@ void LeggiOrari::leggiFile(const std::list<std::shared_ptr<Stazione>>& Stazioni)
 }
 
 
-void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno)
+void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno, int idTreno)
 {//putroppo non sono riuscito a creare un algoritmo unico per treni reverse e non reverse in quanto non si può assegnare un reverse iterator a un iterator
 	int i = 1;
 	bool fermataPrev = false;//bool che tiene conto se il treno si e' fermato nella stazione prima, in quel caso aggiungo 5 in al tempo
@@ -185,6 +186,7 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 			}
 			if (orari[i] - orari[i - 1] < tempoInMezzo) {
 				orari[i] = tempoInMezzo + orari[i - 1];
+
 			}
 
 			i++;
@@ -216,6 +218,7 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 				fermataPrev = true;
 			}
 			if (orari[i] - orari[i - 1] < tempoInMezzo) {
+				std::cout << "cambiato orario di fermata/arrivo nella stazione: " << (*it)->getNome() << " da " << orari[i] << " a " << tempoInMezzo + orari[i - 1] << std::endl;
 				orari[i] = tempoInMezzo + orari[i - 1];
 			}
 
