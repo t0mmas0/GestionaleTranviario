@@ -69,7 +69,7 @@ void Stazione::PrenotaStazionamento(int t , bool reverse) {
     }
     else {
         std::cout << "Accesso al Binario di Stazionamento del treno " << t << " alla Stazione " << this->nome << std::endl;
-        binariStazionamento[i]=t;
+        binariStazionamento.push_back(t);
         i++;
         if (i == 2) {
             semBinariStazionamento.setRosso();
