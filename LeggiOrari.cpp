@@ -185,6 +185,7 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 				fermataPrev = true;
 			}
 			if (orari[i] - orari[i - 1] < tempoInMezzo) {
+				std::cout << "Treno: " << idTreno << " cambiato orario di fermata/arrivo nella stazione: " << (*it)->getNome() << " da " << orari[i] << " a " << tempoInMezzo + orari[i - 1] << std::endl;
 				orari[i] = tempoInMezzo + orari[i - 1];
 
 			}
@@ -218,7 +219,7 @@ void LeggiOrari::correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazi
 				fermataPrev = true;
 			}
 			if (orari[i] - orari[i - 1] < tempoInMezzo) {
-				std::cout << "cambiato orario di fermata/arrivo nella stazione: " << (*it)->getNome() << " da " << orari[i] << " a " << tempoInMezzo + orari[i - 1] << std::endl;
+				std::cout <<"Treno: "<< idTreno<< " cambiato orario di fermata/arrivo nella stazione: " << (*it)->getNome() << " da " << orari[i] << " a " << tempoInMezzo + orari[i - 1] << std::endl;
 				orari[i] = tempoInMezzo + orari[i - 1];
 			}
 
