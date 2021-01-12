@@ -152,7 +152,7 @@ void LineaFerroviaria::attivaTreni() {
 		if ((*i)->get_orario() > orario)
 			break;
 		if ((*linea.rbegin())->isPrincipale()) {
-			if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
+			if ((*linea.rbegin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 				(*i)->attiva(orario);
 				treniAttiviRitorno.push_back(*i);
 				i = treniRitorno.erase(i);
@@ -163,7 +163,7 @@ void LineaFerroviaria::attivaTreni() {
 		}
 		else {
 			if ((*i)->max_speed() > 160) {
-				if ((*linea.begin())->isFreePass((*i)->get_id(), (*i)->isReverse())) {
+				if ((*linea.rbegin())->isFreePass((*i)->get_id(), (*i)->isReverse())) {
 					(*i)->attiva(orario);
 					treniAttiviRitorno.push_back(*i);
 					i = treniRitorno.erase(i);
@@ -173,7 +173,7 @@ void LineaFerroviaria::attivaTreni() {
 				}
 			}
 			else {
-				if ((*linea.begin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
+				if ((*linea.rbegin())->isFreeStop((*i)->get_id(), (*i)->isReverse())) {
 					(*i)->attiva(orario);
 					treniAttiviRitorno.push_back(*i);
 					i = treniRitorno.erase(i);
