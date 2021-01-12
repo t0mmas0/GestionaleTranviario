@@ -15,6 +15,16 @@ public:
     static void accessoAlBinario(bool tipoBinario,int id, std::string nome);
     static void liberaBinario(bool tipoBinario,int id, std::string nome);
     static void uscitaDeposito(int id);
+    static void attesa(int id,double pos);
+    static void switchAttesa(int id);
+    static void capolinea(int id);
+    static void passStazione(int id,std::string nome);
+    static void possibileAvanzare(int id,std::string nome);
+    static void posizioneTreno(int id,double pos,int ora);
+
+
+
+
 
 
 };

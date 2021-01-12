@@ -1,10 +1,9 @@
 //Simone Peraro 1216334
 #include <iostream>
-#include <cmath>
 #include <stdexcept>
 #include "Treno.h"
-#include "Stazione.h"
 #include <memory>
+#include "Grafica.h"
 
 //Costruttore della classe treno richiamato dalle sottoclassi. Il passaggio del vettore Orari avviene per copia poichè la funzione leggiFile della classe LeggiOrari passa una copia del vettore che in seguito viene distrutto, in modo che il compilatore effettui una copy-elision
 Treno::Treno(int id, const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int> Orari, bool reverse)
@@ -76,7 +75,7 @@ void Treno::esegui() {
 		break;
 	case attesa:
 		//Se il treno è in attesa, non fa assolutamente nulla, ma avvisa di essere fermo
-		std::cout << "Il treno " << identificativo << " e' fermo in attesa al chilometro " << posizione << std::endl;
+		Grafica::attesa(identificativo,posizione);
 	case fermata:
 		//Se sono fermo alla fermata, devo controllare se è trascorso abbastanza tempo da poter proseguire e calcolare l'eventuale ritardo
 		aggiorna_fermata();
@@ -124,7 +123,7 @@ void Treno::esegui() {
 		break;
 	}
 	orario++;	//Trascorre il minuto
-	std::cout << "Il treno " << identificativo << " e' al km " << posizione << " e segna le ore " << orario << std::endl;
+	Grafica::posizioneTreno(identificativo,posizione,orario);
 }
 
 //Subroutine: cambia lo stato del treno e regola la velocità
@@ -135,7 +134,7 @@ void Treno::cambia_stato(Stato s) {
 		break;
 	case attesa:
 		velocita = 0;
-		std::cout << "Il treno " << identificativo << " e' stato messo in attesa" << std::endl;
+		Grafica::switchAttesa(identificativo);
 		break;
 	case stazione:
 		velocita = 80;
@@ -257,22 +256,22 @@ void Treno::testa_fermata() {
 void Treno::testa_transito(){
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance()) {
-			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+			Grafica::passStazione(identificativo,(*iteratore_stazioni)->getNome());
 			transitato = true;
 			//Controllo se questa è la stazione capolinea
 			if (iteratore_stazioni == Stazioni.begin()) {
 				cambia_stato(distrutto);
-				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed e' stato distrutto";
+				Grafica::capolinea(identificativo);
 				libera_binario();
 			}			
 		}
 	}
 	else{
 		if (posizione >= (*iteratore_stazioni)->getDistance()) {
-			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+            Grafica::passStazione(identificativo,(*iteratore_stazioni)->getNome());
 			transitato = true;
 			if (std::next(iteratore_stazioni) == Stazioni.end()) {
-				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed e' stato distrutto" << std::endl;
+                Grafica::capolinea(identificativo);
 				libera_binario();
 			}
 		}
@@ -325,14 +324,14 @@ void Treno::libera_uscita(){
 		if (posizione <= (*std::next(iteratore_stazioni))->getDistance() - 15) {
 			(*std::next(iteratore_stazioni))->liberaUscita(reverse);
 			liberato = true;
-			std::cout << "Il treno " << identificativo << " ha liberato il binario di uscita dalla stazione " << (*std::next(iteratore_stazioni))->getNome() << std::endl;
+			Grafica::possibileAvanzare(identificativo,(*std::next(iteratore_stazioni))->getNome() );
 		}
 	}
 	else {
 		if (posizione >= (*std::prev(iteratore_stazioni))->getDistance() + 15) {
 			(*std::prev(iteratore_stazioni))->liberaUscita(reverse);
 			liberato = true;
-			std::cout << "Il treno " << identificativo << " ha liberato il binario di uscita dalla stazione " << (*std::prev(iteratore_stazioni))->getNome() << std::endl;
+            Grafica::possibileAvanzare(identificativo,(*std::next(iteratore_stazioni))->getNome() );
 		}
 	}
 }

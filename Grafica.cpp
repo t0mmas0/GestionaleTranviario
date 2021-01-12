@@ -64,3 +64,27 @@ void Grafica::liberaBinario(bool tipoBinario, int id, std::string nome) {
 void Grafica::uscitaDeposito(int id) {
     std::cout<<"Il Treno N." <<id<<"ha lasciato il deposito\n";
 }
+
+void Grafica::attesa(int id, double pos) {
+    std::cout << "Il treno " << id << " e' fermo in attesa al chilometro " << pos << std::endl;
+}
+
+void Grafica::posizioneTreno(int id, double pos,int ora) {
+    std::cout << "Il treno " << id << " e' al km " << pos << " e segna le ore " << ora << std::endl;
+}
+
+void Grafica::switchAttesa(int id) {
+    std::cout << "Il treno " << id << " e' stato messo in attesa" << std::endl;
+}
+
+void Grafica::capolinea(int id) {
+    std::cout << "Il treno " << id << " ha superato il capolinea ed e' stato distrutto";
+}
+
+void Grafica::passStazione(int id, std::string nome) {
+    std::cout << "Il treno " << id << " in transito, ha superato la stazione " << nome << std::endl;
+}
+
+void Grafica::possibileAvanzare(int id, std::string nome) {
+    std::cout << "Il treno " << id << " ha liberato il binario di uscita dalla stazione " << nome<< std::endl;
+}
