@@ -92,3 +92,7 @@ void Grafica::possibileAvanzare(int id, std::string nome) {
 void Grafica::distruggi(int id) {
     std::cout << "Il treno " << id << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
 }
+
+void Grafica::ingressoStazione(int id, std::string nome, double orario) {
+
+}

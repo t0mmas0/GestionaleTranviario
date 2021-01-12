@@ -351,7 +351,7 @@ void Treno::aggiorna_indici() {
 //Ferma il treno alla banchina
 void Treno::effettua_fermata() {
 	cambia_stato(fermata);
-	std::cout << "Il treno " << identificativo << " e' arrivato alla stazione " << (*iteratore_stazioni)->getNome() << " ai minuti " << orario << std::endl;
+	Grafica::ingressoStazione(identificativo,(*iteratore_stazioni)->getNome(),orario);
 	fermata_effettuata = true;
 	//Controllo se era l'ultima fermata
 	if (reverse) {
