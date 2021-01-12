@@ -271,6 +271,7 @@ void Treno::testa_transito(){
             Grafica::passStazione(identificativo,(*iteratore_stazioni)->getNome());
 			transitato = true;
 			if (std::next(iteratore_stazioni) == Stazioni.end()) {
+				cambia_stato(distrutto);
                 Grafica::capolinea(identificativo);
 				libera_binario();
 			}

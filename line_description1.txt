@@ -1,6 +1,10 @@
-VICENZA
-LERINO 1 30
-GRISIGNANO DI ZOCCO 0 60
-MESTRINO 0 100
-PADOVA 1 150
-BUSA DI VIGONZA 0 185
+Venezia		
+Padova	1	21
+Grisignano di Zocco	1	42
+Vicenza	0	63
+Verona	0	84
+Brescia	0	105
+Rovato	1	126
+Treviglio	1	147
+Milano	0	188
+Milano Certosa	1	209
