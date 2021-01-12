@@ -9,18 +9,12 @@
 #include <fstream>
 class LeggiOrari
 {
-	/*
-	fix correggiorari reverse e altro
-	ORDINARE TRENI
-	COMMENTARE
-	*/
 private:
 	std::list<std::shared_ptr<Treno>> TreniDa; //treni da 0 a fine
 	std::list<std::shared_ptr<Treno>> TreniPer;//treni da fine a 0
 	std::string NomeFile;
 	std::ifstream Stream;
 	void correggiOrari(const std::list<std::shared_ptr<Stazione>>& Stazioni, std::vector<int>& orari, int velocita, bool reverse, int tipoTreno,int idTreno);
-	void sortTreni();
 	int getVelocita(int tipoTreno);
 	
 public:

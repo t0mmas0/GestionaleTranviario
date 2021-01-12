@@ -1,3 +1,4 @@
+//autore Marco Nardi 1218629
 #include "LeggiOrari.h"
 #include <iostream>
 #include<sstream>
@@ -6,7 +7,7 @@
 #include <iostream>
 #include "Grafica.h"
 
-
+//functor per sort dei treni
 bool treniCompare(const std::shared_ptr<Treno>& primo, const std::shared_ptr<Treno>& secondo) {
 	// Returna true se primo va prima del secondo
 	if (primo->get_orario() < secondo->get_orario()) {
