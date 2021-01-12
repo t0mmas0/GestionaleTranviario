@@ -118,7 +118,7 @@ void Treno::esegui() {
 		testa_ingresso_stazione();
 		break;
 	case distrutto:
-		throw std::logic_error("Errore. Il treno è distrutto e non può eseguire nessuna azione");
+		throw std::logic_error("Errore. Il treno e' distrutto e non può eseguire nessuna azione");
 		break;
 	default:
 		break;
@@ -131,7 +131,7 @@ void Treno::esegui() {
 void Treno::cambia_stato(Stato s) {
 	switch (s) {
 	case creato:
-		throw std::logic_error("Impossibile cambiare lo stato in creato. Questo stato è possibile solo dopo la chiamata al costruttore");
+		throw std::logic_error("Impossibile cambiare lo stato in creato. Questo stato e' possibile solo dopo la chiamata al costruttore");
 		break;
 	case attesa:
 		velocita = 0;
@@ -186,7 +186,6 @@ void Treno::testa_ingresso_stazione() {
 	}
 }
 
-//TODO: Controlla il semaforo prima di uscire
 //Controlla se il treno è uscito dalla zona stazione. A seguito del controllo lo stato del treno sarà uno tra {movimento, stazione, transito, attesa}
 void Treno::testa_uscita_stazione() {
 	if (reverse) {
@@ -263,7 +262,7 @@ void Treno::testa_transito(){
 			//Controllo se questa è la stazione capolinea
 			if (iteratore_stazioni == Stazioni.begin()) {
 				cambia_stato(distrutto);
-				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
+				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed e' stato distrutto";
 				libera_binario();
 			}			
 		}
@@ -273,7 +272,7 @@ void Treno::testa_transito(){
 			std::cout << "Il treno " << identificativo << " in transito, ha superato la stazione " << (*iteratore_stazioni)->getNome() << std::endl;
 			transitato = true;
 			if (std::next(iteratore_stazioni) == Stazioni.end()) {
-				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed è stato distrutto";
+				std::cout << "Il treno " << identificativo << " ha superato il capolinea ed e' stato distrutto" << std::endl;
 				libera_binario();
 			}
 		}
@@ -357,14 +356,14 @@ void Treno::effettua_fermata() {
 	//Controllo se era l'ultima fermata
 	if (reverse) {
 		if (iteratore_stazioni == Stazioni.begin()) {
-			std::cout << "Il treno " << identificativo << " è arrivato alla fermata finale e verrà distrutto" << std::endl;
+			std::cout << "Il treno " << identificativo << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
 			cambia_stato(distrutto);
 			libera_binario();
 		}
 	}
 	else {
 		if (std::next(iteratore_stazioni, 1) == Stazioni.end()) {
-			std::cout << "Il treno " << identificativo << " è arrivato alla fermata finale e verrà distrutto" << std::endl;
+			std::cout << "Il treno " << identificativo << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
 			cambia_stato(distrutto);
 			libera_binario();
 		}
@@ -375,13 +374,13 @@ void Treno::effettua_fermata() {
 void Treno::calcola_ritardo() {
 	//Devo calcoare l'eventuale ritardo/anticipo del treno
 	int previsto = Orari[indice_orario];
-	if (previsto - orario == ritardo)
-		return; //Il ritardo non è variato
-	ritardo = previsto - orario;
-	if (ritardo > 0)
-		std::cout << "Il treno " << identificativo << " è in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
+	//if (orario - previsto == ritardo)
+		//return; //Il ritardo non è variato
+	ritardo = orario - previsto;
+	if (ritardo >= 0)
+		std::cout << "Il treno " << identificativo << " e' in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
 	if (ritardo < 0)
-		std::cout << "Il treno " << identificativo << " è in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
+		std::cout << "Il treno " << identificativo << " e' in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
@@ -406,10 +405,9 @@ void Treno::partenza(bool trans) {
 }
 
 //Prenota un binario di fermata
-//TODO: CHE SUCCEDE SE QUEL MONA DI TRENO ARRIVA 800 MINUTI PRIMA DEL PREVISTO?
 void Treno::prenota_fermata(){
-	if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse)) {
-		//Se il binario è disponibile, lo prenoto ed entro in stazione
+	if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse) && (Orari[indice_orario]- orario <= 4)) {
+		//Se il binario è disponibile e non sono in largo anticipo , lo prenoto ed entro in stazione
 		//Se sono in parcheggio libero il binario
 		if (stato == parcheggio) {
 			(*iteratore_stazioni)->liberaDeposito(identificativo, reverse);
@@ -427,6 +425,8 @@ void Treno::prenota_fermata(){
 		else
 			posizione = (*iteratore_stazioni)->getDistance() - 5;
 	}
+	if (Orari[indice_orario] - orario >= 4)
+		std::cout << "Il treno " << identificativo << " e' in anticipo di " << Orari[indice_orario] - orario << " minuti, e rimarra' in parcheggio" << std::endl;
 }
 
 //Prenota un binario di transito
@@ -473,7 +473,7 @@ Regionale::Regionale(int id, const std::list<std::shared_ptr<Stazione>>& Stazion
 
 void Regionale::attiva(int ora){
 	if (attivato)
-		throw std::logic_error("Errore. Si sta attivando un treno già attivato");
+		throw std::logic_error("Errore. Si sta attivando un treno gia' attivato");
 	orario_partenza = ora;
 	orario = ora;
 	//Devo cercare un binario libero
@@ -490,7 +490,6 @@ void Regionale::attiva(int ora){
 void Regionale::set_velocita(int v){
 	if (v > MAX_SPEED)
 		v = MAX_SPEED;
-	std::cout << "La velocità che sto ipostando e' " << v;
 	Treno::set_velocita(v);
 }
 
