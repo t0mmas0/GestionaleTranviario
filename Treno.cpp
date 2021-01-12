@@ -378,9 +378,9 @@ void Treno::calcola_ritardo() {
 		//return; //Il ritardo non è variato
 	ritardo = orario - previsto;
 	if (ritardo >= 0)
-		std::cout << "Il treno " << identificativo << " e' in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+	    Grafica::ritardo(identificativo,ritardo,(*iteratore_stazioni)->getNome());
 	if (ritardo < 0)
-		std::cout << "Il treno " << identificativo << " e' in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome() << std::endl;
+        Grafica::ritardo(identificativo,ritardo,(*iteratore_stazioni)->getNome());
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
@@ -426,7 +426,7 @@ void Treno::prenota_fermata(){
 			posizione = (*iteratore_stazioni)->getDistance() - 5;
 	}
 	if (Orari[indice_orario] - orario >= 4)
-		std::cout << "Il treno " << identificativo << " e' in anticipo di " << Orari[indice_orario] - orario << " minuti, e rimarra' in parcheggio" << std::endl;
+	    Grafica::anticipo(identificativo,Orari[indice_orario] - orario);
 }
 
 //Prenota un binario di transito
@@ -582,7 +582,7 @@ void AltaVelocita::pre_chiamata() {
 				if ((*iteratore_stazioni)->isFreePass(identificativo, reverse))
 					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
 				else
-					std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+					std::cout << "Il treno Alta Velocita" << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
 				annunciato = true;
 			}
 		}

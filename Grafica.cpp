@@ -94,5 +94,13 @@ void Grafica::distruggi(int id) {
 }
 
 void Grafica::ingressoStazione(int id, std::string nome, double orario) {
+    std::cout << "Il treno " << id << " e'entrato alla stazione"<<nome<<" all' orario" <<orario<< std::endl;
+}
 
+void Grafica::ritardo(int id, int ritardo, std::string nome) {
+    std::cout << "Il treno " << id << " e' in ritardo di " << ritardo << " minuti alla stazione " <<nome<< std::endl;
+}
+
+void Grafica::anticipo(int id, int min) {
+    std::cout << "Il treno " << id << " e' in anticipo di " << min << " minuti, e rimarra' in parcheggio" << std::endl;
 }
