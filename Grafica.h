@@ -25,6 +25,7 @@ public:
     static void ingressoStazione(int id,std::string nome,double orario);
     static void ritardo(int id,int ritardo,std::string nome);
     static void anticipo(int id,int min);
+    static void accessoStazione(bool esito,bool tipoTreno,int id,std::string nome);
 
 
 };

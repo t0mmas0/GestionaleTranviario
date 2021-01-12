@@ -104,3 +104,20 @@ void Grafica::ritardo(int id, int ritardo, std::string nome) {
 void Grafica::anticipo(int id, int min) {
     std::cout << "Il treno " << id << " e' in anticipo di " << min << " minuti, e rimarra' in parcheggio" << std::endl;
 }
+
+void Grafica::accessoStazione(bool esito, bool tipoTreno, int id, std::string nome) {
+    if(esito){
+        if(tipoTreno){
+            std::cout << "Il treno Alta Velocita' " << id << " ha richiesto un binario di fermata presso la stazione " << nome<< " con esito positivo" << std::endl;
+        }else{
+            std::cout << "Il treno regionale " << id << " ha richiesto un binario di fermata presso la stazione " << nome << " con esito positivo" << std::endl;
+        }
+    }else{
+        if(tipoTreno){
+            std::cout << "Il treno Alta Velocita' " << id << " ha richiesto un binario di fermata presso la stazione " << nome<< " con esito negativo" << std::endl;
+        }else{
+            std::cout << "Il treno regionale " << id << " ha richiesto un binario di fermata presso la stazione " << nome << " con esito negativo" << std::endl;
+        }
+    }
+
+}

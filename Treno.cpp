@@ -497,18 +497,18 @@ void Regionale::pre_chiamata() {
 	if (reverse) {
 		if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
 			if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse))
-				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+			    Grafica::accessoStazione(true,false,identificativo,(*iteratore_stazioni)->getNome());
 			else
-				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+			    Grafica::accessoStazione(false,false,identificativo,(*iteratore_stazioni)->getNome());
 			annunciato = true;
 		}
 	}
 	else {
 		if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
 			if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse))
-				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+                Grafica::accessoStazione(true,false,identificativo,(*iteratore_stazioni)->getNome());
 			else
-				std::cout << "Il treno regionale " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                Grafica::accessoStazione(false,false,identificativo,(*iteratore_stazioni)->getNome());
 			annunciato = true;
 		}
 	}
@@ -560,18 +560,19 @@ void AltaVelocita::pre_chiamata() {
 		if (reverse) {
 			if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
 				if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse))
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+				    Grafica::accessoStazione(true,true,identificativo,(*iteratore_stazioni)->getNome());
 				else
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                    Grafica::accessoStazione(false,true,identificativo,(*iteratore_stazioni)->getNome());
 				annunciato = true;
 			}
 		}
 		else {
 			if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
 				if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse))
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+
+                    Grafica::accessoStazione(true,true,identificativo,(*iteratore_stazioni)->getNome());
 				else
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                    Grafica::accessoStazione(false,true,identificativo,(*iteratore_stazioni)->getNome());
 				annunciato = true;
 			}
 		}
@@ -580,18 +581,18 @@ void AltaVelocita::pre_chiamata() {
 		if (reverse) {
 			if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
 				if ((*iteratore_stazioni)->isFreePass(identificativo, reverse))
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+                    Grafica::accessoStazione(true,true,identificativo,(*iteratore_stazioni)->getNome());
 				else
-					std::cout << "Il treno Alta Velocita" << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                    Grafica::accessoStazione(false,true,identificativo,(*iteratore_stazioni)->getNome());
 				annunciato = true;
 			}
 		}
 		else {
 			if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
 				if ((*iteratore_stazioni)->isFreePass(identificativo, reverse))
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+                    Grafica::accessoStazione(true,true,identificativo,(*iteratore_stazioni)->getNome());
 				else
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di transito presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                    Grafica::accessoStazione(false,true,identificativo,(*iteratore_stazioni)->getNome());
 				annunciato = true;
 			}
 		}
@@ -651,18 +652,18 @@ void SuperVelocita::pre_chiamata() {
 		if (reverse) {
 			if (posizione <= (*iteratore_stazioni)->getDistance() + 20) {
 				if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse))
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+				    Grafica::accessoStazione(true,true,identificativo,(*iteratore_stazioni)->getNome());
 				else
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                    Grafica::accessoStazione(false,true,identificativo,(*iteratore_stazioni)->getNome());
 				annunciato = true;
 			}
 		}
 		else {
 			if (posizione >= (*iteratore_stazioni)->getDistance() - 20) {
 				if ((*iteratore_stazioni)->isFreeStop(identificativo, reverse))
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito positivo" << std::endl;
+                    Grafica::accessoStazione(true,true,identificativo,(*iteratore_stazioni)->getNome());
 				else
-					std::cout << "Il treno Alta Velocita' " << identificativo << " ha richiesto un binario di fermata presso la stazione " << (*iteratore_stazioni)->getNome() << " con esito negativo" << std::endl;
+                    Grafica::accessoStazione(false,true,identificativo,(*iteratore_stazioni)->getNome());
 				annunciato = true;
 			}
 		}
