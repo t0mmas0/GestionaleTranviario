@@ -1,0 +1,871 @@
+input: line_description_1.txt, timetables_3.txt
+            ___________   _______________________________________^__
+             ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\
+            |   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\
+            |___| |___|||| |___| |___| |___|  | O | O | |  |  |        \
+                       |||                    |___|___| |  |__|         )
+            ___________|||______________________________|______________/
+                       |||                                        /--------
+            -----------'''---------------------------------------'
+
+                                  _             _
+                                 | |_ _ __ __ _(_)_ __  ___
+                                 | __| '__/ _` | | '_ \/ __|
+                                 | |_| | | (_| | | | | \__ \
+                                  \__|_|  \__,_|_|_| |_|___/
+                                       ____
+                                      |  _ \
+                                      | |_) |_   _
+                                      |  _ <| | | |
+                                      | |_) | |_| |
+            _______                   |____/ \__, |          ____            _        _     _ _
+           |__   __|                          __/ |         |  _ \          | |      | |   | (_)
+              | | ___  _ __ ___  _ __ ___   _|___/__  ___   | |_) | ___ _ __| |_ ___ | | __| |_
+              | |/ _ \| '_ ` _ \| '_ ` _ \ / _` / __|/ _ \  |  _ < / _ \ '__| __/ _ \| |/ _` | |
+              | | (_) | | | | | | | | | | | (_| \__ \ (_) | | |_) |  __/ |  | || (_) | | (_| | |
+            __|_|\___/|_| |_| |_|_| |_| |_|\__,_|___/\___/  |____/ \___|_|   \__\___/|_|\__,_|_|
+            |  \/  |                     | \ | |             | (_)
+            | \  / | __ _ _ __ ___ ___   |  \| | __ _ _ __ __| |_
+            | |\/| |/ _` | '__/ __/ _ \  | . ` |/ _` | '__/ _` | |
+            | |  | | (_| | | | (_| (_) | | |\  | (_| | | | (_| | |
+            |_|  |_|\__,_|_|  \___\___/  |_| \_|\__,_|_|  \__,_|_|
+              _____ _                              _____
+             / ____(_)                            |  __ \
+            | (___  _ _ __ ___   ___  _ __   ___  | |__) |__ _ __ __ _ _ __ ___
+             \___ \| | '_ ` _ \ / _ \| '_ \ / _ \ |  ___/ _ \ '__/ _` | '__/ _ \
+             ____) | | | | | | | (_) | | | |  __/ | |  |  __/ | | (_| | | | (_) |
+            |_____/|_|_| |_| |_|\___/|_| |_|\___| |_|   \___|_|  \__,_|_|  \___/
+
+                                                 (@@@)     (@@@@@)
+                                           (@@)     (@@@@@@@)        (@@@@@@@)
+                                     (@@@@@@@)   (@@@@@)       (@@@@@@@@@@@)
+                                (@@@)     (@@@@@@@)   (@@@@@@)             (@@@)
+                           (@@@@@@)    (@@@@@@)                (@)
+                       (@@@)  (@@@@)           (@@)
+                    (@@)              (@@@)
+                   .-.
+                   ] [    .-.      _    .-----.
+                 ."   """"   """""" """"| .--`
+                (:--:--:--:--:--:--:--:-| [___    .------------------------.
+                 |     :  :  :  :  :  : [_9_] |'='|.----------------------.|
+                /|.___________________________|___|'--.___.--.___.--.___.-'|
+               / ||_.--.______.--.______.--._ |---\'--\-.-/==\-.-/==\-.-/-'/--
+              /__;^=(==)======(==)======(==)=^~^^^ ^^^^(-)^^^^(-)^^^^(-)^^^
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  _____  _      _       _                         _                     ____                 _
+ |  __ \(_)    | |     | |                       (_)                   / __ \               (_)  _
+ | |__) |_  ___| | __ _| |__   ___  _ __ __ _ _____  ___  _ __   ___  | |  | |_ __ __ _ _ __ _  (_)
+ |  _  /| |/ _ \ |/ _` | '_ \ / _ \| '__/ _` |_  / |/ _ \| '_ \ / _ \ | |  | | '__/ _` | '__| |
+ | | \ \| |  __/ | (_| | |_) | (_) | | | (_| |/ /| | (_) | | | |  __/ | |__| | | | (_| | |  | |  _
+ |_|  \_\_|\___|_|\__,_|_.__/ \___/|_|  \__,_/___|_|\___/|_| |_|\___|  \____/|_|  \__,_|_|  |_| (_)
+
+
+TRENO           ORARIO LETTO            ORARIO CORRETTO         STAZIONE
+
+N.12556         00:00                   07:10                   Milano
+N.12556         00:00                   07:25                   Treviglio
+N.12556         00:00                   07:40                   Rovato
+N.12556         00:00                   07:55                   Brescia
+N.12556         00:00                   08:10                   Verona
+N.12556         00:00                   08:25                   Vicenza
+N.12556         00:00                   08:40                   Grisignano di Zocco
+N.12556         00:00                   08:55                   Padova
+N.12556         00:00                   09:10                   Venezia
+Simulazione al minuto 1
+Simulazione al minuto 2
+Simulazione al minuto 3
+Simulazione al minuto 4
+Simulazione al minuto 5
+Simulazione al minuto 6
+Simulazione al minuto 7
+Simulazione al minuto 8
+Simulazione al minuto 9
+Simulazione al minuto 10
+Simulazione al minuto 11
+Simulazione al minuto 12
+Simulazione al minuto 13
+Simulazione al minuto 14
+Simulazione al minuto 15
+Simulazione al minuto 16
+Simulazione al minuto 17
+Simulazione al minuto 18
+Simulazione al minuto 19
+Simulazione al minuto 20
+Simulazione al minuto 21
+Simulazione al minuto 22
+Simulazione al minuto 23
+Simulazione al minuto 24
+Simulazione al minuto 25
+Simulazione al minuto 26
+Simulazione al minuto 27
+Simulazione al minuto 28
+Simulazione al minuto 29
+Simulazione al minuto 30
+Simulazione al minuto 31
+Simulazione al minuto 32
+Simulazione al minuto 33
+Simulazione al minuto 34
+Simulazione al minuto 35
+Simulazione al minuto 36
+Simulazione al minuto 37
+Simulazione al minuto 38
+Simulazione al minuto 39
+Simulazione al minuto 40
+Simulazione al minuto 41
+Simulazione al minuto 42
+Simulazione al minuto 43
+Simulazione al minuto 44
+Simulazione al minuto 45
+Simulazione al minuto 46
+Simulazione al minuto 47
+Simulazione al minuto 48
+Simulazione al minuto 49
+Simulazione al minuto 50
+Simulazione al minuto 51
+Simulazione al minuto 52
+Simulazione al minuto 53
+Simulazione al minuto 54
+Simulazione al minuto 55
+Simulazione al minuto 56
+Simulazione al minuto 57
+Simulazione al minuto 58
+Simulazione al minuto 59
+Simulazione al minuto 60
+Simulazione al minuto 61
+Simulazione al minuto 62
+Simulazione al minuto 63
+Simulazione al minuto 64
+Simulazione al minuto 65
+Simulazione al minuto 66
+Simulazione al minuto 67
+Simulazione al minuto 68
+Simulazione al minuto 69
+Simulazione al minuto 70
+Simulazione al minuto 71
+Simulazione al minuto 72
+Simulazione al minuto 73
+Simulazione al minuto 74
+Simulazione al minuto 75
+Simulazione al minuto 76
+Simulazione al minuto 77
+Simulazione al minuto 78
+Simulazione al minuto 79
+Simulazione al minuto 80
+Simulazione al minuto 81
+Simulazione al minuto 82
+Simulazione al minuto 83
+Simulazione al minuto 84
+Simulazione al minuto 85
+Simulazione al minuto 86
+Simulazione al minuto 87
+Simulazione al minuto 88
+Simulazione al minuto 89
+Simulazione al minuto 90
+Simulazione al minuto 91
+Simulazione al minuto 92
+Simulazione al minuto 93
+Simulazione al minuto 94
+Simulazione al minuto 95
+Simulazione al minuto 96
+Simulazione al minuto 97
+Simulazione al minuto 98
+Simulazione al minuto 99
+Simulazione al minuto 100
+Simulazione al minuto 101
+Simulazione al minuto 102
+Simulazione al minuto 103
+Simulazione al minuto 104
+Simulazione al minuto 105
+Simulazione al minuto 106
+Simulazione al minuto 107
+Simulazione al minuto 108
+Simulazione al minuto 109
+Simulazione al minuto 110
+Simulazione al minuto 111
+Simulazione al minuto 112
+Simulazione al minuto 113
+Simulazione al minuto 114
+Simulazione al minuto 115
+Simulazione al minuto 116
+Simulazione al minuto 117
+Simulazione al minuto 118
+Simulazione al minuto 119
+Simulazione al minuto 120
+Simulazione al minuto 121
+Simulazione al minuto 122
+Simulazione al minuto 123
+Simulazione al minuto 124
+Simulazione al minuto 125
+Simulazione al minuto 126
+Simulazione al minuto 127
+Simulazione al minuto 128
+Simulazione al minuto 129
+Simulazione al minuto 130
+Simulazione al minuto 131
+Simulazione al minuto 132
+Simulazione al minuto 133
+Simulazione al minuto 134
+Simulazione al minuto 135
+Simulazione al minuto 136
+Simulazione al minuto 137
+Simulazione al minuto 138
+Simulazione al minuto 139
+Simulazione al minuto 140
+Simulazione al minuto 141
+Simulazione al minuto 142
+Simulazione al minuto 143
+Simulazione al minuto 144
+Simulazione al minuto 145
+Simulazione al minuto 146
+Simulazione al minuto 147
+Simulazione al minuto 148
+Simulazione al minuto 149
+Simulazione al minuto 150
+Simulazione al minuto 151
+Simulazione al minuto 152
+Simulazione al minuto 153
+Simulazione al minuto 154
+Simulazione al minuto 155
+Simulazione al minuto 156
+Simulazione al minuto 157
+Simulazione al minuto 158
+Simulazione al minuto 159
+Simulazione al minuto 160
+Simulazione al minuto 161
+Simulazione al minuto 162
+Simulazione al minuto 163
+Simulazione al minuto 164
+Simulazione al minuto 165
+Simulazione al minuto 166
+Simulazione al minuto 167
+Simulazione al minuto 168
+Simulazione al minuto 169
+Simulazione al minuto 170
+Simulazione al minuto 171
+Simulazione al minuto 172
+Simulazione al minuto 173
+Simulazione al minuto 174
+Simulazione al minuto 175
+Simulazione al minuto 176
+Simulazione al minuto 177
+Simulazione al minuto 178
+Simulazione al minuto 179
+Simulazione al minuto 180
+Simulazione al minuto 181
+Simulazione al minuto 182
+Simulazione al minuto 183
+Simulazione al minuto 184
+Simulazione al minuto 185
+Simulazione al minuto 186
+Simulazione al minuto 187
+Simulazione al minuto 188
+Simulazione al minuto 189
+Simulazione al minuto 190
+Simulazione al minuto 191
+Simulazione al minuto 192
+Simulazione al minuto 193
+Simulazione al minuto 194
+Simulazione al minuto 195
+Simulazione al minuto 196
+Simulazione al minuto 197
+Simulazione al minuto 198
+Simulazione al minuto 199
+Simulazione al minuto 200
+Simulazione al minuto 201
+Simulazione al minuto 202
+Simulazione al minuto 203
+Simulazione al minuto 204
+Simulazione al minuto 205
+Simulazione al minuto 206
+Simulazione al minuto 207
+Simulazione al minuto 208
+Simulazione al minuto 209
+Simulazione al minuto 210
+Simulazione al minuto 211
+Simulazione al minuto 212
+Simulazione al minuto 213
+Simulazione al minuto 214
+Simulazione al minuto 215
+Simulazione al minuto 216
+Simulazione al minuto 217
+Simulazione al minuto 218
+Simulazione al minuto 219
+Simulazione al minuto 220
+Simulazione al minuto 221
+Simulazione al minuto 222
+Simulazione al minuto 223
+Simulazione al minuto 224
+Simulazione al minuto 225
+Simulazione al minuto 226
+Simulazione al minuto 227
+Simulazione al minuto 228
+Simulazione al minuto 229
+Simulazione al minuto 230
+Simulazione al minuto 231
+Simulazione al minuto 232
+Simulazione al minuto 233
+Simulazione al minuto 234
+Simulazione al minuto 235
+Simulazione al minuto 236
+Simulazione al minuto 237
+Simulazione al minuto 238
+Simulazione al minuto 239
+Simulazione al minuto 240
+Simulazione al minuto 241
+Simulazione al minuto 242
+Simulazione al minuto 243
+Simulazione al minuto 244
+Simulazione al minuto 245
+Simulazione al minuto 246
+Simulazione al minuto 247
+Simulazione al minuto 248
+Simulazione al minuto 249
+Simulazione al minuto 250
+Simulazione al minuto 251
+Simulazione al minuto 252
+Simulazione al minuto 253
+Simulazione al minuto 254
+Simulazione al minuto 255
+Simulazione al minuto 256
+Simulazione al minuto 257
+Simulazione al minuto 258
+Simulazione al minuto 259
+Simulazione al minuto 260
+Simulazione al minuto 261
+Simulazione al minuto 262
+Simulazione al minuto 263
+Simulazione al minuto 264
+Simulazione al minuto 265
+Simulazione al minuto 266
+Simulazione al minuto 267
+Simulazione al minuto 268
+Simulazione al minuto 269
+Simulazione al minuto 270
+Simulazione al minuto 271
+Simulazione al minuto 272
+Simulazione al minuto 273
+Simulazione al minuto 274
+Simulazione al minuto 275
+Simulazione al minuto 276
+Simulazione al minuto 277
+Simulazione al minuto 278
+Simulazione al minuto 279
+Simulazione al minuto 280
+Simulazione al minuto 281
+Simulazione al minuto 282
+Simulazione al minuto 283
+Simulazione al minuto 284
+Simulazione al minuto 285
+Simulazione al minuto 286
+Simulazione al minuto 287
+Simulazione al minuto 288
+Simulazione al minuto 289
+Simulazione al minuto 290
+Simulazione al minuto 291
+Simulazione al minuto 292
+Simulazione al minuto 293
+Simulazione al minuto 294
+Simulazione al minuto 295
+Simulazione al minuto 296
+Simulazione al minuto 297
+Simulazione al minuto 298
+Simulazione al minuto 299
+Simulazione al minuto 300
+Simulazione al minuto 301
+Simulazione al minuto 302
+Simulazione al minuto 303
+Simulazione al minuto 304
+Simulazione al minuto 305
+Simulazione al minuto 306
+Simulazione al minuto 307
+Simulazione al minuto 308
+Simulazione al minuto 309
+Simulazione al minuto 310
+Simulazione al minuto 311
+Simulazione al minuto 312
+Simulazione al minuto 313
+Simulazione al minuto 314
+Simulazione al minuto 315
+Simulazione al minuto 316
+Simulazione al minuto 317
+Simulazione al minuto 318
+Simulazione al minuto 319
+Simulazione al minuto 320
+Simulazione al minuto 321
+Simulazione al minuto 322
+Simulazione al minuto 323
+Simulazione al minuto 324
+Simulazione al minuto 325
+Simulazione al minuto 326
+Simulazione al minuto 327
+Simulazione al minuto 328
+Simulazione al minuto 329
+Simulazione al minuto 330
+Simulazione al minuto 331
+Simulazione al minuto 332
+Simulazione al minuto 333
+Simulazione al minuto 334
+Simulazione al minuto 335
+Simulazione al minuto 336
+Simulazione al minuto 337
+Simulazione al minuto 338
+Simulazione al minuto 339
+Simulazione al minuto 340
+Simulazione al minuto 341
+Simulazione al minuto 342
+Simulazione al minuto 343
+Simulazione al minuto 344
+Simulazione al minuto 345
+Simulazione al minuto 346
+Simulazione al minuto 347
+Simulazione al minuto 348
+Simulazione al minuto 349
+Simulazione al minuto 350
+Simulazione al minuto 351
+Simulazione al minuto 352
+Simulazione al minuto 353
+Simulazione al minuto 354
+Simulazione al minuto 355
+Simulazione al minuto 356
+Simulazione al minuto 357
+Simulazione al minuto 358
+Simulazione al minuto 359
+Simulazione al minuto 360
+Simulazione al minuto 361
+Simulazione al minuto 362
+Simulazione al minuto 363
+Simulazione al minuto 364
+Simulazione al minuto 365
+Simulazione al minuto 366
+Simulazione al minuto 367
+Simulazione al minuto 368
+Simulazione al minuto 369
+Simulazione al minuto 370
+Simulazione al minuto 371
+Simulazione al minuto 372
+Simulazione al minuto 373
+Simulazione al minuto 374
+Simulazione al minuto 375
+Simulazione al minuto 376
+Simulazione al minuto 377
+Simulazione al minuto 378
+Simulazione al minuto 379
+Simulazione al minuto 380
+Simulazione al minuto 381
+Simulazione al minuto 382
+Simulazione al minuto 383
+Simulazione al minuto 384
+Simulazione al minuto 385
+Simulazione al minuto 386
+Simulazione al minuto 387
+Simulazione al minuto 388
+Simulazione al minuto 389
+Simulazione al minuto 390
+Simulazione al minuto 391
+Simulazione al minuto 392
+Simulazione al minuto 393
+Simulazione al minuto 394
+Simulazione al minuto 395
+Simulazione al minuto 396
+Simulazione al minuto 397
+Simulazione al minuto 398
+Simulazione al minuto 399
+Simulazione al minuto 400
+Simulazione al minuto 401
+Simulazione al minuto 402
+Simulazione al minuto 403
+Simulazione al minuto 404
+Simulazione al minuto 405
+Simulazione al minuto 406
+Simulazione al minuto 407
+Simulazione al minuto 408
+Simulazione al minuto 409
+Simulazione al minuto 410
+Simulazione al minuto 411
+Simulazione al minuto 412
+Simulazione al minuto 413
+Simulazione al minuto 414
+Simulazione al minuto 415
+Simulazione al minuto 416
+Simulazione al minuto 417
+Simulazione al minuto 418
+Simulazione al minuto 419
+Simulazione al minuto 420
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Milano Certosa
+Il treno 12556 e' al km 209 e segna le ore 421
+Simulazione al minuto 421
+Il treno 12556 e' al km 207.667 e segna le ore 422
+Simulazione al minuto 422
+Il treno 12556 e' al km 206.333 e segna le ore 423
+Simulazione al minuto 423
+Il treno 12556 e' al km 205 e segna le ore 424
+Simulazione al minuto 424
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 203.667 e segna le ore 425
+Simulazione al minuto 425
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Milano con esito positivo
+Il treno 12556 e' al km 201 e segna le ore 426
+Simulazione al minuto 426
+Il treno 12556 e' al km 198.333 e segna le ore 427
+Simulazione al minuto 427
+Il treno 12556 e' al km 195.667 e segna le ore 428
+Simulazione al minuto 428
+Il treno 12556 ha liberato il binario di uscita dalla stazione Milano Certosa
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Milano
+Il treno 12556 e' al km 193 e segna le ore 429
+Simulazione al minuto 429
+Il treno 12556 e' al km 191.667 e segna le ore 430
+Simulazione al minuto 430
+Il treno 12556 e' al km 190.333 e segna le ore 431
+Simulazione al minuto 431
+Il treno 12556 e' al km 189 e segna le ore 432
+Simulazione al minuto 432
+Il treno 12556 e'entrato alla stazioneMilano all' orario432
+Il treno 12556 e' in ritardo di 2 minuti alla stazione Milano
+Il treno 12556 e' al km 188 e segna le ore 433
+Simulazione al minuto 433
+Il treno 12556 e' al km 188 e segna le ore 434
+Simulazione al minuto 434
+Il treno 12556 e' al km 188 e segna le ore 435
+Simulazione al minuto 435
+Il treno 12556 e' al km 188 e segna le ore 436
+Simulazione al minuto 436
+Il treno 12556 e' al km 188 e segna le ore 437
+Simulazione al minuto 437
+Il treno 12556 e' al km 188 e segna le ore 438
+Simulazione al minuto 438
+Il treno 12556 e' al km 186.667 e segna le ore 439
+Simulazione al minuto 439
+Il treno 12556 e' al km 185.333 e segna le ore 440
+Simulazione al minuto 440
+Il treno 12556 e' al km 184 e segna le ore 441
+Simulazione al minuto 441
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 182.667 e segna le ore 442
+Simulazione al minuto 442
+Il treno 12556 e' al km 180 e segna le ore 443
+Simulazione al minuto 443
+Il treno 12556 e' al km 177.333 e segna le ore 444
+Simulazione al minuto 444
+Il treno 12556 e' al km 174.667 e segna le ore 445
+Simulazione al minuto 445
+Il treno 12556 ha liberato il binario di uscita dalla stazione Milano
+Il treno 12556 e' al km 172 e segna le ore 446
+Simulazione al minuto 446
+Il treno 12556 e' al km 169.333 e segna le ore 447
+Simulazione al minuto 447
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Treviglio con esito positivo
+Il treno 12556 e' al km 166.667 e segna le ore 448
+Simulazione al minuto 448
+Il treno 12556 e' al km 164 e segna le ore 449
+Simulazione al minuto 449
+Il treno 12556 e' al km 161.333 e segna le ore 450
+Simulazione al minuto 450
+Il treno 12556 e' al km 158.667 e segna le ore 451
+Simulazione al minuto 451
+Il treno 12556 e' al km 156 e segna le ore 452
+Simulazione al minuto 452
+Il treno 12556 e' al km 153.333 e segna le ore 453
+Simulazione al minuto 453
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Treviglio
+Il treno 12556 e' al km 150.667 e segna le ore 454
+Simulazione al minuto 454
+Il treno 12556 e' al km 149.333 e segna le ore 455
+Simulazione al minuto 455
+Il treno 12556 e' al km 148 e segna le ore 456
+Simulazione al minuto 456
+Il treno 12556 e'entrato alla stazioneTreviglio all' orario456
+Il treno 12556 e' in ritardo di 11 minuti alla stazione Treviglio
+Il treno 12556 e' al km 147 e segna le ore 457
+Simulazione al minuto 457
+Il treno 12556 e' al km 147 e segna le ore 458
+Simulazione al minuto 458
+Il treno 12556 e' al km 147 e segna le ore 459
+Simulazione al minuto 459
+Il treno 12556 e' al km 147 e segna le ore 460
+Simulazione al minuto 460
+Il treno 12556 e' al km 147 e segna le ore 461
+Simulazione al minuto 461
+Il treno 12556 e' al km 147 e segna le ore 462
+Simulazione al minuto 462
+Il treno 12556 e' al km 145.667 e segna le ore 463
+Simulazione al minuto 463
+Il treno 12556 e' al km 144.333 e segna le ore 464
+Simulazione al minuto 464
+Il treno 12556 e' al km 143 e segna le ore 465
+Simulazione al minuto 465
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 141.667 e segna le ore 466
+Simulazione al minuto 466
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Rovato con esito positivo
+Il treno 12556 e' al km 139 e segna le ore 467
+Simulazione al minuto 467
+Il treno 12556 e' al km 136.333 e segna le ore 468
+Simulazione al minuto 468
+Il treno 12556 e' al km 133.667 e segna le ore 469
+Simulazione al minuto 469
+Il treno 12556 ha liberato il binario di uscita dalla stazione Treviglio
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Rovato
+Il treno 12556 e' al km 131 e segna le ore 470
+Simulazione al minuto 470
+Il treno 12556 e' al km 129.667 e segna le ore 471
+Simulazione al minuto 471
+Il treno 12556 e' al km 128.333 e segna le ore 472
+Simulazione al minuto 472
+Il treno 12556 e' al km 127 e segna le ore 473
+Simulazione al minuto 473
+Il treno 12556 e'entrato alla stazioneRovato all' orario473
+Il treno 12556 e' in ritardo di 13 minuti alla stazione Rovato
+Il treno 12556 e' al km 126 e segna le ore 474
+Simulazione al minuto 474
+Il treno 12556 e' al km 126 e segna le ore 475
+Simulazione al minuto 475
+Il treno 12556 e' al km 126 e segna le ore 476
+Simulazione al minuto 476
+Il treno 12556 e' al km 126 e segna le ore 477
+Simulazione al minuto 477
+Il treno 12556 e' al km 126 e segna le ore 478
+Simulazione al minuto 478
+Il treno 12556 e' al km 126 e segna le ore 479
+Simulazione al minuto 479
+Il treno 12556 e' al km 124.667 e segna le ore 480
+Simulazione al minuto 480
+Il treno 12556 e' al km 123.333 e segna le ore 481
+Simulazione al minuto 481
+Il treno 12556 e' al km 122 e segna le ore 482
+Simulazione al minuto 482
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 120.667 e segna le ore 483
+Simulazione al minuto 483
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Brescia con esito positivo
+Il treno 12556 e' al km 118 e segna le ore 484
+Simulazione al minuto 484
+Il treno 12556 e' al km 115.333 e segna le ore 485
+Simulazione al minuto 485
+Il treno 12556 e' al km 112.667 e segna le ore 486
+Simulazione al minuto 486
+Il treno 12556 ha liberato il binario di uscita dalla stazione Rovato
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Brescia
+Il treno 12556 e' al km 110 e segna le ore 487
+Simulazione al minuto 487
+Il treno 12556 e' al km 108.667 e segna le ore 488
+Simulazione al minuto 488
+Il treno 12556 e' al km 107.333 e segna le ore 489
+Simulazione al minuto 489
+Il treno 12556 e' al km 106 e segna le ore 490
+Simulazione al minuto 490
+Il treno 12556 e'entrato alla stazioneBrescia all' orario490
+Il treno 12556 e' in ritardo di 15 minuti alla stazione Brescia
+Il treno 12556 e' al km 105 e segna le ore 491
+Simulazione al minuto 491
+Il treno 12556 e' al km 105 e segna le ore 492
+Simulazione al minuto 492
+Il treno 12556 e' al km 105 e segna le ore 493
+Simulazione al minuto 493
+Il treno 12556 e' al km 105 e segna le ore 494
+Simulazione al minuto 494
+Il treno 12556 e' al km 105 e segna le ore 495
+Simulazione al minuto 495
+Il treno 12556 e' al km 105 e segna le ore 496
+Simulazione al minuto 496
+Il treno 12556 e' al km 103.667 e segna le ore 497
+Simulazione al minuto 497
+Il treno 12556 e' al km 102.333 e segna le ore 498
+Simulazione al minuto 498
+Il treno 12556 e' al km 101 e segna le ore 499
+Simulazione al minuto 499
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 99.6667 e segna le ore 500
+Simulazione al minuto 500
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Verona con esito positivo
+Il treno 12556 e' al km 97 e segna le ore 501
+Simulazione al minuto 501
+Il treno 12556 e' al km 94.3333 e segna le ore 502
+Simulazione al minuto 502
+Il treno 12556 e' al km 91.6667 e segna le ore 503
+Simulazione al minuto 503
+Il treno 12556 ha liberato il binario di uscita dalla stazione Brescia
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Verona
+Il treno 12556 e' al km 89 e segna le ore 504
+Simulazione al minuto 504
+Il treno 12556 e' al km 87.6667 e segna le ore 505
+Simulazione al minuto 505
+Il treno 12556 e' al km 86.3333 e segna le ore 506
+Simulazione al minuto 506
+Il treno 12556 e' al km 85 e segna le ore 507
+Simulazione al minuto 507
+Il treno 12556 e'entrato alla stazioneVerona all' orario507
+Il treno 12556 e' in ritardo di 17 minuti alla stazione Verona
+Il treno 12556 e' al km 84 e segna le ore 508
+Simulazione al minuto 508
+Il treno 12556 e' al km 84 e segna le ore 509
+Simulazione al minuto 509
+Il treno 12556 e' al km 84 e segna le ore 510
+Simulazione al minuto 510
+Il treno 12556 e' al km 84 e segna le ore 511
+Simulazione al minuto 511
+Il treno 12556 e' al km 84 e segna le ore 512
+Simulazione al minuto 512
+Il treno 12556 e' al km 84 e segna le ore 513
+Simulazione al minuto 513
+Il treno 12556 e' al km 82.6667 e segna le ore 514
+Simulazione al minuto 514
+Il treno 12556 e' al km 81.3333 e segna le ore 515
+Simulazione al minuto 515
+Il treno 12556 e' al km 80 e segna le ore 516
+Simulazione al minuto 516
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 78.6667 e segna le ore 517
+Simulazione al minuto 517
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Vicenza con esito positivo
+Il treno 12556 e' al km 76 e segna le ore 518
+Simulazione al minuto 518
+Il treno 12556 e' al km 73.3333 e segna le ore 519
+Simulazione al minuto 519
+Il treno 12556 e' al km 70.6667 e segna le ore 520
+Simulazione al minuto 520
+Il treno 12556 ha liberato il binario di uscita dalla stazione Verona
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Vicenza
+Il treno 12556 e' al km 68 e segna le ore 521
+Simulazione al minuto 521
+Il treno 12556 e' al km 66.6667 e segna le ore 522
+Simulazione al minuto 522
+Il treno 12556 e' al km 65.3333 e segna le ore 523
+Simulazione al minuto 523
+Il treno 12556 e' al km 64 e segna le ore 524
+Simulazione al minuto 524
+Il treno 12556 e'entrato alla stazioneVicenza all' orario524
+Il treno 12556 e' in ritardo di 19 minuti alla stazione Vicenza
+Il treno 12556 e' al km 63 e segna le ore 525
+Simulazione al minuto 525
+Il treno 12556 e' al km 63 e segna le ore 526
+Simulazione al minuto 526
+Il treno 12556 e' al km 63 e segna le ore 527
+Simulazione al minuto 527
+Il treno 12556 e' al km 63 e segna le ore 528
+Simulazione al minuto 528
+Il treno 12556 e' al km 63 e segna le ore 529
+Simulazione al minuto 529
+Il treno 12556 e' al km 63 e segna le ore 530
+Simulazione al minuto 530
+Il treno 12556 e' al km 61.6667 e segna le ore 531
+Simulazione al minuto 531
+Il treno 12556 e' al km 60.3333 e segna le ore 532
+Simulazione al minuto 532
+Il treno 12556 e' al km 59 e segna le ore 533
+Simulazione al minuto 533
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 57.6667 e segna le ore 534
+Simulazione al minuto 534
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Grisignano di Zocco con esito positivo
+Il treno 12556 e' al km 55 e segna le ore 535
+Simulazione al minuto 535
+Il treno 12556 e' al km 52.3333 e segna le ore 536
+Simulazione al minuto 536
+Il treno 12556 e' al km 49.6667 e segna le ore 537
+Simulazione al minuto 537
+Il treno 12556 ha liberato il binario di uscita dalla stazione Vicenza
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Grisignano di Zocco
+Il treno 12556 e' al km 47 e segna le ore 538
+Simulazione al minuto 538
+Il treno 12556 e' al km 45.6667 e segna le ore 539
+Simulazione al minuto 539
+Il treno 12556 e' al km 44.3333 e segna le ore 540
+Simulazione al minuto 540
+Il treno 12556 e' al km 43 e segna le ore 541
+Simulazione al minuto 541
+Il treno 12556 e'entrato alla stazioneGrisignano di Zocco all' orario541
+Il treno 12556 e' in ritardo di 21 minuti alla stazione Grisignano di Zocco
+Il treno 12556 e' al km 42 e segna le ore 542
+Simulazione al minuto 542
+Il treno 12556 e' al km 42 e segna le ore 543
+Simulazione al minuto 543
+Il treno 12556 e' al km 42 e segna le ore 544
+Simulazione al minuto 544
+Il treno 12556 e' al km 42 e segna le ore 545
+Simulazione al minuto 545
+Il treno 12556 e' al km 42 e segna le ore 546
+Simulazione al minuto 546
+Il treno 12556 e' al km 42 e segna le ore 547
+Simulazione al minuto 547
+Il treno 12556 e' al km 40.6667 e segna le ore 548
+Simulazione al minuto 548
+Il treno 12556 e' al km 39.3333 e segna le ore 549
+Simulazione al minuto 549
+Il treno 12556 e' al km 38 e segna le ore 550
+Simulazione al minuto 550
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 36.6667 e segna le ore 551
+Simulazione al minuto 551
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Padova con esito positivo
+Il treno 12556 e' al km 34 e segna le ore 552
+Simulazione al minuto 552
+Il treno 12556 e' al km 31.3333 e segna le ore 553
+Simulazione al minuto 553
+Il treno 12556 e' al km 28.6667 e segna le ore 554
+Simulazione al minuto 554
+Il treno 12556 ha liberato il binario di uscita dalla stazione Grisignano di Zocco
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Padova
+Il treno 12556 e' al km 26 e segna le ore 555
+Simulazione al minuto 555
+Il treno 12556 e' al km 24.6667 e segna le ore 556
+Simulazione al minuto 556
+Il treno 12556 e' al km 23.3333 e segna le ore 557
+Simulazione al minuto 557
+Il treno 12556 e' al km 22 e segna le ore 558
+Simulazione al minuto 558
+Il treno 12556 e'entrato alla stazionePadova all' orario558
+Il treno 12556 e' in ritardo di 23 minuti alla stazione Padova
+Il treno 12556 e' al km 21 e segna le ore 559
+Simulazione al minuto 559
+Il treno 12556 e' al km 21 e segna le ore 560
+Simulazione al minuto 560
+Il treno 12556 e' al km 21 e segna le ore 561
+Simulazione al minuto 561
+Il treno 12556 e' al km 21 e segna le ore 562
+Simulazione al minuto 562
+Il treno 12556 e' al km 21 e segna le ore 563
+Simulazione al minuto 563
+Il treno 12556 e' al km 21 e segna le ore 564
+Simulazione al minuto 564
+Il treno 12556 e' al km 19.6667 e segna le ore 565
+Simulazione al minuto 565
+Il treno 12556 e' al km 18.3333 e segna le ore 566
+Simulazione al minuto 566
+Il treno 12556 e' al km 17 e segna le ore 567
+Simulazione al minuto 567
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' al km 15.6667 e segna le ore 568
+Simulazione al minuto 568
+Il treno regionale 12556 ha richiesto un binario di fermata presso la stazione Venezia           con esito positivo
+Il treno 12556 e' al km 13 e segna le ore 569
+Simulazione al minuto 569
+Il treno 12556 e' al km 10.3333 e segna le ore 570
+Simulazione al minuto 570
+Il treno 12556 e' al km 7.66667 e segna le ore 571
+Simulazione al minuto 571
+Il treno 12556 ha liberato il binario di uscita dalla stazione Padova
+Il treno 12556 e' al km 5 e segna le ore 572
+Simulazione al minuto 572
+Accesso al Binario di Stazionamento:
+Treno:  12556   Stazione:       Venezia
+Il treno 12556 e' al km 2.33333 e segna le ore 573
+Simulazione al minuto 573
+Il treno 12556 e' al km 1 e segna le ore 574
+Simulazione al minuto 574
+Il treno 12556 e'entrato alla stazioneVenezia            all' orario574
+Il treno 12556 e' arrivato alla fermata finale e verra' distrutto
+il Treno N.12556ha liberato il binario di stazionamento
+Il treno 12556 e' in ritardo di 24 minuti alla stazione Venezia
+Il treno 12556 e' al km 0 e segna le ore 575
+Simulazione al minuto 575
+Simulazione al minuto 576
