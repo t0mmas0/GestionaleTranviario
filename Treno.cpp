@@ -331,7 +331,7 @@ void Treno::libera_uscita(){
 		if (posizione >= (*std::prev(iteratore_stazioni))->getDistance() + 15) {
 			(*std::prev(iteratore_stazioni))->liberaUscita(reverse);
 			liberato = true;
-            Grafica::possibileAvanzare(identificativo,(*std::next(iteratore_stazioni))->getNome() );
+            Grafica::possibileAvanzare(identificativo,(*std::prev(iteratore_stazioni))->getNome() );
 		}
 	}
 }
