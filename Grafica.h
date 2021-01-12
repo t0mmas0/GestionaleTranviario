@@ -21,11 +21,7 @@ public:
     static void passStazione(int id,std::string nome);
     static void possibileAvanzare(int id,std::string nome);
     static void posizioneTreno(int id,double pos,int ora);
-
-
-
-
-
+    static void distruggi(int id);
 
 };
 

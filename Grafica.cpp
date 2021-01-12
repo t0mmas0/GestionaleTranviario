@@ -88,3 +88,7 @@ void Grafica::passStazione(int id, std::string nome) {
 void Grafica::possibileAvanzare(int id, std::string nome) {
     std::cout << "Il treno " << id << " ha liberato il binario di uscita dalla stazione " << nome<< std::endl;
 }
+
+void Grafica::distruggi(int id) {
+    std::cout << "Il treno " << id << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
+}

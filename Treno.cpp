@@ -356,15 +356,15 @@ void Treno::effettua_fermata() {
 	//Controllo se era l'ultima fermata
 	if (reverse) {
 		if (iteratore_stazioni == Stazioni.begin()) {
-			std::cout << "Il treno " << identificativo << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
+			Grafica::distruggi(identificativo);
 			cambia_stato(distrutto);
 			libera_binario();
 		}
 	}
 	else {
 		if (std::next(iteratore_stazioni, 1) == Stazioni.end()) {
-			std::cout << "Il treno " << identificativo << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
-			cambia_stato(distrutto);
+            Grafica::distruggi(identificativo);
+            cambia_stato(distrutto);
 			libera_binario();
 		}
 	}
