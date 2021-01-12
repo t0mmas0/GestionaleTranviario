@@ -85,9 +85,9 @@ void LineaFerroviaria::esegui() {
 					treniAttiviAndata.erase(i);
 			}
 			else {
-				//TODO: dopo aver eliminato con erase non possiamo fare i-- perchè i non punta più ad un elemento della lista
-				for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); (*i)->get_stato() == distrutto; i--) {
-					treniAttiviAndata.erase(i);
+				auto i = --treniAttiviAndata.end();
+				while ((*i)->get_stato() == distrutto) {
+					i = --treniAttiviAndata.erase(i);		//Restituisce list.end(), dobbiamo decrementare
 					if (treniAttiviAndata.size() == 1)
 						break;
 				}
@@ -101,8 +101,9 @@ void LineaFerroviaria::esegui() {
 					treniAttiviRitorno.erase(i);
 			}
 			else {
-				for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviRitorno.begin(); (*i)->get_stato() == distrutto; i++) {
-					treniAttiviRitorno.erase(i);
+				auto i = treniAttiviRitorno.begin();
+				while ((*i)->get_stato() == distrutto) {
+					i = treniAttiviRitorno.erase(i);
 					if (treniAttiviRitorno.size() == 1)
 						break;
 				}
