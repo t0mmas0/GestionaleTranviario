@@ -85,6 +85,7 @@ void LineaFerroviaria::esegui() {
 					treniAttiviAndata.erase(i);
 			}
 			else {
+				//TODO: dopo aver eliminato con erase non possiamo fare i-- perchè i non punta più ad un elemento della lista
 				for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end(); (*i)->get_stato() == distrutto; i--) {
 					treniAttiviAndata.erase(i);
 					if (treniAttiviAndata.size() == 1)
@@ -158,8 +159,7 @@ void LineaFerroviaria::controlloTamponamenti() {
 		for (std::list<std::shared_ptr<Treno>>::const_iterator i = --treniAttiviAndata.end();
 			i != std::next(treniAttiviAndata.begin()); i--) {
 			std::list<std::shared_ptr<Treno>>::const_iterator j = std::prev(i);
-			if ((*i)->get_stato() == movimento ||
-				((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
+			if ( ((*i)->get_stato() == movimento || (*i)->get_stato() == attesa) && ((*j)->get_stato() == movimento || (*j)->get_stato() == attesa)) {
 				double front = (*i)->get_posizione() + (*i)->get_velocita() / 60;
 				double back = (*j)->get_posizione() + (*j)->get_velocita() / 60;
 				if (front - back < 10) {
@@ -171,8 +171,7 @@ void LineaFerroviaria::controlloTamponamenti() {
 	if (treniAttiviRitorno.size() > 1) {
 		for (std::list<std::shared_ptr<Treno>>::const_iterator i = treniAttiviRitorno.begin(); i != std::prev(--treniAttiviRitorno.end()); i++) {
 			std::list<std::shared_ptr<Treno>>::const_iterator j = std::next(i);
-			if ((*i)->get_stato() == movimento ||
-				((*i)->get_stato() == attesa && (*j)->get_stato() == movimento || ((*j)->get_stato() == attesa))) {
+			if (((*i)->get_stato() == movimento || (*i)->get_stato() == attesa) && ((*j)->get_stato() == movimento || (*j)->get_stato() == attesa)) {
 				double back = (*i)->get_posizione() + (*i)->get_velocita() / 60;
 				double front = (*j)->get_posizione() + (*j)->get_velocita() / 60;
 				if (front - back < 10) {
