@@ -5,6 +5,7 @@
  */
 #include <iostream>
 #include "StazioneSecondaria.h"
+#include "Grafica.h"
 
 StazioneSecondaria::StazioneSecondaria(int km, std::string nome) : Stazione(km,nome) {
 principale = false;
@@ -19,12 +20,12 @@ bool StazioneSecondaria::isFreePass(int id, bool reverse) {
 
 void StazioneSecondaria::PrenotaTransito(int id, bool reverse) {
     if(reverse){
-        std::cout << "Accesso al Binario di transito del treno" << id << " alla Stazione" << this->nome << std::endl;
+        Grafica::accessoAlBinario(true,id,this->nome);
         binariTransitoInverso=id;
         semBinariTransitoInverso.setRosso();
 
     }else {
-        std::cout << "Accesso al Binario di transito del treno" << id << " alla Stazione" << this->nome << std::endl;
+        Grafica::accessoAlBinario(true,id,this->nome);
         binariTransito=id;
         semBinariTransito.setRosso();
     }
@@ -33,13 +34,13 @@ void StazioneSecondaria::PrenotaTransito(int id, bool reverse) {
 void StazioneSecondaria::liberaBinarioTransito(int id, bool reverse) {
     if(reverse) {
         binariTransitoInverso = -1;
-        std::cout << "il Treno N." << id << "ha liberato il binario di transito";
         semBinariTransitoInverso.setVerde();
     }else{
         binariTransito = -1;
-        std::cout << "il Treno N." << id << "ha liberato il binario di transito";
         semBinariTransito.setVerde();
     }
+    Grafica::liberaBinario(false, id,this->nome);
+
 }
 
 
