@@ -260,9 +260,9 @@ void Treno::testa_transito(){
 			transitato = true;
 			//Controllo se questa è la stazione capolinea
 			if (iteratore_stazioni == Stazioni.begin()) {
-				cambia_stato(distrutto);
 				Grafica::capolinea(identificativo);
 				libera_binario();
+				cambia_stato(distrutto);
 			}			
 		}
 	}
@@ -271,9 +271,9 @@ void Treno::testa_transito(){
             Grafica::passStazione(identificativo,(*iteratore_stazioni)->getNome());
 			transitato = true;
 			if (std::next(iteratore_stazioni) == Stazioni.end()) {
-				cambia_stato(distrutto);
                 Grafica::capolinea(identificativo);
 				libera_binario();
+				cambia_stato(distrutto);
 			}
 		}
 	}
@@ -357,15 +357,15 @@ void Treno::effettua_fermata() {
 	if (reverse) {
 		if (iteratore_stazioni == Stazioni.begin()) {
 			std::cout << "Il treno " << identificativo << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
-			cambia_stato(distrutto);
 			libera_binario();
+			cambia_stato(distrutto);
 		}
 	}
 	else {
 		if (std::next(iteratore_stazioni, 1) == Stazioni.end()) {
 			std::cout << "Il treno " << identificativo << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
-			cambia_stato(distrutto);
 			libera_binario();
+			cambia_stato(distrutto);
 		}
 	}
 }
