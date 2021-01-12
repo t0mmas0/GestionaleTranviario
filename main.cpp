@@ -57,6 +57,6 @@ int main() {
     std::cout<<"            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<std::endl;
 
 
-    LineaFerroviaria linea{ "./timetables.txt", "./line_description1.txt" };
+    LineaFerroviaria linea{ "./timetables.txt", "./line_description.txt" };
     linea.esegui();
 }
