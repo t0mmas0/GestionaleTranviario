@@ -377,9 +377,9 @@ void Treno::calcola_ritardo() {
 		//return; //Il ritardo non è variato
 	ritardo = orario - previsto;
 	if (ritardo >= 0)
-		std::cout << "Il treno " << identificativo << " e' in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
+		std::cout << "Il treno " << identificativo << " e' in ritardo di " << ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome() << std::endl;
 	if (ritardo < 0)
-		std::cout << "Il treno " << identificativo << " e' in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome();
+		std::cout << "Il treno " << identificativo << " e' in anticipo di " << -ritardo << " minuti alla stazione " << (*iteratore_stazioni)->getNome() << std::endl;
 	return; //Altrimenti se ritardo = 0, non c'è annuncio ritardo
 }
 
