@@ -57,6 +57,6 @@ int main() {
     std::cout<<"            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<<std::endl;
 
 
-    LineaFerroviaria linea{ "C:\\Users\\Tommaso\\GitProjects\\GestionaleTranviario\\timetables.txt", "C:\\Users\\Tommaso\\GitProjects\\GestionaleTranviario\\line_description.txt" };
+    LineaFerroviaria linea{ "../../../timetables.txt", "../../../line_description1.txt" };
     linea.esegui();
 }
