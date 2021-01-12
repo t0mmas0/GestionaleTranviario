@@ -34,8 +34,11 @@ void LineaFerroviaria::esegui() {
 				auto i = --treniAttiviAndata.end();
 				while ((*i)->get_stato() == distrutto) {
 					i = --treniAttiviAndata.erase(i);		//Restituisce list.end(), dobbiamo decrementare
-					if (treniAttiviAndata.size() == 1)
+					if (treniAttiviAndata.size() == 1) {
+						if ((*i)->get_stato() == distrutto)
+							treniAttiviAndata.erase(i);
 						break;
+					}
 				}
 			}
 			
@@ -50,8 +53,11 @@ void LineaFerroviaria::esegui() {
 				auto i = treniAttiviRitorno.begin();
 				while ((*i)->get_stato() == distrutto) {
 					i = treniAttiviRitorno.erase(i);
-					if (treniAttiviRitorno.size() == 1)
+					if (treniAttiviRitorno.size() == 1) {
+						if ((*i)->get_stato() == distrutto)
+							treniAttiviRitorno.erase(i);
 						break;
+					}
 				}
 			}
 			
@@ -66,7 +72,6 @@ void LineaFerroviaria::esegui() {
 		///incremento orario
 		orario++;
 		std::cout << "Simulazione al minuto " << orario << std::endl;
-		///darimuovere sennò se spacca tutto
 		if ((treniAndata.size() == 0 && treniRitorno.size() == 0) && (treniAttiviAndata.size() == 0 && treniAttiviRitorno.size() == 0))
 			break;
 	}
