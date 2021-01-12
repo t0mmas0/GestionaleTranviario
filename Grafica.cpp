@@ -88,3 +88,36 @@ void Grafica::passStazione(int id, std::string nome) {
 void Grafica::possibileAvanzare(int id, std::string nome) {
     std::cout << "Il treno " << id << " ha liberato il binario di uscita dalla stazione " << nome<< std::endl;
 }
+
+void Grafica::distruggi(int id) {
+    std::cout << "Il treno " << id << " e' arrivato alla fermata finale e verra' distrutto" << std::endl;
+}
+
+void Grafica::ingressoStazione(int id, std::string nome, double orario) {
+    std::cout << "Il treno " << id << " e'entrato alla stazione"<<nome<<" all' orario" <<orario<< std::endl;
+}
+
+void Grafica::ritardo(int id, int ritardo, std::string nome) {
+    std::cout << "Il treno " << id << " e' in ritardo di " << ritardo << " minuti alla stazione " <<nome<< std::endl;
+}
+
+void Grafica::anticipo(int id, int min) {
+    std::cout << "Il treno " << id << " e' in anticipo di " << min << " minuti, e rimarra' in parcheggio" << std::endl;
+}
+
+void Grafica::accessoStazione(bool esito, bool tipoTreno, int id, std::string nome) {
+    if(esito){
+        if(tipoTreno){
+            std::cout << "Il treno Alta Velocita' " << id << " ha richiesto un binario di fermata presso la stazione " << nome<< " con esito positivo" << std::endl;
+        }else{
+            std::cout << "Il treno regionale " << id << " ha richiesto un binario di fermata presso la stazione " << nome << " con esito positivo" << std::endl;
+        }
+    }else{
+        if(tipoTreno){
+            std::cout << "Il treno Alta Velocita' " << id << " ha richiesto un binario di fermata presso la stazione " << nome<< " con esito negativo" << std::endl;
+        }else{
+            std::cout << "Il treno regionale " << id << " ha richiesto un binario di fermata presso la stazione " << nome << " con esito negativo" << std::endl;
+        }
+    }
+
+}
